@@ -1,13 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import Button from 'react-bootstrap/Button';
-import NavBar from "./components/NavBar";
-import Footer from './components/Footer';
-import { Breadcrumb, Container } from 'react-bootstrap';
-import Hero from './components/Hero';
-import TotalLocations from './components/TotalLocations';
-import SearchBar from './components/SearchBar';
-import Continents from './pages/Continents';
+
 
 function App() {
   return (
