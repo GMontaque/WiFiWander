@@ -37,8 +37,8 @@ function App() {
             Learn React
           </a>
         </header>
-        <Footer />
       </Container>
+      <Footer />
     </div>
   );
 }
