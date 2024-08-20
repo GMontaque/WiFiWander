@@ -1,8 +1,13 @@
 import React from 'react'
+import { Container, Row } from 'react-bootstrap'
 
 const NotFound = () => {
   return (
-    <div>NotFound 404</div>
+    <Container>
+      <Row>
+        <h1>Error 404, page not found</h1>
+      </Row>
+    </Container>
   )
 }
 
