@@ -1,12 +1,40 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
-import { CurrentUserContext } from '../App';
+import { useCurrentUser, useSetCurrentUser } from './CurrentUserContext';
+import axios from 'axios';
 
 
 const NavBar = () => {
+    const currentUser = useCurrentUser();
+    const setCurrentUser = useSetCurrentUser();
+
+    const handleSignOut = async () => {
+        try {
+            await axios.post("dj-rest-auth/logout/");
+            setCurrentUser(null)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    const loggedInIcons = <>{currentUser?.username}
+        <NavLink to="/profile"
+        >Profile
+            <image src="" alt="image placeholder" /></NavLink>
+        <NavLink to="/" onClick={handleSignOut}>Log Out</NavLink>
+    </>
+    const loggedOutIcons = (
+        <>
+            <NavLink to="/signup">Sign Up</NavLink>
+            <NavLink to="/signin">Sign In</NavLink>
+
+        </>
+    )
+    const addLocation = <>
+        <NavLink to="/newlocation">Add Location</NavLink>
+    </>
 
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
@@ -26,12 +54,11 @@ const NavBar = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <NavLink to="">Home</NavLink>
-                        <NavLink to="/newlocation">Add Location</NavLink>
                         <NavLink to="/about">About Us</NavLink>
+                        {currentUser && addLocation}
                     </Nav>
                     <Nav className="ms-auto">
-                        <NavLink to="/signup">Sign Up</NavLink>
-                        <NavLink to="/signin">Sign In</NavLink>
+                        {currentUser ? loggedInIcons : loggedOutIcons}
                     </Nav>
                 </Navbar.Collapse>
             </Container>
