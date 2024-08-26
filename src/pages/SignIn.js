@@ -1,9 +1,98 @@
-import React from 'react'
+import React, { useState } from "react";
+import axios from "axios"
+import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
+import { Link, useNavigate } from "react-router-dom";
+import { Row } from "react-bootstrap";
+import { useSetCurrentUser } from "../components/CurrentUserContext";
 
-const SignIn = () => {
+
+function SignIn() {
+  const setCurrentUser = useSetCurrentUser();
+
+  const [signInData, setSignInData] = useState({
+    username: "",
+    password: "",
+  });
+  const { username, password } = signInData;
+  const [errors, setErrors] = useState({});
+
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(signInData);
+    try {
+      const { data } = await axios.post("https://wifi-wander-api-835560a3f6c2.herokuapp.com/dj-rest-auth/login/", signInData);
+      setCurrentUser(data.user)
+      navigate("/")
+    } catch (err) {
+      console.log(err)
+      setErrors(err.response?.data);
+    }
+  };
+  const handleChange = (event) => {
+    setSignInData({
+      ...signInData,
+      [event.target.name]: event.target.value,
+    });
+  };
   return (
-    <div>SignIn</div>
-  )
+    <>
+      <Row>
+        <h1 >sign in</h1>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="username">
+            <Form.Label className="d-none">Username</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Username"
+              name="username"
+
+              value={username}
+              onChange={handleChange}
+            />
+            {errors.username?.map((message, idx) => (
+              <Alert variant='warning' key={idx}>{message}</Alert>
+            ))}
+          </Form.Group>
+
+          <Form.Group controlId="password">
+            <Form.Label className="d-none">Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              name="password"
+
+              value={password}
+              onChange={handleChange}
+            />
+            {errors.password?.map((message, idx) => (
+              <Alert variant='warning' key={idx}>{message}</Alert>
+            ))}
+          </Form.Group>
+          <Button
+
+            type="submit"
+          >
+            Sign In
+          </Button>
+          {errors.non_field_errors?.map((message, idx) => (
+            <Alert key={idx} variant="warning" className="mt-3">
+              {message}
+            </Alert>
+          ))}
+        </Form>
+
+        <Link to="/signup">
+          Don't have an account? <span>Sign up now!</span>
+        </Link>
+        <Link to="/password">
+          Frogot your password?
+        </Link>
+      </Row>
+    </>
+  );
 }
 
-export default SignIn
+export default SignIn;
