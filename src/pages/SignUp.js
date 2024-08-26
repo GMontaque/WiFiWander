@@ -1,9 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import { Alert, Row, Col, Container, Form, Button } from "react-bootstrap";
-import { NavLink, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { NavLink } from "react-router-dom";
+
 
 const SignUp = () => {
+
+
+  // Handle input change for text fields
+  const handleChange = (e) => {
+    setSignUpData({
+      ...signUpData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Handle file change for the image upload
+  const handleFileChange = (e) => {
+    setSignUpData({
+      ...signUpData,
+      image: e.target.files[0],  // Save the selected file
+    });
+  };
+
+
 
   return (
     <Row className="justify-content-md-center">
@@ -22,7 +41,9 @@ const SignUp = () => {
                 value={signUpData.username}
                 onChange={handleChange}
               />
-
+              {errors.username?.map((message, idx) => (
+                <Alert variant="warning" key={idx}>{message}</Alert>
+              ))}
             </Form.Group>
 
             {/* Email */}
@@ -35,7 +56,9 @@ const SignUp = () => {
                 value={signUpData.email}
                 onChange={handleChange}
               />
-
+              {errors.email?.map((message, idx) => (
+                <Alert variant="warning" key={idx}>{message}</Alert>
+              ))}
             </Form.Group>
 
             {/* Password */}
@@ -48,7 +71,9 @@ const SignUp = () => {
                 value={signUpData.password1}
                 onChange={handleChange}
               />
-
+              {errors.password1?.map((message, idx) => (
+                <Alert variant="warning" key={idx}>{message}</Alert>
+              ))}
             </Form.Group>
 
             {/* Confirm Password */}
@@ -61,7 +86,9 @@ const SignUp = () => {
                 value={signUpData.password2}
                 onChange={handleChange}
               />
-
+              {errors.password2?.map((message, idx) => (
+                <Alert variant="warning" key={idx}>{message}</Alert>
+              ))}
             </Form.Group>
 
             {/* Memorable Word */}
@@ -74,7 +101,9 @@ const SignUp = () => {
                 value={signUpData.memorable_word}
                 onChange={handleChange}
               />
-
+              {errors.memorable_word?.map((message, idx) => (
+                <Alert variant="warning" key={idx}>{message}</Alert>
+              ))}
             </Form.Group>
 
             {/* Image Upload */}
@@ -85,14 +114,20 @@ const SignUp = () => {
                 name="image"
                 onChange={handleFileChange}
               />
-
+              {errors.image?.map((message, idx) => (
+                <Alert variant="warning" key={idx}>{message}</Alert>
+              ))}
             </Form.Group>
 
             {/* Submit Button */}
             <Button variant="primary" type="submit">
               Sign Up
             </Button>
-
+            {errors.non_field_errors?.map((message, idx) => (
+              <Alert key={idx} variant="warning" className="mt-3">
+                {message}
+              </Alert>
+            ))}
           </Form>
 
           <div className="mt-3">
