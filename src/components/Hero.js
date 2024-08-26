@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
-import heroImageHome from '../assets/3949076.jpg';
+import heroImageHome from '../assets/headerImage.webp';
 
 
 function Hero() {
