@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Alert, Row, Col, Container, Form, Button } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
-
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignUp = () => {
+  const [signUpData, setSignUpData] = useState({
+    username: "",
+    email: "",
+    password1: "",
+    password2: "",
+    memorable_word: "",
+    image: null,
+  });
 
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   // Handle input change for text fields
   const handleChange = (e) => {
@@ -18,11 +28,39 @@ const SignUp = () => {
   const handleFileChange = (e) => {
     setSignUpData({
       ...signUpData,
-      image: e.target.files[0],  // Save the selected file
+      image: e.target.files[0],
     });
   };
 
+  // Handle form submission
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
+    // Create FormData object for multipart/form-data submission
+    const formData = new FormData();
+    formData.append('username', signUpData.username);
+    formData.append('email', signUpData.email);
+    formData.append('password1', signUpData.password1);
+    formData.append('password2', signUpData.password2);
+    formData.append('memorable_word', signUpData.memorable_word);
+
+    // Append the image file to the FormData object
+    if (signUpData.image) {
+      formData.append('image', signUpData.image);
+    }
+
+    try {
+      await axios.post("https://wifi-wander-api-835560a3f6c2.herokuapp.com/dj-rest-auth/registration/", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      navigate("/signin");
+    } catch (err) {
+      setErrors(err.response?.data);
+      console.log(err.response?.data);
+    }
+  };
 
   return (
     <Row className="justify-content-md-center">
