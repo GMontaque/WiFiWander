@@ -16,13 +16,12 @@ import WifiLocationsCreation from './pages/WifiLocationsCreation';
 import About from './pages/About';
 import WifiLocationsPage from './pages/WifiLocationsPage';
 import Password from './pages/Password';
+import './api/axiosDefaults'
 
 
 function App() {
 
-
   return (
-
     <div className="App">
       <NavBar />
       <Hero />
