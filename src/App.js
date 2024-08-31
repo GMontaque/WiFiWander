@@ -17,6 +17,7 @@ import About from './pages/About';
 import WifiLocationsPage from './pages/WifiLocationsPage';
 import Password from './pages/Password';
 import './api/axiosDefaults'
+import CreateComment from './components/CreateComment';
 
 
 function App() {
@@ -36,14 +37,14 @@ function App() {
           <Route path="/continents/:continentName/:countryName" element={<City />} />
           <Route path="/newlocation" element={<WifiLocationsCreation />} />
           <Route path="/continents/:continentName/:countryName/:cityName" element={<WifiLocationsList />} />
-          <Route path="/wifipage" element={<WifiLocationsPage />} />
+          <Route path="/wifi-locations/:id" element={<WifiLocationsPage />} />
           <Route path="/password" element={<Password />} />
+          <Route path="/comment" element={<CreateComment />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>
       <Footer />
     </div>
-
   );
 }
 
