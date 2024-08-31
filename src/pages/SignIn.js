@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios"
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { Row } from "react-bootstrap";
 import { useSetCurrentUser } from "../components/CurrentUserContext";
-
+import { axiosReq } from "../api/axiosDefaults";
 
 function SignIn() {
   const setCurrentUser = useSetCurrentUser();
@@ -19,28 +18,41 @@ function SignIn() {
   const [errors, setErrors] = useState({});
 
   const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(signInData);
+
     try {
-      const { data } = await axios.post("https://wifi-wander-api-835560a3f6c2.herokuapp.com/dj-rest-auth/login/", signInData);
-      setCurrentUser(data.user)
-      navigate("/")
+      const { data } = await axiosReq.post(
+        "/dj-rest-auth/login/",
+        signInData
+      );
+
+      // Store the access and refresh tokens in localStorage
+      localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("refresh_token", data.refresh_token);
+
+      // Set the current user
+      setCurrentUser(data.user);
+
+      // Navigate to the home page
+      navigate("/");
     } catch (err) {
-      console.log(err)
       setErrors(err.response?.data);
     }
   };
+
   const handleChange = (event) => {
     setSignInData({
       ...signInData,
       [event.target.name]: event.target.value,
     });
   };
+
   return (
     <>
       <Row>
-        <h1 >sign in</h1>
+        <h1>Sign In</h1>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="username">
             <Form.Label className="d-none">Username</Form.Label>
@@ -48,12 +60,13 @@ function SignIn() {
               type="text"
               placeholder="Username"
               name="username"
-
               value={username}
               onChange={handleChange}
             />
             {errors.username?.map((message, idx) => (
-              <Alert variant='warning' key={idx}>{message}</Alert>
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
             ))}
           </Form.Group>
 
@@ -63,20 +76,16 @@ function SignIn() {
               type="password"
               placeholder="Password"
               name="password"
-
               value={password}
               onChange={handleChange}
             />
             {errors.password?.map((message, idx) => (
-              <Alert variant='warning' key={idx}>{message}</Alert>
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
             ))}
           </Form.Group>
-          <Button
-
-            type="submit"
-          >
-            Sign In
-          </Button>
+          <Button type="submit">Sign In</Button>
           {errors.non_field_errors?.map((message, idx) => (
             <Alert key={idx} variant="warning" className="mt-3">
               {message}
@@ -87,9 +96,7 @@ function SignIn() {
         <Link to="/signup">
           Don't have an account? <span>Sign up now!</span>
         </Link>
-        <Link to="/password">
-          Frogot your password?
-        </Link>
+        <Link to="/password">Forgot your password?</Link>
       </Row>
     </>
   );
