@@ -35,11 +35,11 @@ function SignIn() {
 
       // Set the current user
       setCurrentUser(data.user);
-      showAlert('Logged In', 'You have succesfully logged in', 'success')
+      showAlert('Logged In', 'You have succesfully logged in', 'success');
       // Navigate to the home page
       navigate("/");
     } catch (err) {
-      showAlert('Logged In', 'There waas an issue when logging In please try again', 'error')
+      showAlert('Logged In', 'There waas an issue when logging In please try again', 'error');
       setErrors(err.response?.data);
     }
   };
