@@ -1,8 +1,9 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import countriesCities from '../Json/worldcities.json';
+import { axiosReq } from "../api/axiosDefaults";
+import showAlert from '../components/Sweetalert';
 
 const WifiLocationsCreation = () => {
   const [wifiData, setWifiData] = useState({
@@ -87,15 +88,16 @@ const WifiLocationsCreation = () => {
 
     try {
       // Submit the WiFi location data to the backend
-      const base_url = "https://wifi-wander-api-835560a3f6c2.herokuapp.com"
-      await axios.post(base_url + '/wifi_locations/', formData, {
+      await axiosReq.post('/wifi_locations/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
 
       navigate("/");
+      showAlert('Success', 'You have succesfully created a Wifi Location', 'success');
     } catch (err) {
+      showAlert('Error', 'There was an issue when logging In please try again', 'error');
       setErrors(err.response.data);
     }
   };
