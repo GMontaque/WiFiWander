@@ -1,10 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+
+import countriesCities from '../Json/worldcities.json';
+
 
 
 const WifiLocationsCreation = () => {
+  const [wifiData, setWifiData] = useState({
+    name: "",
+    street: "",
+    city: "",
+    country: "",
+    postcode: "",
+    description: "",
 
-  let amenitiesList = ["item1", "item2", "item3", "item4", "item5"]
+  });
+
+  const { name, street, city, country, postcode, description } = wifiData;
+  const [citySuggestions, setCitySuggestions] = useState([]);
+  const [countrySuggestions, setCountrySuggestions] = useState([]);
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (!name) return;
+
+    setWifiData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+
+    // Autocomplete logic for city and country
+    if (name === "city") {
+      const filteredCities = countriesCities
+        .filter((item) => item.city.toLowerCase().includes(value.toLowerCase()))
+        .map((item) => item.city);
+      setCitySuggestions(filteredCities);
+
+      // Auto-complete country based on city
+      const matchedCity = countriesCities.find((item) => item.city.toLowerCase() === value.toLowerCase());
+      if (matchedCity) {
+        setWifiData((prevData) => ({
+          ...prevData,
+          country: matchedCity.country
+        }));
+        setCountrySuggestions([]);
+      }
+    } else if (name === "country") {
+      const filteredCountries = countriesCities
+        .filter((item) => item.country.toLowerCase().includes(value.toLowerCase()))
+        .map((item) => item.country);
+      setCountrySuggestions(filteredCountries);
+    }
+  };
+
+  const amenitiesList = ["Outdoor Seating", "Private desks", "Hot Drinks", "Food", "Meeting Rooms", "Power Sockets", "Public Transport"];
   return (
     <>
       <h1>Wifi Location Creation</h1>
@@ -15,8 +66,8 @@ const WifiLocationsCreation = () => {
             type="text"
             placeholder="Wifi Location Name"
             name="name"
-            value={""}
-
+            value={name || ""}
+            onChange={handleChange}
           />
         </Form.Group>
 
@@ -26,8 +77,8 @@ const WifiLocationsCreation = () => {
             type="text"
             placeholder="Street"
             name="street"
-            value={""}
-
+            value={street || ""}
+            onChange={handleChange}
           />
         </Form.Group>
 
@@ -37,9 +88,16 @@ const WifiLocationsCreation = () => {
             type="text"
             placeholder="City"
             name="city"
-            value={""}
-
+            value={city || ""}
+            onChange={handleChange}
+            autoComplete="off"
+            list="city-list"
           />
+          <datalist id="city-list">
+            {citySuggestions.map((city, index) => (
+              <option key={index} value={city} />
+            ))}
+          </datalist>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="country">
@@ -48,10 +106,16 @@ const WifiLocationsCreation = () => {
             type="text"
             placeholder="Country"
             name="country"
-            value={""}
-
-
+            value={country || ""}
+            onChange={handleChange}
+            autoComplete="off"
+            list="country-list"
           />
+          <datalist id="country-list">
+            {countrySuggestions.map((country, index) => (
+              <option key={index} value={country} />
+            ))}
+          </datalist>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="postcode">
@@ -60,8 +124,8 @@ const WifiLocationsCreation = () => {
             type="text"
             placeholder="Postcode"
             name="postcode"
-            value={""}
-
+            value={postcode || ""}
+            onChange={handleChange}
           />
         </Form.Group>
 
@@ -72,8 +136,8 @@ const WifiLocationsCreation = () => {
             rows={3}
             placeholder="Please describe the wifi location"
             name="description"
-            value={""}
-
+            value={description || ""}
+            onChange={handleChange}
           />
         </Form.Group>
 
@@ -86,7 +150,7 @@ const WifiLocationsCreation = () => {
               name="amenities"
               key={index}
               value={item}
-
+              onChange={handleChange}
             />
           ))}
         </Form.Group>
