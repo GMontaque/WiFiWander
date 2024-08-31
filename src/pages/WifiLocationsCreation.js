@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
-
+import { Form, Button, Alert } from 'react-bootstrap';
 import countriesCities from '../Json/worldcities.json';
-
-
 
 const WifiLocationsCreation = () => {
   const [wifiData, setWifiData] = useState({
@@ -13,13 +10,14 @@ const WifiLocationsCreation = () => {
     country: "",
     postcode: "",
     description: "",
-
+    amenities: "",
+    image: null
   });
 
   const { name, street, city, country, postcode, description } = wifiData;
+  const [errors, setErrors] = useState({});
   const [citySuggestions, setCitySuggestions] = useState([]);
   const [countrySuggestions, setCountrySuggestions] = useState([]);
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,11 +53,20 @@ const WifiLocationsCreation = () => {
     }
   };
 
+  // Handle file change for the image
+  const handleFileChange = (e) => {
+    setWifiData((prevData) => ({
+      ...prevData,
+      image: e.target.files[0]
+    }));
+  };
+
   const amenitiesList = ["Outdoor Seating", "Private desks", "Hot Drinks", "Food", "Meeting Rooms", "Power Sockets", "Public Transport"];
+
   return (
     <>
       <h1>Wifi Location Creation</h1>
-      <Form >
+      <Form>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Name</Form.Label>
           <Form.Control
@@ -69,6 +76,9 @@ const WifiLocationsCreation = () => {
             value={name || ""}
             onChange={handleChange}
           />
+          {errors.name?.map((message, idx) => (
+            <Alert variant="warning" key={idx}>{message}</Alert>
+          ))}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="street">
@@ -80,6 +90,9 @@ const WifiLocationsCreation = () => {
             value={street || ""}
             onChange={handleChange}
           />
+          {errors.street?.map((message, idx) => (
+            <Alert variant="warning" key={idx}>{message}</Alert>
+          ))}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="city">
@@ -98,6 +111,9 @@ const WifiLocationsCreation = () => {
               <option key={index} value={city} />
             ))}
           </datalist>
+          {errors.city?.map((message, idx) => (
+            <Alert variant="warning" key={idx}>{message}</Alert>
+          ))}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="country">
@@ -116,6 +132,9 @@ const WifiLocationsCreation = () => {
               <option key={index} value={country} />
             ))}
           </datalist>
+          {errors.country?.map((message, idx) => (
+            <Alert variant="warning" key={idx}>{message}</Alert>
+          ))}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="postcode">
@@ -127,6 +146,9 @@ const WifiLocationsCreation = () => {
             value={postcode || ""}
             onChange={handleChange}
           />
+          {errors.postcode?.map((message, idx) => (
+            <Alert variant="warning" key={idx}>{message}</Alert>
+          ))}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="description">
@@ -139,6 +161,9 @@ const WifiLocationsCreation = () => {
             value={description || ""}
             onChange={handleChange}
           />
+          {errors.description?.map((message, idx) => (
+            <Alert variant="warning" key={idx}>{message}</Alert>
+          ))}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="amenities">
@@ -153,11 +178,14 @@ const WifiLocationsCreation = () => {
               onChange={handleChange}
             />
           ))}
+          {errors.amenities?.map((message, idx) => (
+            <Alert variant="warning" key={idx}>{message}</Alert>
+          ))}
         </Form.Group>
 
         <Form.Group controlId="imageUpload" className="mb-3">
           <Form.Label>Image Upload</Form.Label>
-          <Form.Control type="file" size="lg" />
+          <Form.Control type="file" size="lg" onChange={handleFileChange} />
         </Form.Group>
 
         <Button variant="primary" type="submit">
