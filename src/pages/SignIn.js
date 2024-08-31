@@ -39,7 +39,7 @@ function SignIn() {
       // Navigate to the home page
       navigate("/");
     } catch (err) {
-      showAlert('Logged In', 'There waas an issue when logging In please try again', 'error');
+      showAlert('Logged In', 'There was an issue when logging In please try again', 'error');
       setErrors(err.response?.data);
     }
   };
