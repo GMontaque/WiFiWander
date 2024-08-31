@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Row } from "react-bootstrap";
 import { useSetCurrentUser } from "../components/CurrentUserContext";
 import { axiosReq } from "../api/axiosDefaults";
+import showAlert from '../components/Sweetalert';
 
 function SignIn() {
   const setCurrentUser = useSetCurrentUser();
@@ -34,10 +35,11 @@ function SignIn() {
 
       // Set the current user
       setCurrentUser(data.user);
-
+      showAlert('Logged In', 'You have succesfully logged in', 'success')
       // Navigate to the home page
       navigate("/");
     } catch (err) {
+      showAlert('Logged In', 'There waas an issue when logging In please try again', 'error')
       setErrors(err.response?.data);
     }
   };

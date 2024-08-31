@@ -5,6 +5,7 @@ import { axiosReq } from "../api/axiosDefaults";
 
 import { useCurrentUser, useSetCurrentUser } from './CurrentUserContext';
 import logo from '../assets/logo.png';
+import showAlert from '../components/Sweetalert';
 
 const LoggedOutIcons = () => (
   <>
@@ -27,9 +28,9 @@ const NavBar = () => {
       localStorage.removeItem("refresh_token");
       await axiosReq.post("dj-rest-auth/logout/");
       setCurrentUser(null);
-      console.log("User signed out successfully.");
+      showAlert('Logged Out', 'You have succesfully logged out', 'success')
     } catch (err) {
-      console.log("Error during sign out:", err);
+      showAlert('Logged Out', 'There waas an issue when logging out please try again', 'error')
     }
   };
 

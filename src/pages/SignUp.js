@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Alert, Row, Col, Container, Form, Button } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import showAlert from '../components/Sweetalert';
 
 const SignUp = () => {
   const [signUpData, setSignUpData] = useState({
@@ -56,9 +57,10 @@ const SignUp = () => {
         },
       });
       navigate("/signin");
+      showAlert('Sign Up', 'You have succesfully created an account', 'success')
     } catch (err) {
+      showAlert('Sign Up', 'There waas an issue when signing up please try again', 'error')
       setErrors(err.response?.data);
-      console.log(err.response?.data);
     }
   };
 
