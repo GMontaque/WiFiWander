@@ -2,7 +2,7 @@ import React from 'react'
 import TotalLocations from '../components/TotalLocations';
 import SearchBar from '../components/SearchBar';
 import Continents from '../pages/Continents';
-import {Row } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 
 
 const Homepage = () => {
