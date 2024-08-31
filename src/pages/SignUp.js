@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Alert, Row, Col, Container, Form, Button } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { axiosReq } from "../api/axiosDefaults";
 import showAlert from '../components/Sweetalert';
 
 const SignUp = () => {
@@ -51,7 +51,7 @@ const SignUp = () => {
     }
 
     try {
-      await axios.post("https://wifi-wander-api-835560a3f6c2.herokuapp.com/dj-rest-auth/registration/", formData, {
+      await axiosReq.post("/dj-rest-auth/registration/", formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

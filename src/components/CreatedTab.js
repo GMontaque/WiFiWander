@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import axios from 'axios';
+import { axiosReq } from "../api/axiosDefaults";
 import Table from 'react-bootstrap/Table';
 import { NavLink } from 'react-router-dom';
 
@@ -21,7 +21,7 @@ const CreatedTab = ({ username }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://wifi-wander-api-835560a3f6c2.herokuapp.com/wifi_locations/');
+        const response = await axiosReq.get('/wifi_locations/');
         // Filter locations to only include those created by the logged-in user
         const userLocations = response.data.filter(location => location.added_by === username);
         setWifiLocations(userLocations);

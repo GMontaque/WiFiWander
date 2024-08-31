@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import axios from "axios";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { useNavigate } from "react-router-dom";
 
@@ -41,7 +40,7 @@ export const CurrentUserProvider = ({ children }) => {
         try {
           const refreshToken = localStorage.getItem("refresh_token");
           if (refreshToken) {
-            const { data } = await axios.post("/dj-rest-auth/token/refresh/", {
+            const { data } = await axiosReq.post("/dj-rest-auth/token/refresh/", {
               refresh: refreshToken,
             });
 
@@ -70,14 +69,14 @@ export const CurrentUserProvider = ({ children }) => {
           try {
             const refreshToken = localStorage.getItem("refresh_token");
             if (refreshToken) {
-              const { data } = await axios.post("/dj-rest-auth/token/refresh/", {
+              const { data } = await axiosReq.post("/dj-rest-auth/token/refresh/", {
                 refresh: refreshToken,
               });
 
               localStorage.setItem("access_token", data.access);
-              axios.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
+              axiosReq.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
               err.config.headers.Authorization = `Bearer ${data.access}`;
-              return axios(err.config);
+              return axiosReq(err.config);
             } else {
               console.warn("No refresh token available; cannot refresh access token.");
             }

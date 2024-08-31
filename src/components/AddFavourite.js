@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { axiosReq } from "../api/axiosDefaults";
 import { useCurrentUser } from './CurrentUserContext';
 
 const AddFavourite = ({ location_id }) => {
@@ -23,8 +23,8 @@ const AddFavourite = ({ location_id }) => {
       };
 
       // POST request to add a new favourite
-      const response = await axios.post(
-        "https://wifi-wander-api-835560a3f6c2.herokuapp.com/favourites/",
+      const response = await axiosReq.post(
+        "/favourites/",
         formData
       );
 
