@@ -1,12 +1,10 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { useCurrentUser, useSetCurrentUser } from './CurrentUserContext';
-import axios from 'axios';
-import logo from '../assets/logo.png';
+import { axiosReq } from "../api/axiosDefaults";
 
+import { useCurrentUser, useSetCurrentUser } from './CurrentUserContext';
+import logo from '../assets/logo.png';
 
 const LoggedOutIcons = () => (
   <>
@@ -19,20 +17,21 @@ const AddLocation = () => (
   <NavLink to="/newlocation">Add Location</NavLink>
 );
 
-
-
 const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
 
   const handleSignOut = async () => {
     try {
-      await axios.post("dj-rest-auth/logout/");
-      setCurrentUser(null)
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      await axiosReq.post("dj-rest-auth/logout/");
+      setCurrentUser(null);
+      console.log("User signed out successfully.");
     } catch (err) {
-      console.log(err)
+      console.log("Error during sign out:", err);
     }
-  }
+  };
 
   const LoggedInIcons = () => (
     <>
