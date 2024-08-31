@@ -1,5 +1,7 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import countriesCities from '../Json/worldcities.json';
 
 const WifiLocationsCreation = () => {
@@ -14,11 +16,13 @@ const WifiLocationsCreation = () => {
     image: null
   });
 
-  const { name, street, city, country, postcode, description } = wifiData;
+  const { name, street, city, country, postcode, description, amenities, image } = wifiData;
   const [errors, setErrors] = useState({});
   const [citySuggestions, setCitySuggestions] = useState([]);
   const [countrySuggestions, setCountrySuggestions] = useState([]);
+  const navigate = useNavigate();
 
+  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -61,12 +65,47 @@ const WifiLocationsCreation = () => {
     }));
   };
 
+  // Handle form submission
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Reset errors before submission
+    setErrors({});
+
+    // form data submission
+    const formData = new FormData();
+    formData.append('name', name || "");
+    formData.append('street', street || "");
+    formData.append('city', city || "");
+    formData.append('country', country || "");
+    formData.append('postcode', postcode || "");
+    formData.append('description', description || "");
+    formData.append('amenities', amenities || "");
+    if (image) {
+      formData.append('image', image);
+    }
+
+    try {
+      // Submit the WiFi location data to the backend
+      const base_url = "https://wifi-wander-api-835560a3f6c2.herokuapp.com"
+      await axios.post(base_url + '/wifi_locations/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      navigate("/");
+    } catch (err) {
+      setErrors(err.response.data);
+    }
+  };
+
   const amenitiesList = ["Outdoor Seating", "Private desks", "Hot Drinks", "Food", "Meeting Rooms", "Power Sockets", "Public Transport"];
 
   return (
     <>
       <h1>Wifi Location Creation</h1>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Name</Form.Label>
           <Form.Control
