@@ -21,14 +21,13 @@ import CreateComment from './components/CreateComment';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
-
   return (
     <div className="App">
       <NavBar />
       <Hero />
       <Container fluid>
         <Routes>
-          <Route path="/" element={<Homepage />} />
+          <Route path="" element={<Homepage />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignOut />} />
           {/* user must be logged in to access */}

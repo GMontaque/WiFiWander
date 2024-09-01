@@ -10,7 +10,6 @@ export const useSetCurrentUser = () => useContext(SetCurrentUserContext);
 
 export const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   const handleMount = async () => {
@@ -25,8 +24,6 @@ export const CurrentUserProvider = ({ children }) => {
       }
     } catch (err) {
       console.error("Error fetching user data:", err);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -40,7 +37,7 @@ export const CurrentUserProvider = ({ children }) => {
         try {
           const refreshToken = localStorage.getItem("refresh_token");
           if (refreshToken) {
-            const { data } = await axiosReq.post("/dj-rest-auth/token/refresh/", {
+            const { data } = await axiosRes.post("/dj-rest-auth/token/refresh/", {
               refresh: refreshToken,
             });
 
@@ -50,7 +47,6 @@ export const CurrentUserProvider = ({ children }) => {
             console.warn("No refresh token found in localStorage.");
           }
         } catch (err) {
-          console.error("Token refresh failed during request interception:", err);
           setCurrentUser(null);
           navigate("/signin");
         }
@@ -69,16 +65,16 @@ export const CurrentUserProvider = ({ children }) => {
           try {
             const refreshToken = localStorage.getItem("refresh_token");
             if (refreshToken) {
-              const { data } = await axiosReq.post("/dj-rest-auth/token/refresh/", {
+              const { data } = await axiosRes.post("/dj-rest-auth/token/refresh/", {
                 refresh: refreshToken,
               });
 
               localStorage.setItem("access_token", data.access);
-              axiosReq.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
+              axiosRes.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
               err.config.headers.Authorization = `Bearer ${data.access}`;
-              return axiosReq(err.config);
+              return axiosRes(err.config);
             } else {
-              console.warn("No refresh token available; cannot refresh access token.");
+              console.warn("No refresh token available, cannot refresh access token.");
             }
           } catch (refreshError) {
             setCurrentUser(null);
@@ -93,8 +89,10 @@ export const CurrentUserProvider = ({ children }) => {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <SetCurrentUserContext.Provider value={setCurrentUser}>
-        {!isLoading && children}
+        {children}
       </SetCurrentUserContext.Provider>
     </CurrentUserContext.Provider>
   );
 };
+
+
