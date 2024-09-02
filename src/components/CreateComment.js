@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { axiosReq } from "../api/axiosDefaults";
 import { useParams } from 'react-router-dom';
+import showAlert from '../components/Sweetalert';
 
 const CreateComment = ({ onCommentAdded, username, commentToEdit, onCancelEdit }) => {
   // WiFi location ID
@@ -74,6 +75,7 @@ const CreateComment = ({ onCommentAdded, username, commentToEdit, onCancelEdit }
         );
 
         if (response.status === 200) {
+          showAlert('success', 'Comment updated successfully!', 'success');
           onCommentAdded();
           onCancelEdit();
         }
@@ -93,6 +95,7 @@ const CreateComment = ({ onCommentAdded, username, commentToEdit, onCancelEdit }
         );
 
         if (response.status === 201) {
+          showAlert('success', 'Comment added successfully!', 'success');
           onCommentAdded();
         }
       }
