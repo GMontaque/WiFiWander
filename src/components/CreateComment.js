@@ -1,11 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
-const CreateComment = ({ username, commentToEdit }) => {
+const CreateComment = ({ onCommentAdded, username, commentToEdit, onCancelEdit }) => {
   // WiFi location ID
   const { id } = useParams();
+  const [formData, setFormData] = useState({
+    comment_text: '',
+    star_rating: 0,
+  });
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (commentToEdit) {
+      setFormData({
+        comment_text: commentToEdit.comment_text,
+        star_rating: commentToEdit.star_rating,
+      });
+    } else {
+      setFormData({
+        comment_text: '',
+        star_rating: 0,
+      });
+    }
+  }, [commentToEdit]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleRatingChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      star_rating: parseInt(e.target.value),
+    }));
+  };
+
 
   return (
     <>
@@ -28,6 +62,8 @@ const CreateComment = ({ username, commentToEdit }) => {
             rows={3}
             placeholder="Please describe the wifi location"
             name="comment_text"
+            value={formData.comment_text}
+            onChange={handleChange}
           />
           {errors.comment_text?.map((message, idx) => (
             <Alert variant="warning" key={idx}>
@@ -47,6 +83,8 @@ const CreateComment = ({ username, commentToEdit }) => {
               id={`inline-radio-${int}`}
               key={int}
               value={int}
+              checked={formData.star_rating === int}
+              onChange={handleRatingChange}
             />
           ))}
           {errors.star_rating?.map((message, idx) => (
@@ -60,7 +98,7 @@ const CreateComment = ({ username, commentToEdit }) => {
           {commentToEdit ? 'Update' : 'Submit'}
         </Button>
         {commentToEdit && (
-          <Button variant="secondary" className="ms-2">
+          <Button variant="secondary" onClick={onCancelEdit} className="ms-2">
             Cancel
           </Button>
         )}
