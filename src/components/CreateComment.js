@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
+import { axiosReq } from "../api/axiosDefaults";
 import { useParams } from 'react-router-dom';
 
 const CreateComment = ({ onCommentAdded, username, commentToEdit, onCancelEdit }) => {
@@ -40,11 +41,76 @@ const CreateComment = ({ onCommentAdded, username, commentToEdit, onCancelEdit }
     }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrors({});
+
+    if (!username) {
+      setErrors({ user: ['You must be logged in to comment.'] });
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('access_token');
+
+      if (!token) {
+        setErrors({ auth: ['Authentication token is missing. Please log in again.'] });
+        return;
+      }
+
+      if (commentToEdit) {
+        // Update comment logic
+        const response = await axiosReq.put(
+          `/comments/${commentToEdit.id}/`,
+          {
+            ...formData,
+            wifi_location: id,
+          },
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          }
+        );
+
+        if (response.status === 200) {
+          onCommentAdded();
+          onCancelEdit();
+        }
+      } else {
+        // Create comment logic
+        const response = await axiosReq.post(
+          `/comments/`,
+          {
+            ...formData,
+            wifi_location: id,
+          },
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          }
+        );
+
+        if (response.status === 201) {
+          onCommentAdded();
+        }
+      }
+
+      setFormData({
+        comment_text: '',
+        star_rating: 0,
+      });
+    } catch (err) {
+      setErrors(err.response.data);
+      console.error('Error during comment creation:', err.response.data);
+    }
+  };
 
   return (
     <>
       <h1>{commentToEdit ? 'Update Comment' : 'Create Comment'}</h1>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="comment_text">
           <Form.Label>Description</Form.Label>
           <Form.Control
