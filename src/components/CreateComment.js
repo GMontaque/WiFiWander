@@ -1,12 +1,16 @@
-import React from 'react';
-import { Form, Button } from 'react-bootstrap';
-const CreateComment = ({ username, commentToEdit }) => {
+import React, { useState } from 'react';
+import { Form, Button, Alert } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 
+const CreateComment = ({ username, commentToEdit }) => {
+  // WiFi location ID
+  const { id } = useParams();
+  const [errors, setErrors] = useState({});
 
   return (
     <>
       <h1>{commentToEdit ? 'Update Comment' : 'Create Comment'}</h1>
-      <Form >
+      <Form>
         <Form.Group className="mb-3" controlId="comment_text">
           <Form.Label>Description</Form.Label>
           <Form.Control
@@ -24,9 +28,12 @@ const CreateComment = ({ username, commentToEdit }) => {
             rows={3}
             placeholder="Please describe the wifi location"
             name="comment_text"
-
-
           />
+          {errors.comment_text?.map((message, idx) => (
+            <Alert variant="warning" key={idx}>
+              {message}
+            </Alert>
+          ))}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="star_rating">
@@ -40,8 +47,12 @@ const CreateComment = ({ username, commentToEdit }) => {
               id={`inline-radio-${int}`}
               key={int}
               value={int}
-
             />
+          ))}
+          {errors.star_rating?.map((message, idx) => (
+            <Alert variant="warning" key={idx}>
+              {message}
+            </Alert>
           ))}
         </Form.Group>
 
