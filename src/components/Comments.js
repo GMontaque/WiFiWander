@@ -1,25 +1,32 @@
-import React from 'react'
-import { Card } from 'react-bootstrap'
-import CreateComment from '../components/CreateComment';
+import React from 'react';
+import { Button, Card } from 'react-bootstrap';
 
-const Comments = () => {
+const Comments = ({ comments, onDelete, onUpdate }) => {
   return (
     <>
-    <Card style={{ width: '18rem' }}>
-      <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </Card.Text>
-        <Card.Link href="#">Card Link</Card.Link>
-        <Card.Link href="#">Another Link</Card.Link>
-      </Card.Body>
-    </Card>
-    <CreateComment />
+      {comments.length > 0 ? (
+        comments.map((comment) => (
+          <Card key={comment.id} style={{ width: '18rem', marginBottom: '1rem' }}>
+            <Card.Body>
+              <Card.Title>{comment.user}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">
+                {comment.star_rating} Stars
+              </Card.Subtitle>
+              <Card.Text>{comment.comment_text}</Card.Text>
+            </Card.Body>
+            <Button variant="warning" onClick={() => onUpdate(comment)}>
+              Update
+            </Button>
+            <Button variant="danger" onClick={() => onDelete(comment.id)}>
+              Delete
+            </Button>
+          </Card>
+        ))
+      ) : (
+        <p>No comments available for this location.</p>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default Comments
+export default Comments;
