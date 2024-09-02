@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { axiosReq } from "../api/axiosDefaults";
-import { Image, Row, Button } from 'react-bootstrap';
+import { Image, Row, Alert, Button } from 'react-bootstrap';
 import Comments from '../components/Comments';
 import AmenitiesKey from '../components/AmenitiesKey';
 import { useCurrentUser } from '../components/CurrentUserContext';
@@ -62,6 +62,38 @@ const WifiLocationsPage = () => {
     fetchComments();
   }, [id]);
 
+  const handleAddToFavorites = async () => {
+    if (!currentUser) {
+      setError('You must be logged in to add to favorites');
+      return;
+    }
+
+    try {
+      const response = await axiosReq.post(
+        `/favourites/`,
+        {
+          user: currentUser.id,
+          wifi_location: id,
+          notes: '',
+          folder_name: '',
+          visit_status: 'Planned',
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+          }
+        }
+      );
+
+      if (response.status === 201) {
+        console.log('Location added to favorites successfully!');
+      }
+    } catch (err) {
+      setError('Failed to add location to favorites');
+      console.error(err);
+    }
+  };
+
   const handleDeleteComment = async (commentId) => {
     try {
       const response = await axiosReq.delete(
@@ -117,7 +149,13 @@ const WifiLocationsPage = () => {
     }
   };
 
+  if (error && !wifiLocation) {
+    return <Alert variant="danger">{error}</Alert>;
+  }
 
+  if (!wifiLocation) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <>
@@ -125,7 +163,7 @@ const WifiLocationsPage = () => {
         <h1>{wifiLocation.name}</h1>
         <span>
           {currentUser && (
-            <Button>Add to Favorites</Button>
+            <Button onClick={handleAddToFavorites}>Add to Favorites</Button>
           )}
         </span>
         <div>{wifiLocation.star_rating || 'No rating available'}</div>
