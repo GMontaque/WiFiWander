@@ -1,24 +1,43 @@
-import React from 'react'
-import { Image, Row } from 'react-bootstrap'
-import Comments from '../components/Comments'
-import AmenitiesKey from '../components/AmenitiesKey'
+import React from 'react';
+import { Image, Row, Button } from 'react-bootstrap';
+import AmenitiesKey from '../components/AmenitiesKey';
+import { useCurrentUser } from '../components/CurrentUserContext';
+
 
 const WifiLocationsPage = () => {
-    return (
-        <>
-            <Row>
-                <h1>Wifi Location title</h1>
-                <div>star rating</div>
-                <Image src='' alt='image of wifi location' />
-                <p>Wifi description</p>
-                <div>Amenities icons</div>
-            </Row>
-            <Row>
-                <Comments/>
-            </Row>
-            <AmenitiesKey/>
-        </>
-    )
-}
+  const wifiLocation = {
+    name: "test",
+    star_rating: 2,
+    image: null,
+    description: "afrsadfsdfs",
+    amenities: "wifi"
+  }
+  const currentUser = useCurrentUser();
 
-export default WifiLocationsPage
+
+  return (
+    <>
+      <Row>
+        <h1>{wifiLocation.name}</h1>
+        <span>
+          {currentUser && (
+            <Button >Add to Favorites</Button>
+          )}
+        </span>
+        <div>{wifiLocation.star_rating || 'No rating available'}</div>
+        {wifiLocation.image && (
+          <Image
+            src={wifiLocation.image}
+            alt={`Image of ${wifiLocation.name}`}
+            fluid
+          />
+        )}
+        <p>{wifiLocation.description}</p>
+        <div>{wifiLocation.amenities}</div>
+      </Row>
+      <AmenitiesKey />
+    </>
+  );
+};
+
+export default WifiLocationsPage;
