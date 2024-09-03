@@ -23,7 +23,6 @@ const WifiLocationsPage = () => {
     const fetchWifiLocation = async () => {
       if (!id) {
         showAlert('error', 'WiFi location ID is missing.', 'error');
-        console.error('ID is undefined or null.');
         return;
       }
 
@@ -32,7 +31,7 @@ const WifiLocationsPage = () => {
         setWifiLocation(response.data);
       } catch (err) {
         showAlert('error', 'Failed to fetch WiFi location data', 'error');
-        console.error('Error fetching WiFi location:', err);
+        setError(err)
       }
     };
 
@@ -57,7 +56,7 @@ const WifiLocationsPage = () => {
     } catch (err) {
       showAlert('error', 'Failed to fetch comments', 'error');
       setComments([]);  // Clear comments state on error
-      console.error('Error fetching comments:', err);
+      setError(err)
     }
   };
 
@@ -91,7 +90,7 @@ const WifiLocationsPage = () => {
       }
     } catch (err) {
       showAlert('error', 'Failed to add location to favorites', 'error');
-      console.error('Error adding to favorites:', err);
+      setError(err)
     }
   };
 
@@ -109,9 +108,9 @@ const WifiLocationsPage = () => {
           prevComments.filter((comment) => comment.id !== commentId)
         );
       }
-    } catch (error) {
+    } catch (err) {
       showAlert('error', 'There was an error deleting the comment, please try again', 'error');
-      console.error('Error deleting comment:', error);
+      setError(err)
     }
   };
 
@@ -146,9 +145,9 @@ const WifiLocationsPage = () => {
           showAlert('success', 'Successfully deleted WiFi location', 'success');
           navigate("/");
         }
-      } catch (error) {
+      } catch (err) {
         showAlert('error', "There was an error deleting the WiFi location, please try again", 'error');
-        console.error('Error deleting WiFi location:', error);
+        setError(err)
       }
     } else {
       showAlert('error', "You don't have permission to delete this location", 'error');
