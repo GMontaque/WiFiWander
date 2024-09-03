@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import countriesCities from '../Json/worldcities.json';
-import { axiosReq } from "../api/axiosDefaults";
+import React, { useState, useEffect } from "react";
+import { Form, Button, Alert, Container } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
 import showAlert from '../components/Sweetalert';
+import { axiosReq, axiosRes } from "../api/axiosDefaults";
 
 const WifiLocationsCreation = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  // form data
   const [wifiData, setWifiData] = useState({
     name: "",
     street: "",
@@ -14,107 +17,107 @@ const WifiLocationsCreation = () => {
     postcode: "",
     description: "",
     amenities: "",
-    image: null
+    image: null,
   });
 
-  const { name, street, city, country, postcode, description, amenities, image } = wifiData;
   const [errors, setErrors] = useState({});
-  const [citySuggestions, setCitySuggestions] = useState([]);
-  const [countrySuggestions, setCountrySuggestions] = useState([]);
-  const navigate = useNavigate();
 
-  // Handle input change
+  const { name, street, city, country, postcode, description, amenities, image } = wifiData;
+
+  useEffect(() => {
+    if (id) {
+      const fetchWifiLocation = async () => {
+        try {
+          const { data } = await axiosReq.get(`/wifi_locations/${id}/`);
+          setWifiData({
+            name: data.name,
+            street: data.street,
+            city: data.city,
+            country: data.country,
+            postcode: data.postcode,
+            description: data.description,
+            amenities: data.amenities,
+            image: data.image,
+          });
+        } catch (err) {
+          showAlert('error', "Error fetching WiFi location data, please try again", 'error');
+          setErrors((prevErrors) => ({ ...prevErrors, fetch: "Failed to load WiFi location data." }));
+        }
+      };
+
+      fetchWifiLocation();
+    }
+  }, [id]);
+
+  // input changes for form fields
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    if (!name) return;
-
     setWifiData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
-
-    // Autocomplete logic for city and country
-    if (name === "city") {
-      const filteredCities = countriesCities
-        .filter((item) => item.city.toLowerCase().includes(value.toLowerCase()))
-        .map((item) => item.city);
-      setCitySuggestions(filteredCities);
-
-      // Auto-complete country based on city
-      const matchedCity = countriesCities.find((item) => item.city.toLowerCase() === value.toLowerCase());
-      if (matchedCity) {
-        setWifiData((prevData) => ({
-          ...prevData,
-          country: matchedCity.country
-        }));
-        setCountrySuggestions([]);
-      }
-    } else if (name === "country") {
-      const filteredCountries = countriesCities
-        .filter((item) => item.country.toLowerCase().includes(value.toLowerCase()))
-        .map((item) => item.country);
-      setCountrySuggestions(filteredCountries);
-    }
   };
 
-  // Handle file change for the image
+  // file change for image upload
   const handleFileChange = (e) => {
     setWifiData((prevData) => ({
       ...prevData,
-      image: e.target.files[0]
+      image: e.target.files[0],
     }));
   };
 
-  // Handle form submission
+  // form submission for creating or updating WiFi locations
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Reset errors before submission
-    setErrors({});
-
-    // form data submission
     const formData = new FormData();
-    formData.append('name', name || "");
-    formData.append('street', street || "");
-    formData.append('city', city || "");
-    formData.append('country', country || "");
-    formData.append('postcode', postcode || "");
-    formData.append('description', description || "");
-    formData.append('amenities', amenities || "");
+    formData.append("name", name);
+    formData.append("street", street);
+    formData.append("city", city);
+    formData.append("country", country);
+    formData.append("postcode", postcode);
+    formData.append("description", description);
+    formData.append("amenities", amenities);
     if (image) {
-      formData.append('image', image);
+      formData.append("image", image);
     }
 
     try {
-      // Submit the WiFi location data to the backend
-      await axiosReq.post('/wifi_locations/', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      if (id) {
+        // Update WiFi location
+        await axiosRes.put(`/wifi_locations/${id}/`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      } else {
+        // Create new WiFi location
+        await axiosRes.post("/wifi_locations/", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      }
 
       navigate("/");
-      showAlert('Success', 'You have succesfully created a Wifi Location', 'success');
     } catch (err) {
-      showAlert('Error', 'There was an issue when logging In please try again', 'error');
-      setErrors(err.response.data);
+      setErrors(err.response?.data || { submit: "Failed to submit form." });
+      showAlert('error', "Error submitting form, please try again", 'error');
     }
   };
 
-  const amenitiesList = ["Outdoor Seating", "Private desks", "Hot Drinks", "Food", "Meeting Rooms", "Power Sockets", "Public Transport"];
-
   return (
-    <>
-      <h1>Wifi Location Creation</h1>
+    <Container>
+      <h1>{id ? "Edit WiFi Location" : "Create WiFi Location"}</h1>
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="name">
+        {/* Name Field */}
+        <Form.Group controlId="name" className="mb-3">
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Wifi Location Name"
+            placeholder="Enter WiFi location name"
             name="name"
-            value={name || ""}
+            value={name}
             onChange={handleChange}
           />
           {errors.name?.map((message, idx) => (
@@ -122,118 +125,98 @@ const WifiLocationsCreation = () => {
           ))}
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="street">
+        {/* Address Fields */}
+        <Form.Group controlId="street" className="mb-3">
           <Form.Label>Street</Form.Label>
           <Form.Control
             type="text"
             placeholder="Street"
             name="street"
-            value={street || ""}
+            value={street}
             onChange={handleChange}
           />
-          {errors.street?.map((message, idx) => (
-            <Alert variant="warning" key={idx}>{message}</Alert>
-          ))}
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="city">
+        <Form.Group controlId="city" className="mb-3">
           <Form.Label>City</Form.Label>
           <Form.Control
             type="text"
             placeholder="City"
             name="city"
-            value={city || ""}
+            value={city}
             onChange={handleChange}
-            autoComplete="off"
-            list="city-list"
           />
-          <datalist id="city-list">
-            {citySuggestions.map((city, index) => (
-              <option key={index} value={city} />
-            ))}
-          </datalist>
-          {errors.city?.map((message, idx) => (
-            <Alert variant="warning" key={idx}>{message}</Alert>
-          ))}
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="country">
+        <Form.Group controlId="country" className="mb-3">
           <Form.Label>Country</Form.Label>
           <Form.Control
             type="text"
             placeholder="Country"
             name="country"
-            value={country || ""}
+            value={country}
             onChange={handleChange}
-            autoComplete="off"
-            list="country-list"
           />
-          <datalist id="country-list">
-            {countrySuggestions.map((country, index) => (
-              <option key={index} value={country} />
-            ))}
-          </datalist>
-          {errors.country?.map((message, idx) => (
-            <Alert variant="warning" key={idx}>{message}</Alert>
-          ))}
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="postcode">
+        <Form.Group controlId="postcode" className="mb-3">
           <Form.Label>Postcode</Form.Label>
           <Form.Control
             type="text"
             placeholder="Postcode"
             name="postcode"
-            value={postcode || ""}
+            value={postcode}
             onChange={handleChange}
           />
-          {errors.postcode?.map((message, idx) => (
-            <Alert variant="warning" key={idx}>{message}</Alert>
-          ))}
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="description">
+        {/* Description Field */}
+        <Form.Group controlId="description" className="mb-3">
           <Form.Label>Description</Form.Label>
           <Form.Control
             as="textarea"
             rows={3}
-            placeholder="Please describe the wifi location"
+            placeholder="Enter description"
             name="description"
-            value={description || ""}
+            value={description}
             onChange={handleChange}
           />
-          {errors.description?.map((message, idx) => (
-            <Alert variant="warning" key={idx}>{message}</Alert>
-          ))}
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="amenities">
+        {/* Amenities Field */}
+        <Form.Group controlId="amenities" className="mb-3">
           <Form.Label>Amenities</Form.Label>
-          {amenitiesList.map((item, index) => (
-            <Form.Check
-              type="checkbox"
-              label={item}
-              name="amenities"
-              key={index}
-              value={item}
-              onChange={handleChange}
-            />
-          ))}
-          {errors.amenities?.map((message, idx) => (
-            <Alert variant="warning" key={idx}>{message}</Alert>
-          ))}
+          <Form.Control
+            type="text"
+            placeholder="Enter amenities"
+            name="amenities"
+            value={amenities}
+            onChange={handleChange}
+          />
         </Form.Group>
 
-        <Form.Group controlId="imageUpload" className="mb-3">
+        {/* Image Upload */}
+        <Form.Group controlId="image" className="mb-3">
           <Form.Label>Image Upload</Form.Label>
-          <Form.Control type="file" size="lg" onChange={handleFileChange} />
+          <Form.Control
+            type="file"
+            name="image"
+            onChange={handleFileChange}
+          />
         </Form.Group>
+
+        {/* Display any error messages */}
+        {Object.keys(errors).length > 0 && (
+          <Alert variant="danger">
+            {Object.values(errors).flat().join(", ")}
+          </Alert>
+        )}
 
         <Button variant="primary" type="submit">
-          Submit
+          {id ? "Update WiFi Location" : "Create WiFi Location"}
         </Button>
       </Form>
-    </>
+    </Container>
   );
 };
 
