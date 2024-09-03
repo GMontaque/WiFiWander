@@ -16,7 +16,7 @@ import WifiLocationsCreation from './pages/WifiLocationsCreation';
 import About from './pages/About';
 import WifiLocationsPage from './pages/WifiLocationsPage';
 import Password from './pages/Password';
-import './api/axiosDefaults'
+import './api/axiosDefaults';
 import CreateComment from './components/CreateComment';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -30,7 +30,7 @@ function App() {
           <Route path="" element={<Homepage />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignOut />} />
-          {/* user must be logged in to access */}
+          {/*  access profile */}
           <Route path="/profile" element={
             <ProtectedRoute>
               <Profile />
@@ -39,11 +39,18 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/continents/:continentName" element={<Country />} />
           <Route path="/continents/:continentName/:countryName" element={<City />} />
-          {/* user must be logged in to access */}
-          <Route path="/newlocation" element={<ProtectedRoute>
-            <WifiLocationsCreation />
-          </ProtectedRoute>}
-          />
+          {/* create WiFi Locations */}
+          <Route path="/newlocation" element={
+            <ProtectedRoute>
+              <WifiLocationsCreation />
+            </ProtectedRoute>
+          } />
+          {/* Editing WiFi Locations */}
+          <Route path="/wifi_locations/edit/:id" element={
+            <ProtectedRoute>
+              <WifiLocationsCreation />
+            </ProtectedRoute>
+          } />
           <Route path="/continents/:continentName/:countryName/:cityName" element={<WifiLocationsList />} />
           <Route path="/wifi-locations/:id" element={<WifiLocationsPage />} />
           <Route path="/password" element={<Password />} />
