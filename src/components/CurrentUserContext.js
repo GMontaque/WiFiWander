@@ -13,24 +13,25 @@ export const CurrentUserProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  const handleMount = async () => {
-    try {
-      const accessToken = localStorage.getItem("access_token");
-      if (accessToken) {
-        axiosRes.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-        const { data } = await axiosRes.get("dj-rest-auth/user/");
-        setCurrentUser(data);
-      } else {
-        console.warn("No access token found in localStorage.");
-      }
-    } catch (err) {
-      console.error("Error fetching user data:", err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const handleMount = async () => {
+      try {
+        const accessToken = localStorage.getItem("access_token");
+        if (accessToken) {
+          axiosRes.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+          const { data } = await axiosRes.get("dj-rest-auth/user/");
+          setCurrentUser(data);
+        } else {
+          setCurrentUser(false);
+        }
+      } catch (err) {
+        console.error("Error fetching user data:", err);
+        setCurrentUser(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     handleMount();
   }, []);
 
@@ -50,14 +51,12 @@ export const CurrentUserProvider = ({ children }) => {
             console.warn("No refresh token found in localStorage.");
           }
         } catch (err) {
-          setCurrentUser(null);
+          setCurrentUser(false);
           navigate("/signin");
         }
         return config;
       },
-      (err) => {
-        return Promise.reject(err);
-      }
+      (err) => Promise.reject(err)
     );
 
     axiosRes.interceptors.response.use(
@@ -80,7 +79,7 @@ export const CurrentUserProvider = ({ children }) => {
               console.warn("No refresh token available, cannot refresh access token.");
             }
           } catch (refreshError) {
-            setCurrentUser(null);
+            setCurrentUser(false);
             navigate("/signin");
           }
         }
@@ -97,4 +96,3 @@ export const CurrentUserProvider = ({ children }) => {
     </CurrentUserContext.Provider>
   );
 };
-
