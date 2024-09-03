@@ -1,27 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { Table, Alert } from 'react-bootstrap';
+import { Table, Alert, Button } from 'react-bootstrap';
 import { useCurrentUser } from '../components/CurrentUserContext';
-import { axiosReq } from "../api/axiosDefaults";
+import { axiosReq, axiosRes } from "../api/axiosDefaults";
+import { useNavigate } from 'react-router-dom';
 
 const FavouritesTab = () => {
   const currentUser = useCurrentUser();
   const [favorites, setFavorites] = useState([]);
   const [wifiLocations, setWifiLocations] = useState({});
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        // Fetch the user's favorites
-        const response = await axiosReq.get(`/favourites/?user=${currentUser.id}`);
+        if (!currentUser) {
+          setError('User is not authenticated.');
+          return;
+        }
+
+        const response = await axiosReq.get('/favourites/');
         setFavorites(response.data);
 
-        // get wifi location ID from the favorites
-        const wifiLocationIds = response.data.map(fav => fav.wifi_location);
+        const wifiLocationIds = response.data
+          .map(fav => fav.wifi_location_id_display)
+          .filter(id => id !== undefined && id !== null);
 
-        // Fetch details for each wifi location
+        if (wifiLocationIds.length === 0) {
+          console.error('No valid WiFi locations found in favorites:', response.data);
+          setError('No valid WiFi locations found in favorites.');
+          return;
+        }
+
         const wifiLocationPromises = wifiLocationIds.map(id =>
-          axiosReq.get(`/wifi_locations/${id}`)
+          axiosReq.get(`/wifi_locations/${id}/`)
         );
         const wifiLocationResponses = await Promise.all(wifiLocationPromises);
 
@@ -31,10 +43,9 @@ const FavouritesTab = () => {
         });
 
         setWifiLocations(wifiLocationData);
-        console.log(wifiLocationData);
       } catch (err) {
         setError('Failed to fetch favorites or WiFi locations');
-        console.error(err);
+        console.error('Error fetching favorites or WiFi locations:', err);
       }
     };
 
@@ -58,13 +69,14 @@ const FavouritesTab = () => {
               <th>Name</th>
               <th>Notes</th>
               <th>Visit Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {favorites.map((fav, index) => {
-              const wifiLocation = wifiLocations[fav.wifi_location];
+            {favorites.map((fav) => {
+              const wifiLocation = wifiLocations[fav.wifi_location_id_display];
               return (
-                <tr key={index}>
+                <tr key={fav.id}>
                   <td>
                     {wifiLocation && wifiLocation.image ? (
                       <img src={wifiLocation.image} alt={wifiLocation.name} width="50" />
