@@ -3,6 +3,7 @@ import { Form, Button, Alert, Container } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import showAlert from '../components/Sweetalert';
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
+import AutoComplete from '../components/AutoComplete';
 
 const WifiLocationsCreation = () => {
   const { id } = useParams();
@@ -55,6 +56,15 @@ const WifiLocationsCreation = () => {
     setWifiData((prevData) => ({
       ...prevData,
       [name]: value,
+    }));
+  };
+
+  // handle city selection and auto-fill country
+  const handleCitySelect = (selectedCity, selectedCountry) => {
+    setWifiData((prevData) => ({
+      ...prevData,
+      city: selectedCity,
+      country: selectedCountry,
     }));
   };
 
@@ -137,17 +147,13 @@ const WifiLocationsCreation = () => {
           />
         </Form.Group>
 
+        {/* City Field with AutoComplete */}
         <Form.Group controlId="city" className="mb-3">
           <Form.Label>City</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="City"
-            name="city"
-            value={city}
-            onChange={handleChange}
-          />
+          <AutoComplete type="city" onSelect={handleCitySelect} />
         </Form.Group>
 
+        {/* Country Field (Read Only) */}
         <Form.Group controlId="country" className="mb-3">
           <Form.Label>Country</Form.Label>
           <Form.Control
@@ -156,6 +162,7 @@ const WifiLocationsCreation = () => {
             name="country"
             value={country}
             onChange={handleChange}
+            readOnly
           />
         </Form.Group>
 
