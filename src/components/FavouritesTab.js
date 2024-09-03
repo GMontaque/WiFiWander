@@ -54,6 +54,24 @@ const FavouritesTab = () => {
     }
   }, [currentUser]);
 
+  // Function to handle removing a favorite
+  const handleRemoveFavorite = async (favoriteId) => {
+    try {
+      await axiosRes.delete(`/favourites/${favoriteId}/`);
+      // Update the favorites list after deletion
+      setFavorites(prevFavorites => prevFavorites.filter(fav => fav.id !== favoriteId));
+      console.log('WiFi location removed from favorites successfully.');
+    } catch (err) {
+      console.error('Failed to remove WiFi location from favorites:', err);
+      setError('Failed to remove WiFi location from favorites.');
+    }
+  };
+
+  // Function to handle viewing the full WiFi location page
+  const handleViewLocation = (locationId) => {
+    navigate(`/wifi-locations/${locationId}/`);
+  };
+
   if (error) {
     return <Alert variant="danger">{error}</Alert>;
   }
@@ -87,6 +105,21 @@ const FavouritesTab = () => {
                   <td>{wifiLocation ? wifiLocation.name : 'Loading...'}</td>
                   <td>{fav.notes}</td>
                   <td>{fav.visit_status}</td>
+                  <td>
+                    <Button
+                      variant="primary"
+                      onClick={() => handleViewLocation(fav.wifi_location_id_display)}
+                      className="me-2"
+                    >
+                      View Full Location
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={() => handleRemoveFavorite(fav.id)}
+                    >
+                      Remove from Favorites
+                    </Button>
+                  </td>
                 </tr>
               );
             })}
