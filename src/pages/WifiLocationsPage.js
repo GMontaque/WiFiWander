@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { axiosReq } from "../api/axiosDefaults";
-import { Image, Row, Alert, Button } from 'react-bootstrap';
+import { axiosReq, axiosRes } from "../api/axiosDefaults";
+import { Image, Row, Button } from 'react-bootstrap';
 import Comments from '../components/Comments';
 import AmenitiesKey from '../components/AmenitiesKey';
 import { useCurrentUser } from '../components/CurrentUserContext';
 import CreateComment from '../components/CreateComment';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import showAlert from '../components/Sweetalert';
+import Loader from '../components/Loader';
 
 const WifiLocationsPage = () => {
   const { id } = useParams();
@@ -14,124 +16,33 @@ const WifiLocationsPage = () => {
   const [error, setError] = useState(null);
   const [commentToEdit, setCommentToEdit] = useState(null);
   const currentUser = useCurrentUser();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // Function to fetch WiFi location data
     const fetchWifiLocation = async () => {
+      if (!id) {
+        showAlert('error', 'WiFi location ID is missing.', 'error');
+        console.error('ID is undefined or null.');
+        return;
+      }
+
       try {
-        const response = await axiosReq.get(
-          `/wifi_locations/${id}`
-        );
+        const response = await axiosReq.get(`/wifi_locations/${id}/`);
         setWifiLocation(response.data);
       } catch (err) {
-        setError('Failed to fetch WiFi location data');
-        console.error(err);
+        showAlert('error', 'Failed to fetch WiFi location data', 'error');
+        console.error('Error fetching WiFi location:', err);
       }
     };
 
-    const fetchComments = async () => {
-      try {
-        console.log(`Fetching comments for wifi location: ${id}`);
-
-        const token = localStorage.getItem('access_token');
-
-        if (!token) {
-          setError('Authentication credentials were not provided.');
-          console.error('No authentication token found.');
-          return;
-        }
-
-        const response = await axiosReq.get(
-          `/comments/?wifi_location=${id}`,
-          {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          }
-        );
-
-        console.log('Fetched comments:', response.data);
-        setComments(response.data);
-      } catch (err) {
-        setError('Failed to fetch comments');
-        setComments([]);
-        console.error('Error fetching comments:', err);
-      }
-    };
-
-    fetchWifiLocation();
-    fetchComments();
+    if (id) {
+      fetchWifiLocation();
+      fetchComments();
+    }
   }, [id]);
 
-  const handleAddToFavorites = async () => {
-    if (!currentUser) {
-      setError('You must be logged in to add to favorites');
-      return;
-    }
-
-    try {
-      const response = await axiosReq.post(
-        `/favourites/`,
-        {
-          user: currentUser.id,
-          wifi_location: id,
-          notes: '',
-          folder_name: '',
-          visit_status: 'Planned',
-        },
-        {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-          }
-        }
-      );
-
-      if (response.status === 201) {
-        console.log('Location added to favorites successfully!');
-      }
-    } catch (err) {
-      setError('Failed to add location to favorites');
-      console.error(err);
-    }
-  };
-
-  const handleDeleteComment = async (commentId) => {
-    try {
-      const response = await axiosReq.delete(
-        `/comments/${commentId}/`,
-        {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-          }
-        }
-      );
-      if (response.status === 204) {
-        console.log('Successfully deleted');
-        setComments((prevComments) =>
-          prevComments.filter((comment) => comment.id !== commentId)
-        );
-      }
-    } catch (error) {
-      console.error('There was an error deleting the comment:', error);
-    }
-  };
-
-  const handleUpdateComment = (comment) => {
-    if (currentUser.username === comment.username) {
-      setCommentToEdit(comment);
-    }
-    setCommentToEdit(comment);
-    console.log("dont have permission")
-  };
-
-  const handleCancelEdit = () => {
-    setCommentToEdit(null);
-  };
-
-  const handleCommentAdded = () => {
-    fetchComments();
-    setCommentToEdit(null);
-  };
-
+  // Function to fetch comments for the WiFi location
   const fetchComments = async () => {
     try {
       const response = await axiosReq.get(
@@ -144,17 +55,119 @@ const WifiLocationsPage = () => {
       );
       setComments(response.data);
     } catch (err) {
-      setError('Failed to fetch comments');
-      setComments([]);
+      showAlert('error', 'Failed to fetch comments', 'error');
+      setComments([]);  // Clear comments state on error
+      console.error('Error fetching comments:', err);
     }
   };
 
+  // Function to handle adding a new comment
+  const handleCommentAdded = () => {
+    fetchComments();
+    setCommentToEdit(null);
+  };
+
+  // Function to handle adding WiFi location to favorites
+  const handleAddToFavorites = async () => {
+    if (!currentUser) {
+      showAlert('error', 'You must be logged in to add to favorites', 'error');
+      return;
+    }
+
+    try {
+      const response = await axiosRes.post(`/favourites/`, {
+        wifi_location_id: id,
+        notes: '',
+        folder_name: '',
+        visit_status: 'Planned'
+      }, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        }
+      });
+
+      if (response.status === 201) {
+        showAlert('success', 'Location added to favorites successfully!', 'success');
+      }
+    } catch (err) {
+      showAlert('error', 'Failed to add location to favorites', 'error');
+      console.error('Error adding to favorites:', err);
+    }
+  };
+
+  // Function to handle comment deletion
+  const handleDeleteComment = async (commentId) => {
+    try {
+      const response = await axiosRes.delete(`/comments/${commentId}/`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        }
+      });
+      if (response.status === 204) {
+        showAlert('success', 'Successfully deleted', 'success');
+        setComments((prevComments) =>
+          prevComments.filter((comment) => comment.id !== commentId)
+        );
+      }
+    } catch (error) {
+      showAlert('error', 'There was an error deleting the comment, please try again', 'error');
+      console.error('Error deleting comment:', error);
+    }
+  };
+
+  // Function to handle updating a comment
+  const handleUpdateComment = (comment) => {
+    if (currentUser?.username === comment.username) {
+      setCommentToEdit(comment);
+    } else {
+      showAlert('error', "You don't have permission to edit this comment", 'error');
+    }
+  };
+
+  // Function to handle updating the WiFi location
+  const handleUpdateLocation = () => {
+    if (currentUser?.id === wifiLocation?.added_by?.id) {
+      navigate(`/wifi_locations/edit/${id}`);
+    } else {
+      showAlert('error', "You don't have permission to edit this location", 'error');
+    }
+  };
+
+  // Function to handle deleting the WiFi location
+  const handleDeleteLocation = async () => {
+    if (currentUser?.id === wifiLocation?.added_by?.id) {
+      try {
+        const response = await axiosRes.delete(`/wifi_locations/${id}/`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+          }
+        });
+        if (response.status === 204) {
+          showAlert('success', 'Successfully deleted WiFi location', 'success');
+          navigate("/");
+        }
+      } catch (error) {
+        showAlert('error', "There was an error deleting the WiFi location, please try again", 'error');
+        console.error('Error deleting WiFi location:', error);
+      }
+    } else {
+      showAlert('error', "You don't have permission to delete this location", 'error');
+    }
+  };
+
+  // Function to handle canceling the comment edit
+  const handleCancelEdit = () => {
+    setCommentToEdit(null);
+  };
+
+  // Render loading state or error state if necessary
   if (error && !wifiLocation) {
-    return <Alert variant="danger">{error}</Alert>;
+    showAlert('error', error, 'error');
+    return null;
   }
 
   if (!wifiLocation) {
-    return <p>Loading...</p>;
+    return <Loader />;
   }
 
   return (
@@ -163,7 +176,15 @@ const WifiLocationsPage = () => {
         <h1>{wifiLocation.name}</h1>
         <span>
           {currentUser && (
-            <Button onClick={handleAddToFavorites}>Add to Favorites</Button>
+            <>
+              <Button onClick={handleAddToFavorites}>Add to Favorites</Button>
+              {currentUser?.id === wifiLocation?.added_by?.id && (
+                <>
+                  <Button onClick={handleUpdateLocation}>Edit Location</Button>
+                  <Button onClick={handleDeleteLocation}>Delete Location</Button>
+                </>
+              )}
+            </>
           )}
         </span>
         <div>{wifiLocation.star_rating || 'No rating available'}</div>
