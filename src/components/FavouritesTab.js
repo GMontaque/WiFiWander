@@ -27,7 +27,6 @@ const FavouritesTab = () => {
           .filter(id => id !== undefined && id !== null);
 
         if (wifiLocationIds.length === 0) {
-          console.error('No valid WiFi locations found in favorites:', response.data);
           setError('No valid WiFi locations found in favorites.');
           return;
         }
