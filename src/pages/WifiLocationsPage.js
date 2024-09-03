@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { Image, Row, Button } from 'react-bootstrap';
 import Comments from '../components/Comments';
@@ -18,31 +18,8 @@ const WifiLocationsPage = () => {
   const currentUser = useCurrentUser();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Function to fetch WiFi location data
-    const fetchWifiLocation = async () => {
-      if (!id) {
-        showAlert('error', 'WiFi location ID is missing.', 'error');
-        return;
-      }
-
-      try {
-        const response = await axiosReq.get(`/wifi_locations/${id}/`);
-        setWifiLocation(response.data);
-      } catch (err) {
-        showAlert('error', 'Failed to fetch WiFi location data', 'error');
-        setError(err)
-      }
-    };
-
-    if (id) {
-      fetchWifiLocation();
-      fetchComments();
-    }
-  }, [id]);
-
   // Function to fetch comments for the WiFi location
-  const fetchComments = async () => {
+  const fetchComments = useCallback(async () => {
     try {
       const response = await axiosReq.get(
         `/comments/?wifi_location=${id}`,
@@ -58,7 +35,30 @@ const WifiLocationsPage = () => {
       setComments([]);  // Clear comments state on error
       setError(err)
     }
-  };
+  }, [id]);  // Add 'id' as dependency for useCallback
+
+  useEffect(() => {
+    // Function to fetch WiFi location data
+    const fetchWifiLocation = async () => {
+      if (!id) {
+        showAlert('error', 'WiFi location ID is missing.', 'error');
+        return;
+      }
+
+      try {
+        const response = await axiosReq.get(`/wifi_locations/${id}/`);
+        setWifiLocation(response.data);
+      } catch (err) {
+        showAlert('error', 'Failed to fetch WiFi location data', 'error');
+        setError(err);
+      }
+    };
+
+    if (id) {
+      fetchWifiLocation();
+      fetchComments();
+    }
+  }, [id, fetchComments]);  // Include fetchComments in the dependency array
 
   // Function to handle adding a new comment
   const handleCommentAdded = () => {
