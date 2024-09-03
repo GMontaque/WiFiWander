@@ -9,6 +9,9 @@ const WifiLocationsCreation = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  // List of amenities options
+  const amenitiesList = ["Outside Seating", "Desks", "Private Rooms", "Coffee", "Food", "Meeting Rooms"];
+
   // form data
   const [wifiData, setWifiData] = useState({
     name: "",
@@ -17,13 +20,14 @@ const WifiLocationsCreation = () => {
     country: "",
     postcode: "",
     description: "",
-    amenities: "",
+    amenities: [],
     image: null,
+    continent: "",
   });
 
   const [errors, setErrors] = useState({});
 
-  const { name, street, city, country, postcode, description, amenities, image } = wifiData;
+  const { name, street, city, country, postcode, description, amenities, image, continent } = wifiData;
 
   useEffect(() => {
     if (id) {
@@ -37,8 +41,9 @@ const WifiLocationsCreation = () => {
             country: data.country,
             postcode: data.postcode,
             description: data.description,
-            amenities: data.amenities,
+            amenities: data.amenities.split(", "),
             image: data.image,
+            continent: data.continent,
           });
         } catch (err) {
           showAlert('error', "Error fetching WiFi location data, please try again", 'error');
@@ -59,7 +64,17 @@ const WifiLocationsCreation = () => {
     }));
   };
 
-  // handle city selection and auto-fill country
+  // Handle checkbox change for amenities
+  const handleCheckboxChange = (e) => {
+    const { value, checked } = e.target;
+    setWifiData((prevData) => {
+      const updatedAmenities = checked
+        ? [...prevData.amenities, value]
+        : prevData.amenities.filter((amenity) => amenity !== value);
+      return { ...prevData, amenities: updatedAmenities };
+    });
+  };
+
   const handleCitySelect = (selectedCity, selectedCountry) => {
     setWifiData((prevData) => ({
       ...prevData,
@@ -68,7 +83,6 @@ const WifiLocationsCreation = () => {
     }));
   };
 
-  // file change for image upload
   const handleFileChange = (e) => {
     setWifiData((prevData) => ({
       ...prevData,
@@ -76,7 +90,6 @@ const WifiLocationsCreation = () => {
     }));
   };
 
-  // form submission for creating or updating WiFi locations
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -87,21 +100,20 @@ const WifiLocationsCreation = () => {
     formData.append("country", country);
     formData.append("postcode", postcode);
     formData.append("description", description);
-    formData.append("amenities", amenities);
+    formData.append("amenities", amenities.join(", "));
+    formData.append("continent", continent);
     if (image) {
       formData.append("image", image);
     }
 
     try {
       if (id) {
-        // Update WiFi location
         await axiosRes.put(`/wifi_locations/${id}/`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
       } else {
-        // Create new WiFi location
         await axiosRes.post("/wifi_locations/", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -161,7 +173,6 @@ const WifiLocationsCreation = () => {
             placeholder="Country"
             name="country"
             value={country}
-            onChange={handleChange}
             readOnly
           />
         </Form.Group>
@@ -175,6 +186,26 @@ const WifiLocationsCreation = () => {
             value={postcode}
             onChange={handleChange}
           />
+        </Form.Group>
+
+        {/* Continent Field */}
+        <Form.Group controlId="continent" className="mb-3">
+          <Form.Label>Continent</Form.Label>
+          <Form.Control
+            as="select"
+            name="continent"
+            value={continent}
+            onChange={handleChange}
+          >
+            <option value="">Select a Continent</option>
+            <option value="Africa">Africa</option>
+            <option value="Antarctica">Antarctica</option>
+            <option value="Asia">Asia</option>
+            <option value="Europe">Europe</option>
+            <option value="North America">North America</option>
+            <option value="Australia">Australia</option>
+            <option value="South America">South America</option>
+          </Form.Control>
         </Form.Group>
 
         {/* Description Field */}
@@ -191,16 +222,22 @@ const WifiLocationsCreation = () => {
         </Form.Group>
 
         {/* Amenities Field */}
-        <Form.Group controlId="amenities" className="mb-3">
+        <Form.Group className="mb-3" controlId="amenities">
           <Form.Label>Amenities</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter amenities"
-            name="amenities"
-            value={amenities}
-            onChange={handleChange}
-          />
+          {amenitiesList.map((item, index) => (
+            <Form.Check
+              type="checkbox"
+              label={item}
+              key={index}
+              value={item}
+              checked={amenities.includes(item)}
+              onChange={handleCheckboxChange}
+            />
+          ))}
         </Form.Group>
+        {errors.amenities?.map((message, idx) => (
+          <Alert variant="warning" key={idx}>{message}</Alert>
+        ))}
 
         {/* Image Upload */}
         <Form.Group controlId="image" className="mb-3">
