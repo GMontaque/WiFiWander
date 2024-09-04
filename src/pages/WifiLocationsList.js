@@ -19,7 +19,6 @@ const WifiLocationsList = () => {
     const fetchData = async () => {
       try {
         const response = await axiosReq.get(`/wifi_locations/?continent=${continentName}&country=${countryName}&city=${cityName}`);
-        console.log('Fetched Wifi Locations:', response.data); // Debug log
         setWifiLocations(response.data);
         setError(null);
       } catch (err) {
