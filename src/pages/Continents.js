@@ -36,7 +36,6 @@ const Continents = () => {
           </Card.Body>
         </Card>
       ))}
-
     </div>
   );
 }
