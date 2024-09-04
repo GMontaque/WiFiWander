@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { useNavigate } from "react-router-dom";
+import showAlert from '../components/Sweetalert';
 
 export const CurrentUserContext = createContext();
 export const SetCurrentUserContext = createContext();
@@ -22,11 +23,11 @@ export const CurrentUserProvider = ({ children }) => {
           const { data } = await axiosRes.get("dj-rest-auth/user/");
           setCurrentUser(data);
         } else {
-          setCurrentUser(false);
+          setCurrentUser(null);
         }
       } catch (err) {
-        console.error("Error fetching user data:", err);
-        setCurrentUser(false);
+        showAlert('error', "Error fetching user data, please refresh and try again", 'error');
+        setCurrentUser(null);
       } finally {
         setIsLoading(false);
       }
@@ -36,57 +37,69 @@ export const CurrentUserProvider = ({ children }) => {
   }, []);
 
   useMemo(() => {
-    axiosReq.interceptors.request.use(
-      async (config) => {
-        try {
-          const refreshToken = localStorage.getItem("refresh_token");
-          if (refreshToken) {
-            const { data } = await axiosRes.post("/dj-rest-auth/token/refresh/", {
-              refresh: refreshToken,
-            });
+    const refreshAuthLogic = async (config) => {
+      const refreshToken = localStorage.getItem("refresh_token");
 
-            localStorage.setItem("access_token", data.access);
-            config.headers.Authorization = `Bearer ${data.access}`;
-          } else {
-            console.warn("No refresh token found in localStorage.");
-          }
-        } catch (err) {
-          setCurrentUser(false);
-          navigate("/signin");
-        }
+      if (!refreshToken) {
+        setCurrentUser(null);
+        navigate("/signin");
         return config;
-      },
-      (err) => Promise.reject(err)
-    );
-
-    axiosRes.interceptors.response.use(
-      (response) => response,
-      async (err) => {
-        if (err.response?.status === 401 && !err.config._retry) {
-          err.config._retry = true;
-          try {
-            const refreshToken = localStorage.getItem("refresh_token");
-            if (refreshToken) {
-              const { data } = await axiosRes.post("/dj-rest-auth/token/refresh/", {
-                refresh: refreshToken,
-              });
-
-              localStorage.setItem("access_token", data.access);
-              axiosRes.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
-              err.config.headers.Authorization = `Bearer ${data.access}`;
-              return axiosRes(err.config);
-            } else {
-              console.warn("No refresh token available, cannot refresh access token.");
-            }
-          } catch (refreshError) {
-            setCurrentUser(false);
-            navigate("/signin");
-          }
-        }
-        return Promise.reject(err);
       }
-    );
-  }, [navigate]);
+
+      try {
+        const { data } = await axiosRes.post("/dj-rest-auth/token/refresh/", {
+          refresh: refreshToken,
+        });
+
+        localStorage.setItem("access_token", data.access);
+        config.headers.Authorization = `Bearer ${data.access}`;
+      } catch (err) {
+        setCurrentUser(null);
+        navigate("/signin");
+      }
+
+      return config;
+    };
+
+    const attachRequestInterceptor = () => {
+      axiosReq.interceptors.request.use(refreshAuthLogic, (err) => Promise.reject(err));
+    };
+
+    const attachResponseInterceptor = () => {
+      axiosRes.interceptors.response.use(
+        (response) => response,
+        async (err) => {
+          if (err.response?.status === 401 && !err.config._retry) {
+            err.config._retry = true;
+            try {
+              const refreshToken = localStorage.getItem("refresh_token");
+              if (refreshToken) {
+                const { data } = await axiosRes.post("/dj-rest-auth/token/refresh/", {
+                  refresh: refreshToken,
+                });
+
+                localStorage.setItem("access_token", data.access);
+                axiosRes.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
+                err.config.headers.Authorization = `Bearer ${data.access}`;
+                return axiosRes(err.config);
+              } else {
+                console.info("No refresh token available; cannot refresh access token.");
+              }
+            } catch (refreshError) {
+              setCurrentUser(null);
+              navigate("/signin");
+            }
+          }
+          return Promise.reject(err);
+        }
+      );
+    };
+
+    if (currentUser) {
+      attachRequestInterceptor();
+      attachResponseInterceptor();
+    }
+  }, [navigate, currentUser]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
