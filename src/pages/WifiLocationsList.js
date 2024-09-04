@@ -21,6 +21,7 @@ const WifiLocationsList = () => {
         const response = await axiosReq.get(`/wifi_locations/?continent=${continentName}&country=${countryName}&city=${cityName}`);
         console.log('Fetched Wifi Locations:', response.data); // Debug log
         setWifiLocations(response.data);
+        setError(null);
       } catch (err) {
         setError('Failed to fetch WiFi locations');
       }
@@ -29,19 +30,22 @@ const WifiLocationsList = () => {
     fetchData();
   }, [continentName, countryName, cityName]);
 
+  useEffect(() => {
+    if (error) {
+      showAlert('error', error, 'error');
+    }
+  }, [error]);
+
   return (
     <>
       {/* Display Breadcrumb */}
       <div>
         <BreadcrumbComp continentName={continentName} countryName={countryName} cityName={cityName} />
       </div>
-      
+
       {/* Display the city name */}
       <h1>{cityName}</h1>
-      
-      {/* Error handling */}
-      {showAlert('error',error,'error')}
-      
+
       {/* display WiFi locations */}
       <Table responsive>
         <thead>
