@@ -1,37 +1,32 @@
-import React from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
-import { Row, Col, Card, Button } from 'react-bootstrap';
-import BreadcrumbComp from '../components/BreadcrumbComp';
-
-const citiesData = {
-  Egypt: ['Cairo', 'Alexandria', 'Giza'],
-  Japan: ['Tokyo', 'Osaka', 'Kyoto'],
-  Germany: ['Berlin', 'Munich', 'Frankfurt'],
-  Canada: ['Toronto', 'Vancouver', 'Montreal'],
-  Colombia: ['Bogotá', 'Medellín', 'Cali'],
-  Fiji: ['Suva', 'Nadi', 'Lautoka']
-};
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import axios from 'axios';
+import { Col, Card, Button } from 'react-bootstrap';
+import showAlert from '../components/Sweetalert';
 
 const City = () => {
   const { continentName, countryName } = useParams();
+  const [cities, setCities] = useState([]);
 
-  if (!continentName || !countryName) {
-    console.error("continentName or countryName is undefined");
-    return <Navigate to="/404" />;
-  }
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const response = await axios.get(`/wifi_locations/?continent=${continentName}&country=${countryName}`);
+        const uniqueCities = [...new Set(response.data.map(location => location.city))];
+        setCities(uniqueCities);
+      } catch (error) {
+        showAlert('error','Error fetching cities, please refresh and try again', 'error');
+      }
+    };
 
-  const cities = citiesData[countryName.charAt(0).toUpperCase() + countryName.slice(1)];
-
-  if (!cities) {
-    return <Navigate to="/404" />;
-  }
+    fetchCities();
+  }, [continentName, countryName]);
 
   return (
     <div>
-      <BreadcrumbComp continentName={continentName} countryName={countryName} />
-      <h2>Cities in {countryName.charAt(0).toUpperCase() + countryName.slice(1)}</h2>
-      <Row>
-        {cities.map(city => (
+      <h2>Select a City in {countryName}</h2>
+      <ul>
+      {cities.map(city => (
           <Col key={city} sm={12} md={6} lg={4}>
             <Card className="mb-4">
               <Card.Body>
@@ -45,20 +40,7 @@ const City = () => {
             </Card>
           </Col>
         ))}
-
-        <Card.Body>
-          <Card.Title>No Results</Card.Title>
-          <Card.Text>
-            Could find a the country you were looking for? why not create a new entry
-          </Card.Text>
-          <Button variant="primary">
-            <Link to={"/newlocation"} style={{ color: 'white', textDecoration: 'none' }}>
-              Add Location
-            </Link>
-          </Button>
-        </Card.Body>
-
-      </Row>
+      </ul>
     </div>
   );
 };
