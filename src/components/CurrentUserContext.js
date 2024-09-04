@@ -20,8 +20,16 @@ export const CurrentUserProvider = ({ children }) => {
         const accessToken = localStorage.getItem("access_token");
         if (accessToken) {
           axiosRes.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-          const { data } = await axiosRes.get("dj-rest-auth/user/");
-          setCurrentUser(data);
+
+          // Fetch user data
+          const { data: userData } = await axiosRes.get("dj-rest-auth/user/");
+
+          // Fetch profile data
+          const { data: profileData } = await axiosRes.get(`profiles/${userData.profile_id}/`);
+
+          // Merge user data with profile data
+          setCurrentUser({ ...userData, is_admin: profileData.is_admin });
+
         } else {
           setCurrentUser(null);
         }

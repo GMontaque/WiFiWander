@@ -20,6 +20,9 @@ const WifiLocationsPage = () => {
 
   const isAuthenticated = !!localStorage.getItem('access_token');
 
+  // Check if the current user is the creator of the wifi location or is an admin
+  const canEditOrDelete = currentUser && (currentUser.username === wifiLocation?.added_by || currentUser.is_admin);
+
   // Function to fetch comments for the WiFi location
   const fetchComments = useCallback(async () => {
     if (!isAuthenticated) return;
@@ -126,32 +129,24 @@ const WifiLocationsPage = () => {
 
   // Function to handle updating the WiFi location
   const handleUpdateLocation = () => {
-    if (currentUser?.id === wifiLocation?.added_by?.id) {
-      navigate(`/wifi_locations/edit/${id}`);
-    } else {
-      showAlert('error', "You don't have permission to edit this location", 'error');
-    }
+    navigate(`/wifi_locations/edit/${id}`);
   };
 
   // Function to handle deleting the WiFi location
   const handleDeleteLocation = async () => {
-    if (currentUser?.id === wifiLocation?.added_by?.id) {
-      try {
-        const response = await axiosRes.delete(`/wifi_locations/${id}/`, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-          }
-        });
-        if (response.status === 204) {
-          showAlert('success', 'Successfully deleted WiFi location', 'success');
-          navigate("/");
+    try {
+      const response = await axiosRes.delete(`/wifi_locations/${id}/`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
-      } catch (err) {
-        showAlert('error', "There was an error deleting the WiFi location, please try again", 'error');
-        setError(err);
+      });
+      if (response.status === 204) {
+        showAlert('success', 'Successfully deleted WiFi location', 'success');
+        navigate("/");
       }
-    } else {
-      showAlert('error', "You don't have permission to delete this location", 'error');
+    } catch (err) {
+      showAlert('error', "There was an error deleting the WiFi location, please try again", 'error');
+      setError(err);
     }
   };
 
@@ -178,7 +173,7 @@ const WifiLocationsPage = () => {
           {currentUser && (
             <>
               <Button onClick={handleAddToFavorites}>Add to Favorites</Button>
-              {currentUser?.id === wifiLocation?.added_by?.id && (
+              {canEditOrDelete && (
                 <>
                   <Button onClick={handleUpdateLocation}>Edit Location</Button>
                   <Button onClick={handleDeleteLocation}>Delete Location</Button>
@@ -219,4 +214,3 @@ const WifiLocationsPage = () => {
 };
 
 export default WifiLocationsPage;
-
