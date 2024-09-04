@@ -12,8 +12,8 @@ const continents = [
   { name: 'Africa', path: '/continents/africa', image: africaImage },
   { name: 'Asia', path: '/continents/asia', image: asiaImage },
   { name: 'Europe', path: '/continents/europe', image: europeImage },
-  { name: 'North America', path: '/continents/north_america', image: northAmericaImage },
-  { name: 'South America', path: '/continents/south_america', image: southAmericaImage },
+  { name: 'North America', path: '/continents/north america', image: northAmericaImage },
+  { name: 'South America', path: '/continents/south america', image: southAmericaImage },
   { name: 'Australia', path: '/continents/australia', image: australiaImage },
 ];
 
