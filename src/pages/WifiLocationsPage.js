@@ -18,33 +18,34 @@ const WifiLocationsPage = () => {
   const currentUser = useCurrentUser();
   const navigate = useNavigate();
 
+  const isAuthenticated = !!localStorage.getItem('access_token');
+
   // Function to fetch comments for the WiFi location
   const fetchComments = useCallback(async () => {
+    if (!isAuthenticated) return;
+
     try {
-      const response = await axiosReq.get(
-        `/comments/?wifi_location=${id}`,
-        {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-          }
+      const response = await axiosReq.get(`/comments/?wifi_location=${id}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
-      );
+      });
       setComments(response.data);
     } catch (err) {
-      showAlert('error', 'Failed to fetch comments', 'error');
-      setComments([]);  // Clear comments state on error
-      setError(err)
+      if (err.response?.status === 401) {
+        // Handle unauthorized errors, possibly refresh token
+        showAlert('error', 'You are not authorized. Please log in again.', 'error');
+      } else {
+        showAlert('error', 'Failed to fetch comments', 'error');
+        setComments([]);
+        setError(err);
+      }
     }
-  }, [id]);  // Add 'id' as dependency for useCallback
+  }, [id, isAuthenticated]);
 
   useEffect(() => {
     // Function to fetch WiFi location data
     const fetchWifiLocation = async () => {
-      if (!id) {
-        showAlert('error', 'WiFi location ID is missing.', 'error');
-        return;
-      }
-
       try {
         const response = await axiosReq.get(`/wifi_locations/${id}/`);
         setWifiLocation(response.data);
@@ -56,9 +57,9 @@ const WifiLocationsPage = () => {
 
     if (id) {
       fetchWifiLocation();
-      fetchComments();
+      if (isAuthenticated) fetchComments();
     }
-  }, [id, fetchComments]);  // Include fetchComments in the dependency array
+  }, [id, fetchComments, isAuthenticated]);
 
   // Function to handle adding a new comment
   const handleCommentAdded = () => {
@@ -90,7 +91,7 @@ const WifiLocationsPage = () => {
       }
     } catch (err) {
       showAlert('error', 'Failed to add location to favorites', 'error');
-      setError(err)
+      setError(err);
     }
   };
 
@@ -110,7 +111,7 @@ const WifiLocationsPage = () => {
       }
     } catch (err) {
       showAlert('error', 'There was an error deleting the comment, please try again', 'error');
-      setError(err)
+      setError(err);
     }
   };
 
@@ -147,7 +148,7 @@ const WifiLocationsPage = () => {
         }
       } catch (err) {
         showAlert('error', "There was an error deleting the WiFi location, please try again", 'error');
-        setError(err)
+        setError(err);
       }
     } else {
       showAlert('error', "You don't have permission to delete this location", 'error');
@@ -218,3 +219,4 @@ const WifiLocationsPage = () => {
 };
 
 export default WifiLocationsPage;
+
