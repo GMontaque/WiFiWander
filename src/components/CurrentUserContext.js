@@ -34,7 +34,7 @@ export const CurrentUserProvider = ({ children }) => {
     };
 
     handleMount();
-  }, []);
+  }, [navigate]);
 
   useMemo(() => {
     const refreshAuthLogic = async (config) => {
@@ -82,8 +82,6 @@ export const CurrentUserProvider = ({ children }) => {
                 axiosRes.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
                 err.config.headers.Authorization = `Bearer ${data.access}`;
                 return axiosRes(err.config);
-              } else {
-                console.info("No refresh token available; cannot refresh access token.");
               }
             } catch (refreshError) {
               setCurrentUser(null);
