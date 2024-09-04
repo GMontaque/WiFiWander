@@ -1,70 +1,48 @@
-import React from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
-import { Row, Col, Card, Button } from 'react-bootstrap';
-import BreadcrumbComp from '../components/BreadcrumbComp';
-
-const countryData = {
-    africa: ['Egypt', 'South Africa', 'Morocco', 'Nigeria', 'Algeria'],
-    asia: ['China', 'Japan', 'India', 'South Korea', 'Indonesia'],
-    europe: ['Germany', 'France', 'United Kingdom', 'Italy', 'Spain'],
-    north_america: ['United States', 'Canada', 'Mexico', 'Guatemala', 'Cuba'],
-    south_america: ['Brazil', 'Argentina', 'Colombia', 'Peru', 'Chile'],
-    australia: ['Australia', 'New Zealand', 'Papua New Guinea', 'Fiji', 'Solomon Islands']
-};
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import axios from 'axios';
+import { Col, Card, Button } from 'react-bootstrap';
+import showAlert from '../components/Sweetalert';
 
 const Country = () => {
-    const { continentName, countryName } = useParams();
+  const { continentName } = useParams();
+  const [countries, setCountries] = useState([]);
 
-    if (!continentName) {
-        console.error("continentName is undefined");
-        return <Navigate to="/404" />;
-    }
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await axios.get(`/wifi_locations/?continent=${continentName}`);
+        const uniqueCountries = [...new Set(response.data.map(location => location.country))];
+        setCountries(uniqueCountries);
+      } catch (error) {
+        showAlert('error','Error fetching countries, please refresh and try again', 'error');
+      }
+    };
 
-    const countries = countryData[continentName.toLowerCase()];
+    fetchCountries();
+  }, [continentName]);
 
-    if (!countries) {
-        return <Navigate to="/404" />;
-    }
-
-    if (countryName && !countries.includes(countryName.charAt(0).toUpperCase() + countryName.slice(1))) {
-        return <Navigate to="/404" />;
-    }
-
-    return (
-        <div>
-            <BreadcrumbComp continentName={continentName} countryName={countryName} />
-            <h2>Countries in {continentName.charAt(0).toUpperCase() + continentName.slice(1)}</h2>
-            <Row>
-                {countries.map(country => (
-                    <Col key={country} sm={12} md={6} lg={4}>
-                        <Card className="mb-4">
-                            <Card.Body>
-                                <Card.Title>{country}</Card.Title>
-                                <Button variant="primary">
-                                    <Link to={`/continents/${continentName}/${country.toLowerCase()}`} style={{ color: 'white', textDecoration: 'none' }}>
-                                        Explore {country}
-                                    </Link>
-                                </Button>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))}
-
-                <Card.Body>
-                    <Card.Title>No Results</Card.Title>
-                    <Card.Text>
-                        Could find a the country you were looking for? why not create a new entry
-                    </Card.Text>
-                    <Button variant="primary">
-                        <Link to={"/newlocation"} style={{ color: 'white', textDecoration: 'none' }}>
-                            Add Location
+  return (
+    <div>
+      <h2>Select a Country in {continentName}</h2>
+      <ul>
+        {countries.map(country => (
+            <Col key={country} sm={12} md={6} lg={4}>
+                <Card className="mb-4">
+                    <Card.Body>
+                        <Card.Title>{country}</Card.Title>
+                        <Button variant="primary">
+                        <Link to={`/continents/${continentName}/${country.toLowerCase()}`} style={{ color: 'white', textDecoration: 'none' }}>
+                            Explore {country}
                         </Link>
-                    </Button>
-                </Card.Body>
-
-            </Row>
-        </div>
-    );
+                        </Button>
+                    </Card.Body>
+                </Card>
+            </Col>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 export default Country;
