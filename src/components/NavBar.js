@@ -2,10 +2,12 @@ import React from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { axiosReq } from "../api/axiosDefaults";
+import { useNavigate } from 'react-router-dom';
 
 import { useCurrentUser, useSetCurrentUser } from './CurrentUserContext';
 import logo from '../assets/logo.png';
 import showAlert from '../components/Sweetalert';
+
 
 const LoggedOutIcons = () => (
   <>
@@ -21,6 +23,7 @@ const AddLocation = () => (
 const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
+  const navigate = useNavigate();
 
   const handleSignOut = async () => {
     try {
@@ -28,6 +31,7 @@ const NavBar = () => {
       localStorage.removeItem("refresh_token");
       await axiosReq.post("dj-rest-auth/logout/");
       setCurrentUser(null);
+      navigate('/');
       showAlert('Logged Out', 'You have succesfully logged out', 'success')
     } catch (err) {
       showAlert('Logged Out', 'There waas an issue when logging out please try again', 'error')
