@@ -3,6 +3,7 @@ import { Table, Alert, Button } from 'react-bootstrap';
 import { useCurrentUser } from '../components/CurrentUserContext';
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { useNavigate } from 'react-router-dom';
+import showAlert from '../components/Sweetalert';
 
 const FavouritesTab = () => {
   const currentUser = useCurrentUser();
@@ -44,7 +45,6 @@ const FavouritesTab = () => {
         setWifiLocations(wifiLocationData);
       } catch (err) {
         setError('Failed to fetch favorites or WiFi locations');
-        console.error('Error fetching favorites or WiFi locations:', err);
       }
     };
 
@@ -59,10 +59,9 @@ const FavouritesTab = () => {
       await axiosRes.delete(`/favourites/${favoriteId}/`);
       // Update the favorites list after deletion
       setFavorites(prevFavorites => prevFavorites.filter(fav => fav.id !== favoriteId));
-      console.log('WiFi location removed from favorites successfully.');
+      showAlert('success','WiFi location removed from favorites','success');
     } catch (err) {
-      console.error('Failed to remove WiFi location from favorites:', err);
-      setError('Failed to remove WiFi location from favorites.');
+      showAlert('error','Failed to remove WiFi location from favorites, please refresh and try again', 'error');
     }
   };
 
@@ -84,7 +83,6 @@ const FavouritesTab = () => {
             <tr>
               <th>Image</th>
               <th>Name</th>
-              <th>Notes</th>
               <th>Visit Status</th>
               <th>Actions</th>
             </tr>
@@ -102,7 +100,6 @@ const FavouritesTab = () => {
                     )}
                   </td>
                   <td>{wifiLocation ? wifiLocation.name : 'Loading...'}</td>
-                  <td>{fav.notes}</td>
                   <td>{fav.visit_status}</td>
                   <td>
                     <Button
