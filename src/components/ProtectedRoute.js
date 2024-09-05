@@ -5,8 +5,9 @@ import Loader from './Loader';
 
 const ProtectedRoute = ({ children }) => {
     const currentUser = useCurrentUser();
+    const isLoading = currentUser === undefined;
 
-    if (currentUser === null) {
+    if (isLoading) {
         return <Loader />;
     }
 
