@@ -4,15 +4,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import showAlert from '../components/Sweetalert';
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import AutoComplete from '../components/AutoComplete';
+import { useCurrentUser } from '../components/CurrentUserContext';
 
 const WifiLocationsCreation = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const currentUser = useCurrentUser();
 
   // List of amenities options
   const amenitiesList = ["Outside Seating", "Desks", "Private Rooms", "Coffee", "Food", "Meeting Rooms"];
 
-  // form data
+  // Form data
   const [wifiData, setWifiData] = useState({
     name: "",
     street: "",
@@ -26,14 +28,16 @@ const WifiLocationsCreation = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [wifiLocation, setWifiLocation] = useState(null);
 
   const { name, street, city, country, postcode, description, amenities, image, continent } = wifiData;
 
   useEffect(() => {
-    if (id) {
-      const fetchWifiLocation = async () => {
+    const fetchWifiLocation = async () => {
+      if (id) {
         try {
           const { data } = await axiosReq.get(`/wifi_locations/${id}/`);
+          setWifiLocation(data);
           setWifiData({
             name: data.name,
             street: data.street,
@@ -49,13 +53,13 @@ const WifiLocationsCreation = () => {
           showAlert('error', "Error fetching WiFi location data, please try again", 'error');
           setErrors((prevErrors) => ({ ...prevErrors, fetch: "Failed to load WiFi location data." }));
         }
-      };
+      }
+    };
 
-      fetchWifiLocation();
-    }
+    fetchWifiLocation();
   }, [id]);
 
-  // input changes for form fields
+  // Input changes for form fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setWifiData((prevData) => ({
@@ -102,8 +106,18 @@ const WifiLocationsCreation = () => {
     formData.append("description", description);
     formData.append("amenities", amenities.join(", "));
     formData.append("continent", continent);
-    if (image) {
+
+    // Append image only if a new image is selected
+    if (typeof image === 'object' && image !== null) {
       formData.append("image", image);
+    }
+
+    // Checks current user
+    const canEditOrDelete = currentUser && (currentUser.username === wifiLocation?.added_by || currentUser.is_admin);
+
+    if (id && !canEditOrDelete) {
+      showAlert('warning', "You are not authorized to edit this WiFi location.", 'warning');
+      return;
     }
 
     try {
@@ -247,6 +261,12 @@ const WifiLocationsCreation = () => {
             name="image"
             onChange={handleFileChange}
           />
+          {image && typeof image === 'string' && (
+            <div>
+              <img src={image} alt="Current" style={{ width: '100px', marginTop: '10px' }} />
+              <p>Current image will be used if no new image is selected.</p>
+            </div>
+          )}
         </Form.Group>
 
         {/* Display any error messages */}
@@ -256,9 +276,16 @@ const WifiLocationsCreation = () => {
           </Alert>
         )}
 
-        <Button variant="primary" type="submit">
-          {id ? "Update WiFi Location" : "Create WiFi Location"}
-        </Button>
+        {/* Conditional Buttons for Update or Save */}
+        {id ? (
+          <Button variant="primary" type="submit">
+            Update WiFi Location
+          </Button>
+        ) : (
+          <Button variant="primary" type="submit">
+            Save WiFi Location
+          </Button>
+        )}
       </Form>
     </Container>
   );
