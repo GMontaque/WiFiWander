@@ -10,7 +10,7 @@ export const useCurrentUser = () => useContext(CurrentUserContext);
 export const useSetCurrentUser = () => useContext(SetCurrentUserContext);
 
 export const CurrentUserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(undefined); // undefined for loading state
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -29,13 +29,40 @@ export const CurrentUserProvider = ({ children }) => {
 
           // Merge user data with profile data
           setCurrentUser({ ...userData, is_admin: profileData.is_admin });
-
         } else {
           setCurrentUser(null);
         }
       } catch (err) {
-        showAlert('error', "Error fetching user data, please refresh and try again", 'error');
-        setCurrentUser(null);
+        if (err.response?.status === 401) {
+          // Handle refresh token logic
+          const refreshToken = localStorage.getItem("refresh_token");
+          if (refreshToken) {
+            try {
+              const { data } = await axiosRes.post("/dj-rest-auth/token/refresh/", {
+                refresh: refreshToken,
+              });
+
+              localStorage.setItem("access_token", data.access);
+              axiosRes.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
+
+              // Retry fetching user data after refreshing token
+              const { data: userData } = await axiosRes.get("dj-rest-auth/user/");
+              const { data: profileData } = await axiosRes.get(`profiles/${userData.profile_id}/`);
+
+              setCurrentUser({ ...userData, is_admin: profileData.is_admin });
+            } catch (refreshError) {
+              setCurrentUser(null);
+              navigate("/signin");
+              showAlert('error', "Your session has expired. Please log in again.", 'error');
+            }
+          } else {
+            setCurrentUser(null);
+            navigate("/signin");
+          }
+        } else {
+          showAlert('error', "Error fetching user data, please refresh and try again", 'error');
+          setCurrentUser(null);
+        }
       } finally {
         setIsLoading(false);
       }
