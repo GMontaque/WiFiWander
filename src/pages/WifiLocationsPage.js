@@ -8,6 +8,7 @@ import CreateComment from '../components/CreateComment';
 import { useParams, useNavigate } from 'react-router-dom';
 import showAlert from '../components/Sweetalert';
 import Loader from '../components/Loader';
+import Swal from 'sweetalert2';
 
 const WifiLocationsPage = () => {
   const { id } = useParams();
@@ -25,26 +26,15 @@ const WifiLocationsPage = () => {
 
   // Function to fetch comments for the WiFi location
   const fetchComments = useCallback(async () => {
-    if (!isAuthenticated) return;
-
     try {
-      const response = await axiosReq.get(`/comments/?wifi_location=${id}`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-        }
-      });
+      const response = await axiosReq.get(`/comments/?wifi_location=${id}`);
       setComments(response.data);
     } catch (err) {
-      if (err.response?.status === 401) {
-        // Handle unauthorized errors, possibly refresh token
-        showAlert('error', 'You are not authorized. Please log in again.', 'error');
-      } else {
-        showAlert('error', 'Failed to fetch comments', 'error');
-        setComments([]);
-        setError(err);
-      }
+      showAlert('error', 'Failed to fetch comments', 'error');
+      setComments([]);
+      setError(err);
     }
-  }, [id, isAuthenticated]);
+  }, [id]);
 
   useEffect(() => {
     // Function to fetch WiFi location data
@@ -60,9 +50,9 @@ const WifiLocationsPage = () => {
 
     if (id) {
       fetchWifiLocation();
-      if (isAuthenticated) fetchComments();
+      fetchComments();
     }
-  }, [id, fetchComments, isAuthenticated]);
+  }, [id, fetchComments]);
 
   // Function to handle adding a new comment
   const handleCommentAdded = () => {
@@ -100,6 +90,11 @@ const WifiLocationsPage = () => {
 
   // Function to handle comment deletion
   const handleDeleteComment = async (commentId) => {
+    if (!isAuthenticated) {
+      showAlert('error', 'You must be logged in to delete a comment', 'error');
+      return;
+    }
+
     try {
       const response = await axiosRes.delete(`/comments/${commentId}/`, {
         headers: {
@@ -118,9 +113,27 @@ const WifiLocationsPage = () => {
     }
   };
 
+  // Function to confirm and delete comment
+  const deleteComment = (commentId) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to delete this comment?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleDeleteComment(commentId);
+      }
+    });
+  };
+
   // Function to handle updating a comment
   const handleUpdateComment = (comment) => {
-    if (currentUser?.username === comment.username) {
+    if (currentUser?.username === comment.user) {
       setCommentToEdit(comment);
     } else {
       showAlert('error', "You don't have permission to edit this comment", 'error');
@@ -134,6 +147,11 @@ const WifiLocationsPage = () => {
 
   // Function to handle deleting the WiFi location
   const handleDeleteLocation = async () => {
+    if (!isAuthenticated) {
+      showAlert('error', 'You must be logged in to delete a location', 'error');
+      return;
+    }
+
     try {
       const response = await axiosRes.delete(`/wifi_locations/${id}/`, {
         headers: {
@@ -145,7 +163,7 @@ const WifiLocationsPage = () => {
         navigate("/");
       }
     } catch (err) {
-      showAlert('error', "There was an error deleting the WiFi location, please try again", 'error');
+      showAlert('error', 'There was an error deleting the WiFi location, please try again', 'error');
       setError(err);
     }
   };
@@ -195,7 +213,12 @@ const WifiLocationsPage = () => {
       </Row>
       <Row>
         {comments.length > 0 ? (
-          <Comments comments={comments} onDelete={handleDeleteComment} onUpdate={handleUpdateComment} />
+          <Comments
+            comments={comments}
+            onDelete={deleteComment}
+            onUpdate={handleUpdateComment}
+            currentUser={currentUser}
+          />
         ) : (
           <p>No comments available.</p>
         )}
