@@ -133,6 +133,7 @@ const CreateComment = ({ onCommentAdded, username, commentToEdit, onCancelEdit }
             name="comment_text"
             value={formData.comment_text}
             onChange={handleChange}
+            required
           />
           {errors.comment_text?.map((message, idx) => (
             <Alert variant="warning" key={idx}>
@@ -154,6 +155,7 @@ const CreateComment = ({ onCommentAdded, username, commentToEdit, onCancelEdit }
               value={int}
               checked={formData.star_rating === int}
               onChange={handleRatingChange}
+              required
             />
           ))}
           {errors.star_rating?.map((message, idx) => (
