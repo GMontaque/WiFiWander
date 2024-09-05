@@ -175,7 +175,7 @@ const WifiLocationsCreation = () => {
 
         {/* City Field with AutoComplete */}
         <Form.Group controlId="city" className="mb-3">
-          <Form.Label>City</Form.Label>
+          <Form.Label>{id ? <p>City: {wifiData.city}</p> : "City"}</Form.Label>
           <AutoComplete type="city" onSelect={handleCitySelect} />
         </Form.Group>
 
