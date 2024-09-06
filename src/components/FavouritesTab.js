@@ -4,6 +4,7 @@ import { useCurrentUser } from '../components/CurrentUserContext';
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { useNavigate } from 'react-router-dom';
 import showAlert from '../components/Sweetalert';
+import Swal from 'sweetalert2';
 
 const FavouritesTab = () => {
   const currentUser = useCurrentUser();
@@ -65,6 +66,23 @@ const FavouritesTab = () => {
     }
   };
 
+  const deleteFavorite = (commentId) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to delete this from Favorites?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleRemoveFavorite(commentId);
+      }
+    });
+  };
+
   // Function to handle viewing the full WiFi location page
   const handleViewLocation = (locationId) => {
     navigate(`/wifi-locations/${locationId}/`);
@@ -111,7 +129,7 @@ const FavouritesTab = () => {
                     </Button>
                     <Button
                       variant="danger"
-                      onClick={() => handleRemoveFavorite(fav.id)}
+                      onClick={() => deleteFavorite(fav.id)}
                     >
                       Remove from Favorites
                     </Button>
