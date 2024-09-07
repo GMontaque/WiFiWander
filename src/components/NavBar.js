@@ -11,13 +11,13 @@ import showAlert from '../components/Sweetalert';
 
 const LoggedOutIcons = () => (
   <>
-    <NavLink to="/signup">Sign Up</NavLink>
-    <NavLink to="/signin">Sign In</NavLink>
+    <NavLink to="/signup" className="remove-underline nav-color">Sign Up</NavLink>
+    <NavLink to="/signin" className="remove-underline ms-4 nav-color">Sign In</NavLink>
   </>
 );
 
 const AddLocation = () => (
-  <NavLink to="/newlocation">Add Location</NavLink>
+  <NavLink to="/newlocation" className="remove-underline ms-4 nav-color">Add Location</NavLink>
 );
 
 const NavBar = () => {
@@ -40,17 +40,17 @@ const NavBar = () => {
 
   const LoggedInIcons = () => (
     <>
-      {currentUser?.username}
-      <NavLink to="/profile">Profile</NavLink>
-      <NavLink to="/" onClick={handleSignOut}>Log Out</NavLink>
+      <p className='white capitalize'>{currentUser?.username}</p>
+      <NavLink to="/profile" className="ms-4 remove-underline nav-color">Profile</NavLink>
+      <NavLink to="/" onClick={handleSignOut} className="ms-4 remove-underline nav-color">Log Out</NavLink>
     </>
   );
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
+    <Navbar expand="lg" className=" title">
+      <Container className='navStyle'>
         <NavLink to="/">
-          <Navbar.Brand>
+          <Navbar.Brand className='logo'>
             <img
               src={logo}
               width="30"
@@ -62,14 +62,15 @@ const NavBar = () => {
         </NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/about">About Us</NavLink>
+          <Nav className="me-auto navbar-mobile-links">
+            <NavLink to="/" className="remove-underline nav-color">Home</NavLink>
+            <NavLink to="/about" className="remove-underline ms-4 nav-color">About Us</NavLink>
             {currentUser && <AddLocation />}
           </Nav>
-          <Nav className="ms-auto">
+          <Nav className="ms-auto navbar-mobile-login">
             {currentUser ? <LoggedInIcons /> : <LoggedOutIcons />}
           </Nav>
+
         </Navbar.Collapse>
       </Container>
     </Navbar>
