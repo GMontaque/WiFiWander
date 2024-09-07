@@ -10,7 +10,7 @@ function Hero() {
                 <div className="hero-container">
                     <div className="overlay">
                         <h1 className="overlay-title title">Wifi Wander</h1>
-                        <p className="overlay-text">Find, share, and rate Wi-Fi spots across the globe. Join our community today.</p>
+                        <p className="overlay-text white">Find, share, and rate Wi-Fi spots across the globe. Join our community today.</p>
                     </div>
                 </div>
             );
