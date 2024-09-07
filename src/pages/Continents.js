@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Button } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import africaImage from '../assets/africa.png';
 import asiaImage from '../assets/asia.png';
@@ -28,11 +28,11 @@ const Continents = () => {
             <Card.Text>
               Discover Wi-Fi locations.
             </Card.Text>
-            <Button variant="primary">
-              <Link to={continent.path} style={{ color: 'white', textDecoration: 'none' }}>
+            <div className="continentBtn-back">
+              <Link to={continent.path} className="continentBtn">
                 Explore {continent.name}
               </Link>
-            </Button>
+            </div>
           </Card.Body>
         </Card>
       ))}

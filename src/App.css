@@ -151,7 +151,7 @@ nav {
 
 .continentsCards {
   display: flex;
-  flex-Wrap: wrap;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
@@ -177,11 +177,36 @@ nav {
   background-color: #F5DEB3;
   width: 80%;
   margin: 0rem auto;
-  height: 2rem;
+  height: min-content;
   margin-top: 3rem;
   border-radius: 3rem;
   text-align: center;
-  height: min-content;
+}
+
+.continentBtn-back {
+  background-color: #003366;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  text-align: center;
+  display: inline-block;
+}
+
+.continentBtn {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Hover effects for the button */
+.continentBtn-back:hover {
+  background-color: #00f733;
+}
+
+.continentBtn-back:hover .continentBtn {
+  color: #830000;
+  /* Changes the text color on hover */
+  text-decoration: underline;
 }
 
 @media (max-width: 1025px) {
