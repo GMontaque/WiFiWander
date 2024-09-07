@@ -71,7 +71,9 @@ nav {
   color: #FFFFFF;
 }
 
-.nav-color:hover {
+.nav-color:hover,
+.footer-link:hover,
+a i:hover {
   color: #00f733;
   text-decoration: underline;
 }
@@ -213,4 +215,37 @@ nav {
   .card {
     width: 30rem;
   }
+}
+
+
+/* ***************** footer ********************** */
+
+footer {
+  background-color: #003366;
+}
+
+footer .row {
+  align-items: center;
+  padding-top: 2rem;
+}
+
+.text-align-c {
+  text-align: center;
+  font-size: 3rem;
+}
+
+.footer-bottom {
+  border-top: 5px solid #f5deb3;
+  margin: 2rem 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+footer img {
+  height: 9rem;
+  width: 9rem;
+}
+
+a i {
+  color: white
 }

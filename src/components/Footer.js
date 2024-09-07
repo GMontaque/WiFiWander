@@ -11,46 +11,37 @@ function Footer() {
             <Row>
                 <footer>
                     <Row>
-                        <Col>
+                        <Col className='text-align-c' sm={3}>
                             <Link to="/">
                                 <img
                                     src={logo}
-                                    width="30"
-                                    height="30"
                                     className="d-inline-block align-top"
                                     alt="Logo"
                                 />
                             </Link>
                         </Col>
-                        <Col>
-                            <Link to="/">Home</Link>
-                            <Link to="/about">About Us</Link>
+                        <Col className='text-align-c pt-5' sm={6}>
+                            <Link to="/" className='white remove-underline footer-link'>Home</Link>
+                            <Link to="/about" className='white remove-underline ms-5 footer-link'>About Us</Link>
                         </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">
+                        <Col className='text-align-c pt-5' sm={3}>
+                            <a className='' href="https://www.google.com" target="_blank" rel="noopener noreferrer">
                                 <i className="fa-brands fa-x-twitter"></i>
                             </a>
-                            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                            <a className='ms-4 ' href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
                                 <i className="fa-brands fa-square-facebook"></i>
                             </a>
-                            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                            <a className='ms-4' href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
                                 <i className="fa-brands fa-square-instagram"></i>
                             </a>
                         </Col>
                     </Row>
-                    <Row>
-                        <p>&copy; {new Date().getFullYear()} Wifi Wander. All rights reserved.</p>
-                        <p>
+                    <Row className='footer-bottom'>
+                        <p className='white'>&copy; {new Date().getFullYear()} Wifi Wander. All rights reserved.</p>
+                        <p className='white'>
                             This website and its content are the property of Wifi Wander. Unauthorized
                             reproduction, distribution, or use of the content is strictly prohibited
                             without prior consent from the company.
-                        </p>
-                        <p>
-                            Wifi Wander is committed to protecting your privacy and personal data.
-                            For more information, please review our Privacy Policy
-                            and Terms of Service.
                         </p>
                     </Row>
                 </footer>
