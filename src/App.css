@@ -145,3 +145,47 @@ nav {
     height: 40rem;
   }
 }
+
+
+/* ***************** continents ********************** */
+
+.continentsCards {
+  display: flex;
+  flex-Wrap: wrap;
+  justify-content: center;
+}
+
+.card-title {
+  font-size: 3rem;
+}
+
+.card {
+  width: 45rem;
+  background-color: #003366;
+  border: 5px solid #003366;
+  border-radius: 5rem;
+  padding: 3rem 1rem;
+  margin: 1rem;
+}
+
+.card img {
+  width: 80%;
+  align-self: center;
+}
+
+.card-body {
+  background-color: #F5DEB3;
+  width: 80%;
+  margin: 0rem auto;
+  height: 2rem;
+  margin-top: 3rem;
+  border-radius: 3rem;
+  text-align: center;
+  height: min-content;
+}
+
+@media (max-width: 1025px) {
+  .card {
+    width: 30rem;
+  }
+}

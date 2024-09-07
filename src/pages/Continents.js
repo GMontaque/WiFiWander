@@ -19,14 +19,14 @@ const continents = [
 
 const Continents = () => {
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+    <div className='continentsCards'>
       {continents.map((continent) => (
-        <Card key={continent.name} className="mb-4" style={{ width: '30rem' }}>
+        <Card key={continent.name} className="mb-4">
           <Card.Img variant="top" src={continent.image} />
           <Card.Body>
-            <Card.Title>{continent.name}</Card.Title>
+            <Card.Title className="card-title">{continent.name}</Card.Title>
             <Card.Text>
-              Discover Wi-Fi locations in {continent.name}.
+              Discover Wi-Fi locations.
             </Card.Text>
             <Button variant="primary">
               <Link to={continent.path} style={{ color: 'white', textDecoration: 'none' }}>
