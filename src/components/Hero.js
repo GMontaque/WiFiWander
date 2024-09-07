@@ -1,27 +1,29 @@
 import React from 'react';
-import { Image } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
-import heroImageHome from '../assets/headerImage.webp';
-
 
 function Hero() {
     const location = useLocation();
 
     const HeroImage = () => {
         if (location.pathname === '/') {
-            // return heroImageHome
-            return <Image src={heroImageHome} className="img-fluid" alt="top" style={{ width: '100%', height: '50rem' }} />
+            return (
+                <div className="hero-container">
+                    <div className="overlay">
+                        <h1 className="overlay-title title">Wifi Wander</h1>
+                        <p className="overlay-text">Find, share, and rate Wi-Fi spots across the globe. Join our community today.</p>
+                    </div>
+                </div>
+            );
         } else {
-            // return heroImageHome
-            return <Image src={heroImageHome} className="img-fluid" alt="top" style={{ width: '100%', height: '20rem' }} />
+            return (
+                <div className="hero-container" style={{ width: '100%', height: '30rem', 'background-position': 'center -21rem' }}>
+                    <div className="overlay"></div>
+                </div>
+            );
         }
     };
 
-    return (
-        <>
-            {HeroImage()}
-        </>
-    );
+    return <>{HeroImage()}</>;
 }
 
 export default Hero;
