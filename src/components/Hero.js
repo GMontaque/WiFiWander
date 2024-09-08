@@ -16,7 +16,7 @@ function Hero() {
             );
         } else {
             return (
-                <div className="hero-container" style={{ width: '100%', height: '30rem', 'background-position': 'center -21rem' }}>
+                <div className="hero-container hero-mini" >
                     <div className="overlay"></div>
                 </div>
             );
