@@ -126,7 +126,15 @@ a i:hover {
   text-decoration: underline;
 }
 
+.breadcrumb-item.active {
+  text-decoration: underline;
+}
 
+@media (max-width: 426px) {
+  .breadcrumb {
+    font-size: 2rem;
+  }
+}
 
 /* ******************** Hero image ******************** */
 .hero-container {
@@ -265,6 +273,12 @@ a i:hover {
   text-align: center;
 }
 
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5rem;
+}
+
 
 /* ******************** City ******************** */
 
@@ -275,11 +289,6 @@ a i:hover {
 
 
 /* ******************** Footer ******************** */
-
-/* .fix-bottom {
-  position: sticky;
-  bottom: 0;
-} */
 
 footer {
   background-color: #003366;
