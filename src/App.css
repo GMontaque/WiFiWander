@@ -1,6 +1,12 @@
-/* ************** Genereal **************** */
+/* ******************** Genereal ******************** */
 
-.title {
+.title,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Fredoka', sans-serif;
   font-size: 4rem;
 }
@@ -27,7 +33,11 @@ p {
   margin: 5rem 0rem;
 }
 
-/* ************* navbar **************** */
+.main {
+  min-height: 70vh;
+}
+
+/* ******************** navbar ******************** */
 nav {
   background-color: #003366;
 }
@@ -100,7 +110,25 @@ a i:hover {
   }
 }
 
-/* ******************** Hero image *************** */
+/* ******************** Breadcrumb ******************** */
+.breadcrumb {
+  margin: 2rem;
+  font-size: 3rem;
+}
+
+.breadcrumb-item a {
+  color: #003366;
+  text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+  color: #800000;
+  text-decoration: underline;
+}
+
+
+
+/* ******************** Hero image ******************** */
 .hero-container {
   position: relative;
   width: 100%;
@@ -142,14 +170,27 @@ a i:hover {
   margin-top: 1rem;
 }
 
+.hero-mini {
+  width: 100%;
+  height: 30rem;
+  background-position: center -21rem;
+}
+
 @media (max-width: 991px) {
   .hero-container {
     height: 40rem;
   }
 }
 
+/* ******************** Description ******************** */
 
-/* ***************** continents ********************** */
+.description {
+  width: 90%;
+  margin: 0rem auto;
+}
+
+
+/* ******************** Continents ******************** */
 
 .continentsCards {
   display: flex;
@@ -173,6 +214,7 @@ a i:hover {
 .card img {
   width: 80%;
   align-self: center;
+  margin-bottom: 3rem;
 }
 
 .card-body {
@@ -180,12 +222,12 @@ a i:hover {
   width: 80%;
   margin: 0rem auto;
   height: min-content;
-  margin-top: 3rem;
+  /* margin-top: 3rem; */
   border-radius: 3rem;
   text-align: center;
 }
 
-.continentBtn-back {
+.btn-back {
   background-color: #003366;
   padding: 1rem 2rem;
   border-radius: 2rem;
@@ -193,7 +235,7 @@ a i:hover {
   display: inline-block;
 }
 
-.continentBtn {
+.btn {
   color: white;
   text-decoration: none;
   font-size: 1.5rem;
@@ -201,13 +243,12 @@ a i:hover {
 }
 
 /* Hover effects for the button */
-.continentBtn-back:hover {
+.btn-back:hover {
   background-color: #00f733;
 }
 
-.continentBtn-back:hover .continentBtn {
+.btn-back:hover .btn {
   color: #830000;
-  /* Changes the text color on hover */
   text-decoration: underline;
 }
 
@@ -217,8 +258,28 @@ a i:hover {
   }
 }
 
+/* ******************** Country ******************** */
 
-/* ***************** footer ********************** */
+.pageTitle {
+  font-size: 5rem;
+  text-align: center;
+}
+
+
+/* ******************** City ******************** */
+
+.citybtn {
+  height: 18rem;
+  align-content: center;
+}
+
+
+/* ******************** Footer ******************** */
+
+/* .fix-bottom {
+  position: sticky;
+  bottom: 0;
+} */
 
 footer {
   background-color: #003366;
