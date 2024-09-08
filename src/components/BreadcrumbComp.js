@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const BreadcrumbComp = ({ continentName, countryName, cityName }) => {
     return (
-        <Breadcrumb className='navbar-toggler breadcrumb'>
+        <Breadcrumb className='navbar-toggler'>
             <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Home</Breadcrumb.Item>
             {continentName && (
                 <Breadcrumb.Item linkAs={Link} linkProps={{ to: `/continents/${continentName}` }}>
