@@ -45,43 +45,43 @@ const WifiLocationsList = () => {
       {wifiLocations.length > 0 ? (
         <Table responsive>
           <thead>
-            <tr>
+            <tr className='white'>
               <th>Image</th>
               <th>Name</th>
-              {/* Conditionally render address fields only if they have data */}
-              {wifiLocations.some(location => location.street) && <th className="d-none-712">Street</th>}
-              {wifiLocations.some(location => location.city) && <th className="d-none-712 ">City</th>}
-              {wifiLocations.some(location => location.country) && <th className="d-none-712 ">Country</th>}
-              {wifiLocations.some(location => location.postcode) && <th className="d-none-712 ">Postcode</th>}
-              <th>Amenities</th>
-              <th className="d-none-712">Page link</th>
+              {wifiLocations.some(location => location.street) && <th className="d-none-831">Street</th>}
+              {wifiLocations.some(location => location.city) && <th className="d-none-631">City</th>}
+              {wifiLocations.some(location => location.country) && <th className="d-none-526">Country</th>}
+              {wifiLocations.some(location => location.postcode) && <th className="d-none-831">Postcode</th>}
+              <th className='d-none-520 d-none-446'>Amenities</th>
+              <th className="d-none-831">Link</th>
             </tr>
           </thead>
           <tbody>
             {wifiLocations.map((location) => (
               <React.Fragment key={location.id}>
-                <tr>
+                <tr className='white'>
                   <td>
                     {location.image ? (
-                      <img src={location.image} alt={location.name} style={{ width: '100px' }} />
+                      <img src={location.image} alt={location.name} className='p-4 list-img' />
                     ) : (
                       'No Image'
                     )}
                   </td>
-                  <td>{location.name}</td>
-                  {location.street && <td className="d-none-712">{location.street}</td>}
-                  {location.city && <td className="d-none-712">{location.city}</td>}
-                  {location.country && <td className="d-none-712">{location.country}</td>}
-                  {location.postcode && <td className="d-none-712">{location.postcode}</td>}
-                  <td>{location.amenities}</td>
-                  <td className="d-none-712">
-                    <NavLink to={`/wifi-locations/${location.id}`}>View Details</NavLink>
+                  <td className='table-pad'>{location.name}</td>
+                  {location.street && <td className="d-none-831 table-pad">{location.street}</td>}
+                  {location.city && <td className="table-pad d-none-631">{location.city}</td>}
+                  {location.country && <td className="table-pad d-none-526">{location.country}</td>}
+                  {location.postcode && <td className="d-none-831 table-pad">{location.postcode}</td>}
+                  <td className='table-pad d-none-520 d-none-446'>{location.amenities}</td>
+                  <td className="d-none-831 table-pad">
+                    <NavLink className='remove-underline white wifiListHover' to={`/wifi-locations/${location.id}`}>View</NavLink>
                   </td>
                 </tr>
-                {/* mobile wifi location link */}
+                {/* Mobile wifi location link */}
                 <tr className="d-none display">
                   <td colSpan="6">
-                    <NavLink to={`/wifi-locations/${location.id}`}>View Details</NavLink>
+                    <p className='d-none mobile-amenities '>Amenities: {location.amenities}</p>
+                    <NavLink to={`/wifi-locations/${location.id}`} className='remove-underline white wifiListHover' >View</NavLink>
                   </td>
                 </tr>
               </React.Fragment>

@@ -83,7 +83,8 @@ nav {
 
 .nav-color:hover,
 .footer-link:hover,
-a i:hover {
+a i:hover,
+.wifiListHover:hover {
   color: #00f733;
   text-decoration: underline;
 }
@@ -288,8 +289,22 @@ a i:hover {
 }
 
 /* ******************** Wifi Locations List ******************** */
-@media (max-width: 712px) {
-  .d-none-712 {
+
+.table {
+  --bs-table-color: white;
+  --bs-table-bg: #003366;
+}
+
+.table-pad {
+  padding: 2rem 2rem 2rem 0rem !important;
+}
+
+.list-img {
+  width: 20rem;
+}
+
+@media (max-width: 831px) {
+  .d-none-831 {
     display: none;
   }
 
@@ -298,11 +313,40 @@ a i:hover {
   }
 }
 
+@media (max-width: 631px) {
+  .d-none-631 {
+    display: none;
+  }
+}
 
-@media (max-width: 768px) {
-  .page-link-row td {
-    padding: 10px 0;
-    text-align: center;
+@media (max-width: 526px) {
+  .d-none-526 {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .d-none-520 {
+    display: none;
+  }
+
+  .mobile-amenities {
+    display: block !important;
+    color: white;
+  }
+}
+
+@media (max-width: 446px) {
+  .d-none-446 {
+    display: none;
+  }
+
+  .list-img {
+    width: 18rem;
+  }
+
+  .p-4 {
+    padding: 0 !important;
   }
 }
 
