@@ -10,10 +10,6 @@ const WifiLocationsList = () => {
   const [wifiLocations, setWifiLocations] = useState([]);
   const [error, setError] = useState(null);
 
-  const table_names = [
-    "Image", "Name", "Street", "City", "Country", "Postcode", "Amenities", "Page link"
-  ];
-
   // Fetch WiFi locations based on continent, country, and city
   useEffect(() => {
     const fetchData = async () => {
@@ -43,47 +39,58 @@ const WifiLocationsList = () => {
       </div>
 
       {/* Display the city name */}
-      <h1>{cityName}</h1>
+      <h1 className='pageTitle'>{cityName.charAt(0).toUpperCase() + cityName.slice(1)}</h1>
 
       {/* display WiFi locations */}
-      <Table responsive>
-        <thead>
-          <tr>
-            {table_names.map((name, index) => (
-              <th key={index}>{name}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {wifiLocations && wifiLocations.length > 0 ? (
-            wifiLocations.map((location) => (
-              <tr key={location.id}>
-                <td>
-                  {location.image ? (
-                    <img src={location.image} alt={location.name} style={{ width: '100px' }} />
-                  ) : (
-                    'No Image'
-                  )}
-                </td>
-                <td>{location.name}</td>
-                <td>{location.street}</td>
-                <td>{location.city}</td>
-                <td>{location.country}</td>
-                <td>{location.postcode}</td>
-                <td>{location.amenities}</td>
-                <td>
-                  {/* NavLink to individual WiFi location page */}
-                  <NavLink to={`/wifi-locations/${location.id}`}>View Details</NavLink>
-                </td>
-              </tr>
-            ))
-          ) : (
+      {wifiLocations.length > 0 ? (
+        <Table responsive>
+          <thead>
             <tr>
-              <td colSpan={table_names.length}>No WiFi locations found.</td>
+              <th>Image</th>
+              <th>Name</th>
+              {/* Conditionally render address fields only if they have data */}
+              {wifiLocations.some(location => location.street) && <th className="d-none-712">Street</th>}
+              {wifiLocations.some(location => location.city) && <th className="d-none-712 ">City</th>}
+              {wifiLocations.some(location => location.country) && <th className="d-none-712 ">Country</th>}
+              {wifiLocations.some(location => location.postcode) && <th className="d-none-712 ">Postcode</th>}
+              <th>Amenities</th>
+              <th className="d-none-712">Page link</th>
             </tr>
-          )}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {wifiLocations.map((location) => (
+              <React.Fragment key={location.id}>
+                <tr>
+                  <td>
+                    {location.image ? (
+                      <img src={location.image} alt={location.name} style={{ width: '100px' }} />
+                    ) : (
+                      'No Image'
+                    )}
+                  </td>
+                  <td>{location.name}</td>
+                  {location.street && <td className="d-none-712">{location.street}</td>}
+                  {location.city && <td className="d-none-712">{location.city}</td>}
+                  {location.country && <td className="d-none-712">{location.country}</td>}
+                  {location.postcode && <td className="d-none-712">{location.postcode}</td>}
+                  <td>{location.amenities}</td>
+                  <td className="d-none-712">
+                    <NavLink to={`/wifi-locations/${location.id}`}>View Details</NavLink>
+                  </td>
+                </tr>
+                {/* mobile wifi location link */}
+                <tr className="d-none display">
+                  <td colSpan="6">
+                    <NavLink to={`/wifi-locations/${location.id}`}>View Details</NavLink>
+                  </td>
+                </tr>
+              </React.Fragment>
+            ))}
+          </tbody>
+        </Table>
+      ) : (
+        <p>No WiFi locations found.</p>
+      )}
     </>
   );
 };

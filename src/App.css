@@ -287,6 +287,25 @@ a i:hover {
   align-content: center;
 }
 
+/* ******************** Wifi Locations List ******************** */
+@media (max-width: 712px) {
+  .d-none-712 {
+    display: none;
+  }
+
+  .display {
+    display: contents !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .page-link-row td {
+    padding: 10px 0;
+    text-align: center;
+  }
+}
+
 
 /* ******************** Footer ******************** */
 
