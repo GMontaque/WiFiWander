@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Col, Card, Button } from 'react-bootstrap';
 import showAlert from '../components/Sweetalert';
+import BreadcrumbComp from '../components/BreadcrumbComp';
+
 
 const City = () => {
   const { continentName, countryName } = useParams();
@@ -15,7 +17,7 @@ const City = () => {
         const uniqueCities = [...new Set(response.data.map(location => location.city))];
         setCities(uniqueCities);
       } catch (error) {
-        showAlert('error','Error fetching cities, please refresh and try again', 'error');
+        showAlert('error', 'Error fetching cities, please refresh and try again', 'error');
       }
     };
 
@@ -24,9 +26,13 @@ const City = () => {
 
   return (
     <div>
+      {/* Display Breadcrumb */}
+      <div>
+        <BreadcrumbComp continentName={continentName} countryName={countryName} />
+      </div>
       <h2>Select a City in {countryName}</h2>
       <ul>
-      {cities.map(city => (
+        {cities.map(city => (
           <Col key={city} sm={12} md={6} lg={4}>
             <Card className="mb-4">
               <Card.Body>
