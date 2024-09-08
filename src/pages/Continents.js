@@ -28,8 +28,8 @@ const Continents = () => {
             <Card.Text>
               Discover Wi-Fi locations.
             </Card.Text>
-            <div className="continentBtn-back">
-              <Link to={continent.path} className="continentBtn">
+            <div className="btn-back">
+              <Link to={continent.path} className="btn">
                 Explore {continent.name}
               </Link>
             </div>
