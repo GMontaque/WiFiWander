@@ -30,23 +30,23 @@ const City = () => {
       <div>
         <BreadcrumbComp continentName={continentName} countryName={countryName} />
       </div>
-      <h2>Select a City in {countryName}</h2>
-      <ul>
+      <h1 className='pageTitle'>Select a City in {countryName.charAt(0).toUpperCase() + countryName.slice(1)}</h1>
+      <div className='list'>
         {cities.map(city => (
           <Col key={city} sm={12} md={6} lg={4}>
             <Card className="mb-4">
-              <Card.Body>
+              <Card.Body className='citybtn'>
                 <Card.Title>{city}</Card.Title>
-                <Button variant="primary">
-                  <Link to={`/continents/${continentName}/${countryName.toLowerCase()}/${city.toLowerCase()}`} style={{ color: 'white', textDecoration: 'none' }}>
+                <div className="btn-back">
+                  <Link to={`/continents/${continentName}/${countryName.toLowerCase()}/${city.toLowerCase()}`} className="btn">
                     Explore {city}
                   </Link>
-                </Button>
+                </div>
               </Card.Body>
             </Card>
           </Col>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
