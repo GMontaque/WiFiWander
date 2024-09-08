@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import { Col, Card, Button } from 'react-bootstrap';
+import { Col, Card } from 'react-bootstrap';
 import showAlert from '../components/Sweetalert';
 import BreadcrumbComp from '../components/BreadcrumbComp';
 
@@ -28,23 +28,23 @@ const Country = () => {
       <div>
         <BreadcrumbComp continentName={continentName} countryName={countryName} />
       </div>
-      <h2>Select a Country in {continentName}</h2>
-      <ul>
+      <h1 className='pageTitle'>Select a Country in {continentName.charAt(0).toUpperCase() + continentName.slice(1)}</h1>
+      <div className='list'>
         {countries.map(country => (
           <Col key={country} sm={12} md={6} lg={4}>
             <Card className="mb-4">
-              <Card.Body>
+              <Card.Body className='citybtn'>
                 <Card.Title>{country}</Card.Title>
-                <Button variant="primary">
-                  <Link to={`/continents/${continentName}/${country.toLowerCase()}`} style={{ color: 'white', textDecoration: 'none' }}>
+                <div className="btn-back">
+                  <Link to={`/continents/${continentName}/${country.toLowerCase()}`} className="btn">
                     Explore {country}
                   </Link>
-                </Button>
+                </div>
               </Card.Body>
             </Card>
           </Col>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
