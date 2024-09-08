@@ -25,7 +25,7 @@ function App() {
     <div className="App">
       <NavBar />
       <Hero />
-      <Container fluid>
+      <Container fluid className='main'>
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/signin" element={<SignIn />} />
