@@ -384,6 +384,43 @@ a i:hover,
   max-width: 90%;
 }
 
+/* ******************** Wifi Location Page Comments ******************** */
+
+
+.wifi-comment{
+  max-width: 30rem !important;
+}
+
+.wifi-comments{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 769px) {
+  .wifi-mobile{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wifipage-img {
+    float: left;
+    width: 100%;
+    position: static;
+    top: 0;
+    text-align: center;
+  }
+
+  .wifipage-text{
+    width: 90%;
+    margin: auto;
+    margin-top: 3rem;
+  }
+
+  .wifi-comment{
+    max-width: 25rem !important;
+    padding: 2rem 1rem;
+  }
+}
 
 
 /* ******************** Footer ******************** */
