@@ -351,6 +351,41 @@ a i:hover,
 }
 
 
+/* ******************** Wifi Location Page ******************** */
+
+.wifipage-links{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3rem;
+  align-items: center;
+}
+
+.wifipage-img{
+  float: left;
+  width: 45%;
+  position: sticky;
+  top: 0;
+  text-align: center;
+}
+
+.wifipage-text{
+  float: right;
+  width: 55%;
+  height: min-content;
+}
+
+.amenities{
+  max-width: 90%;
+  margin: auto;
+  display: flex;
+}
+
+.img-fluid{
+  max-width: 90%;
+}
+
+
+
 /* ******************** Footer ******************** */
 
 footer {
