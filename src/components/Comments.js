@@ -6,7 +6,7 @@ const Comments = ({ comments, onDelete, onUpdate, currentUser }) => {
     <>
       {comments.length > 0 ? (
         comments.map((comment) => (
-          <Card key={comment.id} style={{ width: '18rem', marginBottom: '1rem' }}>
+          <Card key={comment.id}>
             <Card.Body>
               <Card.Title>{comment.user}</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">
