@@ -6,7 +6,7 @@ const Comments = ({ comments, onDelete, onUpdate, currentUser }) => {
     <>
       {comments.length > 0 ? (
         comments.map((comment) => (
-          <Card key={comment.id}>
+          <Card key={comment.id} className='wifi-comment'>
             <Card.Body>
               <Card.Title>{comment.user}</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">
