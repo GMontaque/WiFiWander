@@ -189,16 +189,31 @@ const WifiLocationsPage = () => {
         <h1 className='pageTitle mt-4'>{wifiLocation.name}</h1>
         <div className='wifipage-links'>
           <p>{wifiLocation.star_rating || 'No rating available'}</p>
-          <div>
+          <div className='wifi-links'>
             {currentUser && (
               <>
-                <Button onClick={handleAddToFavorites}>Add to Favorites</Button>
+                <div className="btn-back m-top-1">
+                  <Button onClick={handleAddToFavorites} className="btn" variant="">
+                    Add to Favorites
+                  </Button>
+                </div>
+
                 {canEditOrDelete && (
                   <>
-                    <Button onClick={handleUpdateLocation}>Edit Location</Button>
-                    <Button onClick={handleDeleteLocation}>Delete Location</Button>
+                    <div className="btn-back m-top-1 ms-2">
+                      <Button onClick={handleUpdateLocation} className="btn" variant="">
+                        Edit Location
+                      </Button>
+                    </div>
+
+                    <div className="btn-back m-top-1 ms-2">
+                      <Button onClick={handleDeleteLocation} className="btn" variant="">
+                        Delete Location
+                      </Button>
+                    </div>
                   </>
                 )}
+
               </>
             )}
           </div>
@@ -231,8 +246,9 @@ const WifiLocationsPage = () => {
           </div>
         </div>
       </Row>
-      <Row>
-        {currentUser && (
+      <Row className='justify-content-end'>
+        <div className='comments-position'>
+          {currentUser && (
             <CreateComment
               username={currentUser}
               onCommentAdded={handleCommentAdded}
@@ -240,9 +256,10 @@ const WifiLocationsPage = () => {
               onCancelEdit={handleCancelEdit}
             />
           )}
+        </div>
         <AmenitiesKey />
       </Row>
-      
+
     </>
   );
 };
