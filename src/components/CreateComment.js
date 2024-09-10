@@ -128,7 +128,7 @@ const CreateComment = ({ onCommentAdded, username, commentToEdit, onCancelEdit }
           <Form.Label>Description</Form.Label>
           <Form.Control
             as="textarea"
-            rows={3}
+            rows={5}
             placeholder="Please describe the wifi location"
             name="comment_text"
             value={formData.comment_text}
@@ -164,14 +164,17 @@ const CreateComment = ({ onCommentAdded, username, commentToEdit, onCancelEdit }
             </Alert>
           ))}
         </Form.Group>
-
-        <Button variant="primary" type="submit">
-          {commentToEdit ? 'Update' : 'Submit'}
-        </Button>
-        {commentToEdit && (
-          <Button variant="secondary" onClick={onCancelEdit} className="ms-2">
-            Cancel
+        <div className="btn-back">
+          <Button type="submit" className="btn" variant="">
+            {commentToEdit ? 'Update' : 'Submit'}
           </Button>
+        </div>
+        {commentToEdit && (
+          <div className="btn-back ms-2">
+            <Button onClick={onCancelEdit} className="btn" variant="">
+              Cancel
+            </Button>
+          </div>
         )}
       </Form>
     </>
