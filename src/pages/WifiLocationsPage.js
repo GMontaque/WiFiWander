@@ -186,52 +186,63 @@ const WifiLocationsPage = () => {
   return (
     <>
       <Row>
-        <h1>{wifiLocation.name}</h1>
-        <span>
-          {currentUser && (
-            <>
-              <Button onClick={handleAddToFavorites}>Add to Favorites</Button>
-              {canEditOrDelete && (
-                <>
-                  <Button onClick={handleUpdateLocation}>Edit Location</Button>
-                  <Button onClick={handleDeleteLocation}>Delete Location</Button>
-                </>
+        <h1 className='pageTitle mt-4'>{wifiLocation.name}</h1>
+        <div className='wifipage-links'>
+          <p>{wifiLocation.star_rating || 'No rating available'}</p>
+          <div>
+            {currentUser && (
+              <>
+                <Button onClick={handleAddToFavorites}>Add to Favorites</Button>
+                {canEditOrDelete && (
+                  <>
+                    <Button onClick={handleUpdateLocation}>Edit Location</Button>
+                    <Button onClick={handleDeleteLocation}>Delete Location</Button>
+                  </>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+        <div className='wifi-mobile'>
+          <div className='wifipage-img'>
+            {wifiLocation.image && (
+              <Image
+                src={wifiLocation.image}
+                alt={`Image of ${wifiLocation.name}`}
+                fluid
+              />
+            )}
+            <p className='amenities'>{wifiLocation.amenities}</p>
+          </div>
+          <div className='wifipage-text'>
+            <p className='pb-5'>{wifiLocation.description}</p>
+            <div className='wifi-comments'>
+              {comments.length > 0 ? (
+                <Comments
+                  comments={comments}
+                  onDelete={deleteComment}
+                  onUpdate={handleUpdateComment}
+                  currentUser={currentUser}
+                />
+              ) : (
+                <p>No comments available.</p>
               )}
-            </>
-          )}
-        </span>
-        <div>{wifiLocation.star_rating || 'No rating available'}</div>
-        {wifiLocation.image && (
-          <Image
-            src={wifiLocation.image}
-            alt={`Image of ${wifiLocation.name}`}
-            fluid
-          />
-        )}
-        <p>{wifiLocation.description}</p>
-        <div>{wifiLocation.amenities}</div>
+            </div>
+          </div>
+        </div>
       </Row>
       <Row>
-        {comments.length > 0 ? (
-          <Comments
-            comments={comments}
-            onDelete={deleteComment}
-            onUpdate={handleUpdateComment}
-            currentUser={currentUser}
-          />
-        ) : (
-          <p>No comments available.</p>
-        )}
         {currentUser && (
-          <CreateComment
-            username={currentUser}
-            onCommentAdded={handleCommentAdded}
-            commentToEdit={commentToEdit}
-            onCancelEdit={handleCancelEdit}
-          />
-        )}
+            <CreateComment
+              username={currentUser}
+              onCommentAdded={handleCommentAdded}
+              commentToEdit={commentToEdit}
+              onCancelEdit={handleCancelEdit}
+            />
+          )}
+        <AmenitiesKey />
       </Row>
-      <AmenitiesKey />
+      
     </>
   );
 };
