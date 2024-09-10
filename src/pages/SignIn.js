@@ -53,9 +53,9 @@ function SignIn() {
 
   return (
     <>
-      <Row>
-        <h1>Sign In</h1>
-        <Form onSubmit={handleSubmit}>
+      <Row className="flex-column">
+        <h1 className="mt-5 mb-4 text-center">Sign In</h1>
+        <Form onSubmit={handleSubmit} className="mb-5  signup-form">
           <Form.Group controlId="username">
             <Form.Label className="d-none">Username</Form.Label>
             <Form.Control
@@ -80,6 +80,7 @@ function SignIn() {
               name="password"
               value={password}
               onChange={handleChange}
+              className="mt-5"
             />
             {errors.password?.map((message, idx) => (
               <Alert variant="warning" key={idx}>
@@ -87,7 +88,12 @@ function SignIn() {
               </Alert>
             ))}
           </Form.Group>
-          <Button type="submit">Sign In</Button>
+
+          <div className="btn-back mt-4 mb-5">
+            <Button className="btn" variant="" type="submit">
+              Sign In
+            </Button>
+          </div>
           {errors.non_field_errors?.map((message, idx) => (
             <Alert key={idx} variant="warning" className="mt-3">
               {message}
@@ -95,10 +101,10 @@ function SignIn() {
           ))}
         </Form>
 
-        <Link to="/signup">
+        <Link to="/signup" className="signup-form">
           Don't have an account? <span>Sign up now!</span>
         </Link>
-        <Link to="/password">Forgot your password?</Link>
+        <Link to="/password" className="signup-form">Forgot your password?</Link>
       </Row>
     </>
   );
