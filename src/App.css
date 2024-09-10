@@ -351,16 +351,18 @@ a i:hover,
 }
 
 
+
+
 /* ******************** Wifi Location Page ******************** */
 
-.wifipage-links{
+.wifipage-links {
   display: flex;
   flex-direction: column;
   margin-bottom: 3rem;
   align-items: center;
 }
 
-.wifipage-img{
+.wifipage-img {
   float: left;
   width: 45%;
   position: sticky;
@@ -368,36 +370,38 @@ a i:hover,
   text-align: center;
 }
 
-.wifipage-text{
+.wifipage-text {
   float: right;
   width: 55%;
   height: min-content;
 }
 
-.amenities{
+.amenities {
   max-width: 90%;
   margin: auto;
   display: flex;
 }
 
-.img-fluid{
+.img-fluid {
   max-width: 90%;
 }
+
+
 
 /* ******************** Wifi Location Page Comments ******************** */
 
 
-.wifi-comment{
+.wifi-comment {
   max-width: 30rem !important;
 }
 
-.wifi-comments{
+.wifi-comments {
   display: flex;
   flex-wrap: wrap;
 }
 
 @media (max-width: 769px) {
-  .wifi-mobile{
+  .wifi-mobile {
     display: flex;
     flex-direction: column;
   }
@@ -410,13 +414,13 @@ a i:hover,
     text-align: center;
   }
 
-  .wifipage-text{
+  .wifipage-text {
     width: 90%;
     margin: auto;
     margin-top: 3rem;
   }
 
-  .wifi-comment{
+  .wifi-comment {
     max-width: 25rem !important;
     padding: 2rem 1rem;
   }
@@ -425,35 +429,56 @@ a i:hover,
 
 /* ******************** Comments ******************** */
 
-.comment-form{
+.comment-form {
   width: 70%;
 }
 
-.comments-position{
+.comments-position {
   max-width: 55%;
 }
 
-.comment-title{
+.comment-title {
   font-size: 3rem;
 }
 
-input[name="username"],textarea[name="comment_text"] {
-  font-size: 2rem;
+input,
+select,
+textarea {
+  font-size: 2rem !important;
 }
 
 .star-rating {
   margin-right: 1rem;
 }
 
+@media (max-width: 1025px) {
+  .comment-form {
+    width: 80%;
+  }
+}
+
+@media (max-width: 769px) {
+  .comments-position {
+    max-width: 90%;
+  }
+
+  .justify-content-end {
+    justify-content: center !important;
+  }
+
+  .comment-form {
+    width: 100%;
+  }
+}
+
 @media (max-width: 426px) {
-  .comments-position{
+  .comments-position {
     align-items: center;
     display: flex;
     flex-direction: column;
-    max-width: 80%;
   }
 
-  .justify-content-end{
+  .justify-content-end {
     justify-content: center !important;
   }
 }
