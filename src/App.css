@@ -352,15 +352,44 @@ a i:hover,
 
 
 /* ******************** Wifi Creation Page ******************** */
+.wificreation-title {
+  margin: 3rem 0rem;
+}
 
 .wificreation-form {
   width: 60%;
-  margin: auto;
+  margin: 5rem auto 10rem auto;
 }
 
 .wificreation-form input:not([type="checkbox"]),
 .wificreation-form select {
   height: 7rem;
+}
+
+
+#image {
+  height: 4rem;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+@media (max-width: 769px) {
+  .wificreation-form {
+    width: 80%;
+  }
+
+  .container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 426px) {
+  .wificreation-form {
+    width: 90%;
+  }
+
 }
 
 /* ******************** Wifi Location Page ******************** */

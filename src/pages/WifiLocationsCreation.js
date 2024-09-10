@@ -144,7 +144,7 @@ const WifiLocationsCreation = () => {
 
   return (
     <Container>
-      <h1>{id ? "Edit WiFi Location" : "Create WiFi Location"}</h1>
+      <h1 className="text-center wificreation-title">{id ? "Edit WiFi Location" : "Create WiFi Location"}</h1>
       <Form onSubmit={handleSubmit} className="wificreation-form">
         {/* Name Field */}
         <Form.Group controlId="name" className="mb-3">
@@ -278,13 +278,17 @@ const WifiLocationsCreation = () => {
 
         {/* Conditional Buttons for Update or Save */}
         {id ? (
-          <Button variant="primary" type="submit">
-            Update WiFi Location
-          </Button>
+          <div className="btn-back m-top-1 mt-3">
+            <Button type="submit" className="btn" variant="">
+              Update WiFi Location
+            </Button>
+          </div>
         ) : (
-          <Button variant="primary" type="submit">
-            Save WiFi Location
-          </Button>
+          <div className="btn-back m-top-1 mt-5">
+            <Button type="submit" className="btn" variant="">
+              Save WiFi Location
+            </Button>
+          </div>
         )}
       </Form>
     </Container>

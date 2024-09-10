@@ -35,6 +35,7 @@ const AutoComplete = ({ type, onSelect }) => {
     return (
         <div>
             <input
+                className='width-100'
                 type="text"
                 value={searchTerm}
                 onChange={handleChange}
