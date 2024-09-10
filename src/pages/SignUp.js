@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, Row, Col, Container, Form, Button } from "react-bootstrap";
+import { Alert, Row, Form, Button } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { axiosReq } from "../api/axiosDefaults";
 import showAlert from '../components/Sweetalert';
@@ -66,117 +66,113 @@ const SignUp = () => {
 
   return (
     <Row className="justify-content-md-center">
-      <Col md={6} className="my-auto">
-        <Container className="p-4 border rounded">
-          <h1 className="mb-4">Sign Up</h1>
+      <h1 className="mt-5 mb-4 text-center">Sign Up</h1>
+      <div className="mt-3 text-center">
+        <NavLink to="/signin">
+          Already got an account? <span>Sign In</span>
+        </NavLink>
+      </div>
+      <Form onSubmit={handleSubmit} encType="multipart/form-data" className="mb-5 signup-form">
+        {/* Username */}
+        <Form.Group className="mb-3" controlId="username">
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter Username"
+            name="username"
+            value={signUpData.username}
+            onChange={handleChange}
+          />
+          {errors.username?.map((message, idx) => (
+            <Alert variant="warning" key={idx}>{message}</Alert>
+          ))}
+        </Form.Group>
 
-          <Form onSubmit={handleSubmit} encType="multipart/form-data">
-            {/* Username */}
-            <Form.Group className="mb-3" controlId="username">
-              <Form.Label>Username</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter Username"
-                name="username"
-                value={signUpData.username}
-                onChange={handleChange}
-              />
-              {errors.username?.map((message, idx) => (
-                <Alert variant="warning" key={idx}>{message}</Alert>
-              ))}
-            </Form.Group>
+        {/* Email */}
+        <Form.Group className="mb-3" controlId="email">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter Email"
+            name="email"
+            value={signUpData.email}
+            onChange={handleChange}
+          />
+          {errors.email?.map((message, idx) => (
+            <Alert variant="warning" key={idx}>{message}</Alert>
+          ))}
+        </Form.Group>
 
-            {/* Email */}
-            <Form.Group className="mb-3" controlId="email">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter Email"
-                name="email"
-                value={signUpData.email}
-                onChange={handleChange}
-              />
-              {errors.email?.map((message, idx) => (
-                <Alert variant="warning" key={idx}>{message}</Alert>
-              ))}
-            </Form.Group>
+        {/* Password */}
+        <Form.Group className="mb-3" controlId="password1">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Enter Password"
+            name="password1"
+            value={signUpData.password1}
+            onChange={handleChange}
+          />
+          {errors.password1?.map((message, idx) => (
+            <Alert variant="warning" key={idx}>{message}</Alert>
+          ))}
+        </Form.Group>
 
-            {/* Password */}
-            <Form.Group className="mb-3" controlId="password1">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Enter Password"
-                name="password1"
-                value={signUpData.password1}
-                onChange={handleChange}
-              />
-              {errors.password1?.map((message, idx) => (
-                <Alert variant="warning" key={idx}>{message}</Alert>
-              ))}
-            </Form.Group>
+        {/* Confirm Password */}
+        <Form.Group className="mb-3" controlId="password2">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Confirm Password"
+            name="password2"
+            value={signUpData.password2}
+            onChange={handleChange}
+          />
+          {errors.password2?.map((message, idx) => (
+            <Alert variant="warning" key={idx}>{message}</Alert>
+          ))}
+        </Form.Group>
 
-            {/* Confirm Password */}
-            <Form.Group className="mb-3" controlId="password2">
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Confirm Password"
-                name="password2"
-                value={signUpData.password2}
-                onChange={handleChange}
-              />
-              {errors.password2?.map((message, idx) => (
-                <Alert variant="warning" key={idx}>{message}</Alert>
-              ))}
-            </Form.Group>
+        {/* Memorable Word */}
+        <Form.Group className="mb-3" controlId="memorable_word">
+          <Form.Label>Memorable Word</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter Memorable Word"
+            name="memorable_word"
+            value={signUpData.memorable_word}
+            onChange={handleChange}
+          />
+          {errors.memorable_word?.map((message, idx) => (
+            <Alert variant="warning" key={idx}>{message}</Alert>
+          ))}
+        </Form.Group>
 
-            {/* Memorable Word */}
-            <Form.Group className="mb-3" controlId="memorable_word">
-              <Form.Label>Memorable Word</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter Memorable Word"
-                name="memorable_word"
-                value={signUpData.memorable_word}
-                onChange={handleChange}
-              />
-              {errors.memorable_word?.map((message, idx) => (
-                <Alert variant="warning" key={idx}>{message}</Alert>
-              ))}
-            </Form.Group>
+        {/* Image Upload */}
+        <Form.Group controlId="image" className="mb-3">
+          <Form.Label>Profile Image</Form.Label>
+          <Form.Control
+            type="file"
+            name="image"
+            onChange={handleFileChange}
+          />
+          {errors.image?.map((message, idx) => (
+            <Alert variant="warning" key={idx}>{message}</Alert>
+          ))}
+        </Form.Group>
 
-            {/* Image Upload */}
-            <Form.Group controlId="image" className="mb-3">
-              <Form.Label>Profile Image</Form.Label>
-              <Form.Control
-                type="file"
-                name="image"
-                onChange={handleFileChange}
-              />
-              {errors.image?.map((message, idx) => (
-                <Alert variant="warning" key={idx}>{message}</Alert>
-              ))}
-            </Form.Group>
-
-            {/* Submit Button */}
-            <Button variant="primary" type="submit">
-              Sign Up
-            </Button>
-            {errors.non_field_errors?.map((message, idx) => (
-              <Alert key={idx} variant="warning" className="mt-3">
-                {message}
-              </Alert>
-            ))}
-          </Form>
-
-          <div className="mt-3">
-            <NavLink to="/signin">
-              Already got an account? <span>Sign In</span>
-            </NavLink>
-          </div>
-        </Container>
-      </Col>
+        {/* Submit Button */}
+        <div className="btn-back mt-4 mb-5">
+          <Button className="btn" variant="" type="submit">
+            Sign Up
+          </Button>
+        </div>
+        {errors.non_field_errors?.map((message, idx) => (
+          <Alert key={idx} variant="warning" className="mt-3">
+            {message}
+          </Alert>
+        ))}
+      </Form>
     </Row>
   );
 };

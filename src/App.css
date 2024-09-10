@@ -532,6 +532,17 @@ textarea {
   }
 }
 
+/* ******************** Sign Up Form ******************** */
+
+.signup-form {
+  width: 56rem;
+  margin: auto;
+}
+
+.signup-form input {
+  height: 7rem;
+}
+
 /* ******************** Footer ******************** */
 
 footer {
