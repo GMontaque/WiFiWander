@@ -145,7 +145,7 @@ const WifiLocationsCreation = () => {
   return (
     <Container>
       <h1>{id ? "Edit WiFi Location" : "Create WiFi Location"}</h1>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} className="wificreation-form">
         {/* Name Field */}
         <Form.Group controlId="name" className="mb-3">
           <Form.Label>Name</Form.Label>
@@ -227,7 +227,7 @@ const WifiLocationsCreation = () => {
           <Form.Label>Description</Form.Label>
           <Form.Control
             as="textarea"
-            rows={3}
+            rows={5}
             placeholder="Enter description"
             name="description"
             value={description}
