@@ -112,8 +112,8 @@ const CreateComment = ({ onCommentAdded, username, commentToEdit, onCancelEdit }
 
   return (
     <>
-      <h1>{commentToEdit ? 'Update Comment' : 'Create Comment'}</h1>
-      <Form onSubmit={handleSubmit}>
+      <h1 className='comment-title'>{commentToEdit ? 'Update Comment' : 'Create Comment'}</h1>
+      <Form onSubmit={handleSubmit} className='comment-form'>
         <Form.Group className="mb-3" controlId="comment_text">
           <Form.Label>Description</Form.Label>
           <Form.Control
@@ -122,8 +122,8 @@ const CreateComment = ({ onCommentAdded, username, commentToEdit, onCancelEdit }
             value={username.username}
             readOnly
           />
-
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="comment_text">
           <Form.Label>Description</Form.Label>
           <Form.Control
@@ -143,7 +143,7 @@ const CreateComment = ({ onCommentAdded, username, commentToEdit, onCancelEdit }
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="star_rating">
-          <Form.Label>Star Rating</Form.Label>
+          <Form.Label className='star-rating'>Star Rating:</Form.Label>
           {[1, 2, 3, 4, 5].map((int) => (
             <Form.Check
               inline
