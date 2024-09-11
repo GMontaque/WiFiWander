@@ -552,7 +552,8 @@ textarea {
   margin: 2rem auto 0rem auto;
 }
 
-.active {
+button.tab-border.nav-link.active[data-rr-ui-event-key="created"],
+button.tab-border.nav-link.active[data-rr-ui-event-key="favourites"]  {
   background-color: #003366 !important;
   color: white !important;
 }
@@ -569,6 +570,19 @@ textarea {
 .profile-row {
   width: 80%;
   margin: auto;
+}
+
+.tab-content{
+  padding: 0;
+}
+
+.nav-fill{
+  padding-right: 0;
+}
+
+.fav-back{
+  background-color: #003366;
+  padding: 2rem;
 }
 
 /* ******************** About Page ******************** */
