@@ -54,6 +54,15 @@ const Country = () => {
           </Col>
         ))}
       </div>
+      <div className='newlocation-btn'>
+        <h3>Couldn't find the result you were looking for?</h3>
+        <p>Why not add your own</p>
+        <div className="btn-back">
+          <Link to="/newlocation" className="btn">
+            Add Location
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

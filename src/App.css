@@ -2,13 +2,18 @@
 
 .title,
 h1,
+h2 {
+  font-size: 4rem;
+}
+
+.title,
+h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
   font-family: 'Fredoka', sans-serif;
-  font-size: 4rem;
 }
 
 body {
@@ -298,6 +303,13 @@ a i:hover,
   display: flex;
   flex-wrap: wrap;
   margin-top: 5rem;
+}
+
+.newlocation-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 7rem;
 }
 
 
