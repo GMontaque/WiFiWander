@@ -5,11 +5,13 @@ import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { useNavigate } from 'react-router-dom';
 import showAlert from '../components/Sweetalert';
 import Swal from 'sweetalert2';
+import Loader from '../components/Loader';
 
 const FavouritesTab = () => {
   const currentUser = useCurrentUser();
   const [favorites, setFavorites] = useState([]);
   const [wifiLocations, setWifiLocations] = useState({});
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -44,8 +46,11 @@ const FavouritesTab = () => {
         });
 
         setWifiLocations(wifiLocationData);
+        setLoading(false);
       } catch (err) {
         setError('Failed to fetch favorites or WiFi locations');
+        console.error(err);
+        setLoading(false);
       }
     };
 
@@ -83,13 +88,16 @@ const FavouritesTab = () => {
     });
   };
 
-  // Function to handle viewing the full WiFi location page
   const handleViewLocation = (locationId) => {
     navigate(`/wifi-locations/${locationId}/`);
   };
 
   if (error) {
-    console.log(error)
+    return <p style={{ color: 'red' }}>{error}</p>;
+  }
+
+  if (loading) {
+    return <Loader />;
   }
 
   return (
@@ -117,7 +125,7 @@ const FavouritesTab = () => {
                       'No image available'
                     )}
                   </td>
-                  <td className="white">{wifiLocation ? wifiLocation.name : 'Loading...'}</td>
+                  <td className="white">{wifiLocation ? wifiLocation.name : <Loader />}</td>
                   <td className="d-none-426 white">{fav.visit_status}</td>
                   <td>
                     <Button

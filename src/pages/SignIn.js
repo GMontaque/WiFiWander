@@ -7,21 +7,23 @@ import { Row } from "react-bootstrap";
 import { useSetCurrentUser } from "../components/CurrentUserContext";
 import { axiosReq } from "../api/axiosDefaults";
 import showAlert from '../components/Sweetalert';
+import Loader from '../components/Loader'; // Import the Loader component
 
 function SignIn() {
   const setCurrentUser = useSetCurrentUser();
-
   const [signInData, setSignInData] = useState({
     username: "",
     password: "",
   });
   const { username, password } = signInData;
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false); // Add loading state
 
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true); // Set loading to true when form is submitted
 
     try {
       const { data } = await axiosReq.post(
@@ -35,12 +37,14 @@ function SignIn() {
 
       // Set the current user
       setCurrentUser(data.user);
-      showAlert('Logged In', 'You have succesfully logged in', 'success');
+      showAlert('Logged In', 'You have successfully logged in', 'success');
       // Navigate to the home page
       navigate("/");
     } catch (err) {
-      showAlert('Logged In', 'There was an issue when logging In please try again', 'error');
+      showAlert('Error', 'There was an issue when logging in. Please try again', 'error');
       setErrors(err.response?.data);
+    } finally {
+      setLoading(false); // Stop loading after login attempt is complete
     }
   };
 
@@ -55,7 +59,7 @@ function SignIn() {
     <>
       <Row className="flex-column">
         <h1 className="mt-5 mb-4 text-center">Sign In</h1>
-        <Form onSubmit={handleSubmit} className="mb-5  signup-form">
+        <Form onSubmit={handleSubmit} className="mb-5 signup-form">
           <Form.Group controlId="username">
             <Form.Label className="d-none">Username</Form.Label>
             <Form.Control
@@ -90,9 +94,13 @@ function SignIn() {
           </Form.Group>
 
           <div className="btn-back mt-4 mb-5">
-            <Button className="btn" variant="" type="submit">
-              Sign In
-            </Button>
+            {loading ? (
+              <Loader />
+            ) : (
+              <Button className="btn" variant="" type="submit">
+                Sign In
+              </Button>
+            )}
           </div>
           {errors.non_field_errors?.map((message, idx) => (
             <Alert key={idx} variant="warning" className="mt-3">

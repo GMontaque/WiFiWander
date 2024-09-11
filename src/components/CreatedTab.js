@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { axiosReq } from "../api/axiosDefaults";
 import Table from 'react-bootstrap/Table';
 import { NavLink } from 'react-router-dom';
+import Loader from '../components/Loader';  // Import the Loader component
 
 const CreatedTab = ({ username }) => {
   const [wifiLocations, setWifiLocations] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
   const [error, setError] = useState(null);
 
   const table_names = [
@@ -18,17 +20,25 @@ const CreatedTab = ({ username }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);  // Start loading
         const response = await axiosReq.get('/wifi_locations/');
         const userLocations = response.data.filter(location => location.added_by === username);
         setWifiLocations(userLocations);
+        setLoading(false);  // Stop loading after data is fetched
       } catch (err) {
         setError('Failed to fetch WiFi locations');
         console.error(err);
+        setLoading(false);  // Stop loading in case of error
       }
     };
 
     fetchData();
   }, [username]);
+
+  // If loading, show the loader
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -47,7 +57,9 @@ const CreatedTab = ({ username }) => {
         <tbody>
           {wifiLocations.map((location, index) => (
             <tr key={index}>
-              <td className='fav-table'>{location.image ? <img src={location.image} alt={location.name} className='fav-img' /> : 'No Image'}</td>
+              <td className='fav-table'>
+                {location.image ? <img src={location.image} alt={location.name} className='fav-img' /> : 'No Image'}
+              </td>
               <td>{location.name}</td>
               <td id="city">{location.city}</td>
               <td id="country">{location.country}</td>
