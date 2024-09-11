@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Alert, Button } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import { useCurrentUser } from '../components/CurrentUserContext';
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { useNavigate } from 'react-router-dom';
@@ -60,9 +60,9 @@ const FavouritesTab = () => {
       await axiosRes.delete(`/favourites/${favoriteId}/`);
       // Update the favorites list after deletion
       setFavorites(prevFavorites => prevFavorites.filter(fav => fav.id !== favoriteId));
-      showAlert('success','WiFi location removed from favorites','success');
+      showAlert('success', 'WiFi location removed from favorites', 'success');
     } catch (err) {
-      showAlert('error','Failed to remove WiFi location from favorites, please refresh and try again', 'error');
+      showAlert('error', 'Failed to remove WiFi location from favorites, please refresh and try again', 'error');
     }
   };
 
@@ -89,12 +89,12 @@ const FavouritesTab = () => {
   };
 
   if (error) {
-    return <Alert variant="danger">{error}</Alert>;
+    console.log(error)
   }
 
   return (
     <div>
-      <h4>Your Favorites</h4>
+      <h4 className='d-none'>Your Favorites</h4>
       {favorites.length > 0 ? (
         <Table striped bordered hover>
           <thead>
@@ -140,7 +140,7 @@ const FavouritesTab = () => {
           </tbody>
         </Table>
       ) : (
-        <p>No favorites available.</p>
+        <p className="white p-4">No favorites added</p>
       )}
     </div>
   );
