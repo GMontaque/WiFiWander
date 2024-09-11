@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { Image, Row, Button } from 'react-bootstrap';
 import Comments from '../components/Comments';
-import AmenitiesKey from '../components/AmenitiesKey';
 import { useCurrentUser } from '../components/CurrentUserContext';
 import CreateComment from '../components/CreateComment';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -23,6 +22,16 @@ const WifiLocationsPage = () => {
 
   // Check if the current user is the creator of the wifi location or is an admin
   const canEditOrDelete = currentUser && (currentUser.username === wifiLocation?.added_by || currentUser.is_admin);
+
+  // Predefined list of amenities with corresponding Font Awesome icons
+  const amenitiesData = [
+    { name: "Outside Seating", icon: "fa-chair" },
+    { name: "Desks", icon: "fa-box-archive" },
+    { name: "Private Rooms", icon: "fa-person-booth" },
+    { name: "Coffee", icon: "fa-mug-hot" },
+    { name: "Food", icon: "fa-utensils" },
+    { name: "Meeting Rooms", icon: "fa-handshake" }
+  ];
 
   // Function to fetch comments for the WiFi location
   const fetchComments = useCallback(async () => {
@@ -173,6 +182,13 @@ const WifiLocationsPage = () => {
     setCommentToEdit(null);
   };
 
+  // Filter the fetched amenities to match predefined list
+  const matchedAmenities = wifiLocation?.amenities
+    ? amenitiesData.filter(amenity =>
+      wifiLocation.amenities.includes(amenity.name)
+    )
+    : [];
+
   // Render loading state or error state if necessary
   if (error && !wifiLocation) {
     showAlert('error', error, 'error');
@@ -227,7 +243,20 @@ const WifiLocationsPage = () => {
                 fluid
               />
             )}
-            <p className='amenities'>{wifiLocation.amenities}</p>
+            <h5 className='mt-3 mb-3'>Amenities</h5>
+            <div className="amenities">
+
+              {matchedAmenities.length > 0 ? (
+                matchedAmenities.map((amenity, index) => (
+                  <div key={index} className="amenity-item">
+                    <i className={`fa-solid ${amenity.icon} fa-2x`}></i>
+                    <p>{amenity.name}</p>
+                  </div>
+                ))
+              ) : (
+                <p>No amenities available</p>
+              )}
+            </div>
           </div>
           <div className='wifipage-text'>
             <p className='pb-5'>{wifiLocation.description}</p>
@@ -246,7 +275,7 @@ const WifiLocationsPage = () => {
           </div>
         </div>
       </Row>
-      <Row className='justify-content-end'>
+      <Row className='justify-content-end mb-5'>
         <div className='comments-position'>
           {currentUser && (
             <CreateComment
@@ -257,9 +286,7 @@ const WifiLocationsPage = () => {
             />
           )}
         </div>
-        <AmenitiesKey />
       </Row>
-
     </>
   );
 };
