@@ -585,6 +585,26 @@ button.tab-border.nav-link.active[data-rr-ui-event-key="favourites"]  {
   padding: 2rem;
 }
 
+@media (max-width: 769px) {
+  .profile-row {
+    width: 80%;
+  }
+
+  .d-none-769{
+    display: none;
+  }
+
+  th#city, td#city,
+  th#country, td#country {
+    display: none;
+  }
+}
+
+@media (max-width: 426px) {
+  .profile-row {
+    width: 100%;
+  }
+}
 /* ******************** About Page ******************** */
 
 .about-boss-img {
