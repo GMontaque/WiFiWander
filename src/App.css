@@ -543,6 +543,34 @@ textarea {
   height: 7rem;
 }
 
+/* ******************** Profile Page ******************** */
+
+.profile-img {
+  width: 20rem;
+  height: 20rem;
+  display: block;
+  margin: 2rem auto 0rem auto;
+}
+
+.active {
+  background-color: #003366 !important;
+  color: white !important;
+}
+
+.tab-border {
+  border: 4px solid #003366 !important;
+  color: #003366;
+}
+
+.w-90 {
+  width: 90%;
+}
+
+.profile-row {
+  width: 80%;
+  margin: auto;
+}
+
 /* ******************** Footer ******************** */
 
 footer {
