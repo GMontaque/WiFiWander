@@ -47,12 +47,12 @@ const CreatedTab = ({ username }) => {
         <tbody>
           {wifiLocations.map((location, index) => (
             <tr key={index}>
-              <td>{location.image ? <img src={location.image} alt={location.name} style={{ width: '100px' }} /> : 'No Image'}</td>
+              <td className='fav-table'>{location.image ? <img src={location.image} alt={location.name} className='fav-img' /> : 'No Image'}</td>
               <td>{location.name}</td>
               <td id="city">{location.city}</td>
               <td id="country">{location.country}</td>
               <td>
-                <NavLink to={`/wifi-locations/${location.id}`}>View Details</NavLink>
+                <NavLink className="remove-underline white created" to={`/wifi-locations/${location.id}`}>View Page</NavLink>
               </td>
             </tr>
           ))}

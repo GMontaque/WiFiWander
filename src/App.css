@@ -78,14 +78,15 @@ nav {
 
 .nav-color,
 .white {
-  color: #FFFFFF;
+  color: #FFFFFF !important;
 }
 
 .nav-color:hover,
 .footer-link:hover,
 a i:hover,
-.wifiListHover:hover {
-  color: #00f733;
+.wifiListHover:hover,
+.created:hover {
+  color: #00f733 !important;
   text-decoration: underline;
 }
 
@@ -585,6 +586,14 @@ button.tab-border.nav-link.active[data-rr-ui-event-key="favourites"]  {
   padding: 2rem;
 }
 
+.fav-table{
+  width: 20%;
+}
+
+.fav-img{
+  width: 100%;
+}
+
 @media (max-width: 769px) {
   .profile-row {
     width: 80%;
@@ -604,7 +613,20 @@ button.tab-border.nav-link.active[data-rr-ui-event-key="favourites"]  {
   .profile-row {
     width: 100%;
   }
+
+  .d-none-426{
+    display: none;
+  }
+
+  .fav-img{
+    width: 100%;
+  }
+
+  .fav-table img{
+    width: 120px;
+  }
 }
+
 /* ******************** About Page ******************** */
 
 .about-boss-img {
