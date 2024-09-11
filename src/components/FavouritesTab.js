@@ -101,7 +101,7 @@ const FavouritesTab = () => {
             <tr>
               <th>Image</th>
               <th>Name</th>
-              <th>Visit Status</th>
+              <th className="d-none-426">Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -110,28 +110,28 @@ const FavouritesTab = () => {
               const wifiLocation = wifiLocations[fav.wifi_location_id_display];
               return (
                 <tr key={fav.id}>
-                  <td>
+                  <td className="fav-table">
                     {wifiLocation && wifiLocation.image ? (
-                      <img src={wifiLocation.image} alt={wifiLocation.name} width="50" />
+                      <img src={wifiLocation.image} alt={wifiLocation.name} className="fav-img" />
                     ) : (
                       'No image available'
                     )}
                   </td>
-                  <td>{wifiLocation ? wifiLocation.name : 'Loading...'}</td>
-                  <td>{fav.visit_status}</td>
+                  <td className="white">{wifiLocation ? wifiLocation.name : 'Loading...'}</td>
+                  <td className="d-none-426 white">{fav.visit_status}</td>
                   <td>
                     <Button
-                      variant="primary"
+                      variant=""
                       onClick={() => handleViewLocation(fav.wifi_location_id_display)}
-                      className="me-2"
+                      className="me-2 btn created"
                     >
-                      View Full Location
+                      View Page
                     </Button>
                     <Button
-                      variant="danger"
+                      className="btn created" variant=""
                       onClick={() => deleteFavorite(fav.id)}
                     >
-                      Remove from Favorites
+                      Remove
                     </Button>
                   </td>
                 </tr>
