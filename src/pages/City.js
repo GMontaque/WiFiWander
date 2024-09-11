@@ -4,25 +4,33 @@ import axios from 'axios';
 import { Col, Card } from 'react-bootstrap';
 import showAlert from '../components/Sweetalert';
 import BreadcrumbComp from '../components/BreadcrumbComp';
-
+import Loader from '../components/Loader';
 
 const City = () => {
   const { continentName, countryName } = useParams();
   const [cities, setCities] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCities = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`/wifi_locations/?continent=${continentName}&country=${countryName}`);
         const uniqueCities = [...new Set(response.data.map(location => location.city))];
         setCities(uniqueCities);
+        setLoading(false);
       } catch (error) {
         showAlert('error', 'Error fetching cities, please refresh and try again', 'error');
+        setLoading(false);
       }
     };
 
     fetchCities();
   }, [continentName, countryName]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div>
