@@ -140,7 +140,7 @@ const FavouritesTab = () => {
           </tbody>
         </Table>
       ) : (
-        <p className="white p-4">No favorites added</p>
+        <p className="white p-4 fav-back">No favorites added</p>
       )}
     </div>
   );
