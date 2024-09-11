@@ -3,9 +3,11 @@ import { Spinner } from 'react-bootstrap'
 
 const Loader = () => {
   return (
-    <Spinner animation="border" role="status" style={{ width: '10rem', height: '10rem', borderWidth: '2rem' }}>
-      <span className="visually-hidden">Loading...</span>
-    </Spinner>
+    <div className='loaderStyle'>
+      <Spinner animation="border" role="status" className='spin-icon'>
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    </div>
   )
 }
 
