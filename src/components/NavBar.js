@@ -3,11 +3,10 @@ import { Container, Nav, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { axiosReq } from "../api/axiosDefaults";
 import { useNavigate } from 'react-router-dom';
-
 import { useCurrentUser, useSetCurrentUser } from './CurrentUserContext';
 import logo from '../assets/logo.png';
 import showAlert from '../components/Sweetalert';
-
+import Swal from 'sweetalert2';
 
 const LoggedOutIcons = () => (
   <>
@@ -32,17 +31,35 @@ const NavBar = () => {
       await axiosReq.post("dj-rest-auth/logout/");
       setCurrentUser(null);
       navigate('/');
-      showAlert('Logged Out', 'You have succesfully logged out', 'success')
+      showAlert('Logged Out', 'You have successfully logged out', 'success');
     } catch (err) {
-      showAlert('Logged Out', 'There waas an issue when logging out please try again', 'error')
+      showAlert('Error', 'There was an issue logging out, please try again', 'error');
     }
+  };
+
+  const confirmSignOut = () => {
+    // SweetAlert confirmation
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to sign out?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, sign out!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleSignOut();
+      }
+    });
   };
 
   const LoggedInIcons = () => (
     <>
       <p className='white capitalize'>{currentUser?.username}</p>
       <NavLink to="/profile" className="ms-4 remove-underline nav-color">Profile</NavLink>
-      <NavLink to="/" onClick={handleSignOut} className="ms-4 remove-underline nav-color">Log Out</NavLink>
+      <NavLink to="/" onClick={confirmSignOut} className="ms-4 remove-underline nav-color">Log Out</NavLink>
     </>
   );
 
@@ -70,7 +87,6 @@ const NavBar = () => {
           <Nav className="ms-auto navbar-mobile-login">
             {currentUser ? <LoggedInIcons /> : <LoggedOutIcons />}
           </Nav>
-
         </Navbar.Collapse>
       </Container>
     </Navbar>
