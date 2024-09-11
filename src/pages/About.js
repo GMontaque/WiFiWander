@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Row } from 'react-bootstrap'
+import { Image, Row, Col } from 'react-bootstrap'
 import boss from '../assets/boss.jpg'
 import team from '../assets/team.jpg'
 import teamPhoto1 from '../assets/group-photo.jpg'
@@ -14,11 +14,14 @@ const About = () => {
   return (
     <>
       <Row>
-        <h1>About page</h1>
+        <h1 className='text-center mt-4 mb-4'>About page</h1>
         <div>
-          <Image src={boss} />
-          <div>
-            <h3>author name</h3>
+          <div className='about-boss-img'>
+            <Image src={boss} className='img-fluid' />
+          </div>
+
+          <div className='about-text'>
+            <h3>Lorenzo Diana</h3>
             <p>Welcome to our digital platform, tailored specifically for digital nomads and remote workers seeking
               the best Wi-Fi spots around the world. Our website is designed to make your search for optimal work
               environments as easy and efficient as possible, no matter where you are. Whether you're exploring a
@@ -41,10 +44,10 @@ const About = () => {
             </p>
           </div>
         </div>
-        <div>
-          <Image src={team} style={{ width: "100vw" }} />
+        <div className="team-img">
+          <Image src={team} className="full-width-img" />
         </div>
-        <p>Our team is a diverse group of seven digital nomads who share a passion for travel, technology,
+        <p className='team-bio'>Our team is a diverse group of seven digital nomads who share a passion for travel, technology,
           and the freedom to work from anywhere in the world. Each member brings a unique perspective and
           skill set to the table, from web development and design to content creation and marketing, making
           our platform a true reflection of the varied experiences and expertise we all bring as remote
@@ -60,13 +63,26 @@ const About = () => {
           improving and expanding our platform to ensure it remains an invaluable resource for those who choose
           the path of freedom and exploration in their professional lives. Join us as we navigate the world,
           one Wi-Fi spot at a time!</p>
-        <div>
-          <Image src={teamPhoto1} style={{ width: "100vw" }} />
-          <Image src={teamPhoto2} style={{ width: "100vw" }} />
-          <Image src={teamPhoto3} style={{ width: "100vw" }} />
-          <Image src={teamPhoto4} style={{ width: "100vw" }} />
-          <Image src={teamPhoto5} style={{ width: "100vw" }} />
-          <Image src={teamPhoto6} style={{ width: "100vw" }} />
+
+        <div className="team-photos">
+          <Col md={6} className="team-photo-wrapper left">
+            <Image src={teamPhoto1} className="team-photo" />
+          </Col>
+          <Col md={6} className="team-photo-wrapper right">
+            <Image src={teamPhoto2} className="team-photo" />
+          </Col>
+          <Col md={6} className="team-photo-wrapper left">
+            <Image src={teamPhoto3} className="team-photo" />
+          </Col>
+          <Col md={6} className="team-photo-wrapper right">
+            <Image src={teamPhoto4} className="team-photo" />
+          </Col>
+          <Col md={6} className="team-photo-wrapper left">
+            <Image src={teamPhoto5} className="team-photo" />
+          </Col>
+          <Col md={6} className="team-photo-wrapper right">
+            <Image src={teamPhoto6} className="team-photo" />
+          </Col>
         </div>
       </Row>
     </>

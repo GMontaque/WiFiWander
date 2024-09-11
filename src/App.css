@@ -571,6 +571,99 @@ textarea {
   margin: auto;
 }
 
+/* ******************** About Page ******************** */
+
+.about-boss-img {
+  width: 45%;
+  display: flex;
+  float: left;
+  justify-content: center;
+  margin-top: 4rem;
+}
+
+.about-boss-img img {
+  width: 100%;
+}
+
+.about-text {
+  margin: 3rem;
+}
+
+.team-img {
+  width: 100%;
+  height: 30rem;
+  padding: 0;
+  overflow: hidden;
+  margin-top: 10rem;
+}
+
+.full-width-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.team-bio {
+  padding: 10rem 5rem;
+}
+
+.team-photo-wrapper {
+  position: relative;
+  margin: 2rem 0;
+}
+
+.team-photos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10rem;
+  overflow: hidden;
+}
+
+.team-photo {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.team-photo-wrapper.left .team-photo {
+  transform: rotate(10deg);
+}
+
+.team-photo-wrapper.right .team-photo {
+  transform: rotate(-10deg);
+}
+
+@media (max-width: 769px) {
+  .about-boss-img {
+    width: 33rem;
+  }
+
+  .team-photo-wrapper {
+    width: 100%;
+  }
+
+  .team-photo-wrapper {
+    display: block;
+    margin: 1rem auto;
+  }
+}
+
+@media (max-width: 426px) {
+  .about-text {
+    margin: 1rem;
+    width: 90%;
+    text-align: center;
+  }
+
+  .about-boss-img {
+    width: 100%;
+  }
+}
+
+
 /* ******************** Footer ******************** */
 
 footer {
