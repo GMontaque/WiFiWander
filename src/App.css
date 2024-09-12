@@ -65,6 +65,11 @@ p {
   height: 100vh;
 }
 
+.about-subhead{
+  font-size: 3rem;
+  text-decoration: underline;
+}
+
 /* ******************** SweetAlert ******************** */
 
 .swal2-show{
