@@ -112,7 +112,6 @@ function SignIn() {
         <Link to="/signup" className="signup-form">
           Don't have an account? <span>Sign up now!</span>
         </Link>
-        <Link to="/password" className="signup-form">Forgot your password?</Link>
       </Row>
     </>
   );

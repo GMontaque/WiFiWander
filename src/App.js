@@ -15,7 +15,6 @@ import WifiLocationsList from './pages/WifiLocationsList';
 import WifiLocationsCreation from './pages/WifiLocationsCreation';
 import About from './pages/About';
 import WifiLocationsPage from './pages/WifiLocationsPage';
-import Password from './pages/Password';
 import './api/axiosDefaults';
 import CreateComment from './components/CreateComment';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -50,7 +49,6 @@ function App() {
             </ProtectedRoute>
           } />
           <Route path="/wifi-locations/:id" element={<WifiLocationsPage />} />
-          <Route path="/password" element={<Password />} />
           <Route path="/comment" element={<CreateComment />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
