@@ -65,6 +65,20 @@ p {
   height: 100vh;
 }
 
+/* ******************** SweetAlert ******************** */
+
+.swal2-show{
+  width: 40rem;
+}
+
+.swal2-title{
+ font-size: 3rem; 
+}
+
+.swal2-html-container,.swal2-confirm,.swal2-cancel{
+  font-size: 2rem;
+}
+
 /* ******************** navbar ******************** */
 nav {
   background-color: #003366;
