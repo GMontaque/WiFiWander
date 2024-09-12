@@ -237,10 +237,23 @@ a i:hover,
 /* ******************** Description ******************** */
 
 .description {
-  width: 90%;
+  width: 70%;
   margin: 0rem auto;
 }
 
+.description ul li {
+  list-style: none;
+}
+
+.description ul li h3 {
+  text-decoration: underline;
+}
+
+@media (max-width: 769px) {
+  .description {
+    width: 90%;
+  }
+}
 
 /* ******************** Continents ******************** */
 
