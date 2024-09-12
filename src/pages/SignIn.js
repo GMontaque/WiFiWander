@@ -7,7 +7,7 @@ import { Row } from "react-bootstrap";
 import { useSetCurrentUser } from "../components/CurrentUserContext";
 import { axiosReq } from "../api/axiosDefaults";
 import showAlert from '../components/Sweetalert';
-import Loader from '../components/Loader'; // Import the Loader component
+import Loader from '../components/Loader';
 
 function SignIn() {
   const setCurrentUser = useSetCurrentUser();
@@ -17,13 +17,13 @@ function SignIn() {
   });
   const { username, password } = signInData;
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true); // Set loading to true when form is submitted
+    setLoading(true);
 
     try {
       const { data } = await axiosReq.post(
@@ -44,7 +44,7 @@ function SignIn() {
       showAlert('Error', 'There was an issue when logging in. Please try again', 'error');
       setErrors(err.response?.data);
     } finally {
-      setLoading(false); // Stop loading after login attempt is complete
+      setLoading(false);
     }
   };
 

@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { axiosReq } from "../api/axiosDefaults";
 import Table from 'react-bootstrap/Table';
 import { NavLink } from 'react-router-dom';
-import Loader from '../components/Loader';  // Import the Loader component
+import Loader from '../components/Loader';
 
 const CreatedTab = ({ username }) => {
   const [wifiLocations, setWifiLocations] = useState([]);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const table_names = [
@@ -20,15 +20,15 @@ const CreatedTab = ({ username }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true);  // Start loading
+        setLoading(true);
         const response = await axiosReq.get('/wifi_locations/');
         const userLocations = response.data.filter(location => location.added_by === username);
         setWifiLocations(userLocations);
-        setLoading(false);  // Stop loading after data is fetched
+        setLoading(false);
       } catch (err) {
         setError('Failed to fetch WiFi locations');
         console.error(err);
-        setLoading(false);  // Stop loading in case of error
+        setLoading(false);
       }
     };
 

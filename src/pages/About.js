@@ -21,7 +21,7 @@ const About = () => {
           </div>
 
           <div className='about-text'>
-            <h3>Lorenzo Diana</h3>
+            <h3 className='about-subhead'>Lorenzo Diana</h3>
             <p>Welcome to our digital platform, tailored specifically for digital nomads and remote workers seeking
               the best Wi-Fi spots around the world. Our website is designed to make your search for optimal work
               environments as easy and efficient as possible, no matter where you are. Whether you're exploring a

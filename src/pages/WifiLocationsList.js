@@ -9,21 +9,21 @@ import Loader from '../components/Loader';
 const WifiLocationsList = () => {
   const { continentName, countryName, cityName } = useParams();
   const [wifiLocations, setWifiLocations] = useState([]);
-  const [loading, setLoading] = useState(true);  // Add loading state
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   // Fetch WiFi locations based on continent, country, and city
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true);  // Start loading
+        setLoading(true);
         const response = await axiosReq.get(`/wifi_locations/?continent=${continentName}&country=${countryName}&city=${cityName}`);
         setWifiLocations(response.data);
-        setLoading(false);  // Stop loading after data is fetched
+        setLoading(false);
         setError(null);
       } catch (err) {
         setError('Failed to fetch WiFi locations');
-        setLoading(false);  // Stop loading in case of error
+        setLoading(false);
       }
     };
 

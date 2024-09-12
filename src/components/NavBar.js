@@ -23,7 +23,7 @@ const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
   const navigate = useNavigate();
-  const [expanded, setExpanded] = useState(false); // Track navbar state
+  const [expanded, setExpanded] = useState(false);
 
   const handleSignOut = async () => {
     try {
@@ -55,7 +55,7 @@ const NavBar = () => {
     });
   };
 
-  const closeNav = () => setExpanded(false); // Function to close navbar on link click
+  const closeNav = () => setExpanded(false);
 
   const LoggedInIcons = ({ closeNav }) => (
     <>
