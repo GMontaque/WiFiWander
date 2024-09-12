@@ -38,6 +38,10 @@ p {
   margin: 5rem 0rem;
 }
 
+.margin-bottom-7{
+  margin-bottom: 7rem;
+}
+
 .main {
   min-height: 70vh;
 }
