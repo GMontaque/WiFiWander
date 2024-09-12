@@ -20,8 +20,8 @@ const WifiLocationsPage = () => {
 
   const isAuthenticated = !!localStorage.getItem('access_token');
 
-  // Check if the current user is the creator of the wifi location or is an admin
-  const canEditOrDelete = currentUser && (currentUser.username === wifiLocation?.added_by || currentUser.is_admin);
+  const isCreator = currentUser && currentUser.username === wifiLocation?.added_by;
+  const isAdmin = currentUser && currentUser.username === 'adminuser';
 
   // Predefined list of amenities with corresponding Font Awesome icons
   const amenitiesData = [
@@ -207,31 +207,32 @@ const WifiLocationsPage = () => {
           <p>{wifiLocation.star_rating || 'No rating available'}</p>
           <div className='wifi-links'>
             {currentUser && (
-              <>
-                <div className="btn-back m-top-1">
-                  <Button onClick={handleAddToFavorites} className="btn" variant="">
-                    Add to Favorites
-                  </Button>
-                </div>
-
-                {canEditOrDelete && (
-                  <>
-                    <div className="btn-back m-top-1 ms-2">
-                      <Button onClick={handleUpdateLocation} className="btn" variant="">
-                        Edit Location
+                <>
+                  {(!isCreator || isAdmin) && (
+                    <div className="btn-back m-top-1">
+                      <Button onClick={handleAddToFavorites} className="btn" variant="">
+                        Add to Favorites
                       </Button>
                     </div>
+                  )}
 
-                    <div className="btn-back m-top-1 ms-2">
-                      <Button onClick={handleDeleteLocation} className="btn" variant="">
-                        Delete Location
-                      </Button>
-                    </div>
-                  </>
-                )}
+                  {(isCreator || isAdmin) && (
+                    <>
+                      <div className="btn-back m-top-1 ms-2">
+                        <Button onClick={handleUpdateLocation} className="btn" variant="">
+                          Edit Location
+                        </Button>
+                      </div>
 
-              </>
-            )}
+                      <div className="btn-back m-top-1 ms-2">
+                        <Button onClick={handleDeleteLocation} className="btn" variant="">
+                          Delete Location
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                </>
+              )}
           </div>
         </div>
         <div className='wifi-mobile'>

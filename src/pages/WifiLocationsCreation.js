@@ -113,7 +113,7 @@ const WifiLocationsCreation = () => {
     }
 
     // Checks current user
-    const canEditOrDelete = currentUser && (currentUser.username === wifiLocation?.added_by || currentUser.is_admin);
+    const canEditOrDelete = currentUser && (currentUser.username === wifiLocation?.added_by || currentUser.username === 'adminuser');
 
     if (id && !canEditOrDelete) {
       showAlert('warning', "You are not authorized to edit this WiFi location.", 'warning');
