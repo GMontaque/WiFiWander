@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { axiosReq } from "../api/axiosDefaults";
@@ -8,21 +8,22 @@ import logo from '../assets/logo.png';
 import showAlert from '../components/Sweetalert';
 import Swal from 'sweetalert2';
 
-const LoggedOutIcons = () => (
+const LoggedOutIcons = ({ closeNav }) => (
   <>
-    <NavLink to="/signup" className="remove-underline nav-color">Sign Up</NavLink>
-    <NavLink to="/signin" className="remove-underline ms-4 nav-color">Sign In</NavLink>
+    <NavLink to="/signup" onClick={closeNav} className="remove-underline nav-color">Sign Up</NavLink>
+    <NavLink to="/signin" onClick={closeNav} className="remove-underline ms-4 nav-color">Sign In</NavLink>
   </>
 );
 
-const AddLocation = () => (
-  <NavLink to="/newlocation" className="remove-underline ms-4 nav-color">Add Location</NavLink>
+const AddLocation = ({ closeNav }) => (
+  <NavLink to="/newlocation" onClick={closeNav} className="remove-underline ms-4 nav-color">Add Location</NavLink>
 );
 
 const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
   const navigate = useNavigate();
+  const [expanded, setExpanded] = useState(false); // Track navbar state
 
   const handleSignOut = async () => {
     try {
@@ -38,7 +39,6 @@ const NavBar = () => {
   };
 
   const confirmSignOut = () => {
-    // SweetAlert confirmation
     Swal.fire({
       title: 'Are you sure?',
       text: "Do you want to sign out?",
@@ -55,18 +55,20 @@ const NavBar = () => {
     });
   };
 
-  const LoggedInIcons = () => (
+  const closeNav = () => setExpanded(false); // Function to close navbar on link click
+
+  const LoggedInIcons = ({ closeNav }) => (
     <>
       <p className='white capitalize'>{currentUser?.username}</p>
-      <NavLink to="/profile" className="ms-4 remove-underline nav-color">Profile</NavLink>
-      <NavLink to="/" onClick={confirmSignOut} className="ms-4 remove-underline nav-color">Log Out</NavLink>
+      <NavLink to="/profile" onClick={closeNav} className="ms-4 remove-underline nav-color">Profile</NavLink>
+      <NavLink to="/" onClick={() => { closeNav(); confirmSignOut(); }} className="ms-4 remove-underline nav-color">Log Out</NavLink>
     </>
   );
 
   return (
-    <Navbar expand="lg" className=" title">
+    <Navbar expand="lg" expanded={expanded} onToggle={setExpanded} className="title">
       <Container className='navStyle'>
-        <NavLink to="/">
+        <NavLink to="/" onClick={closeNav}>
           <Navbar.Brand className='logo'>
             <img
               src={logo}
@@ -77,15 +79,15 @@ const NavBar = () => {
             />
           </Navbar.Brand>
         </NavLink>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setExpanded(!expanded)} />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto navbar-mobile-links">
-            <NavLink to="/" className="remove-underline nav-color">Home</NavLink>
-            <NavLink to="/about" className="remove-underline ms-4 nav-color">About Us</NavLink>
-            {currentUser && <AddLocation />}
+            <NavLink to="/" onClick={closeNav} className="remove-underline nav-color">Home</NavLink>
+            <NavLink to="/about" onClick={closeNav} className="remove-underline ms-4 nav-color">About Us</NavLink>
+            {currentUser && <AddLocation closeNav={closeNav} />}
           </Nav>
           <Nav className="ms-auto navbar-mobile-login">
-            {currentUser ? <LoggedInIcons /> : <LoggedOutIcons />}
+            {currentUser ? <LoggedInIcons closeNav={closeNav} /> : <LoggedOutIcons closeNav={closeNav} />}
           </Nav>
         </Navbar.Collapse>
       </Container>
