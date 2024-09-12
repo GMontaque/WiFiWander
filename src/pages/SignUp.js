@@ -15,6 +15,7 @@ const SignUp = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [imageError, setImageError] = useState(null);
   const navigate = useNavigate();
 
   // Handle input change for text fields
@@ -27,15 +28,32 @@ const SignUp = () => {
 
   // Handle file change for the image upload
   const handleFileChange = (e) => {
-    setSignUpData({
-      ...signUpData,
-      image: e.target.files[0],
-    });
+    const file = e.target.files[0];
+
+    // Check if the uploaded file is an image
+    if (file && !file.type.startsWith('image/')) {
+      setImageError('Only image files (jpeg, png, gif) are allowed.');
+      setSignUpData({
+        ...signUpData,
+        image: null,
+      });
+    } else {
+      setImageError(null);
+      setSignUpData({
+        ...signUpData,
+        image: file,
+      });
+    }
   };
 
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Check for invalid file type
+    if (imageError) {
+      return;
+    }
 
     // Create FormData object for multipart/form-data submission
     const formData = new FormData();
@@ -57,9 +75,9 @@ const SignUp = () => {
         },
       });
       navigate("/signin");
-      showAlert('Sign Up', 'You have succesfully created an account', 'success')
+      showAlert('Sign Up', 'You have successfully created an account', 'success');
     } catch (err) {
-      showAlert('Sign Up', 'There waas an issue when signing up please try again', 'error')
+      showAlert('Sign Up', 'There was an issue when signing up, please try again', 'error');
       setErrors(err.response?.data);
     }
   };
@@ -155,7 +173,9 @@ const SignUp = () => {
             type="file"
             name="image"
             onChange={handleFileChange}
+            accept="image/*"
           />
+          {imageError && <Alert variant="danger">{imageError}</Alert>}
           {errors.image?.map((message, idx) => (
             <Alert variant="warning" key={idx}>{message}</Alert>
           ))}
