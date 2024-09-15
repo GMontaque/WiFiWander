@@ -154,6 +154,9 @@ const WifiLocationsCreation = () => {
         <Form.Group controlId="city" className="mb-3">
           <Form.Label>{id ? <p>City: {wifiData.city}</p> : "City"}</Form.Label>
           <AutoComplete type="city" onSelect={handleCitySelect} />
+          {errors.city?.map((message, idx) => (
+            <Alert variant="warning" key={idx}>{message}</Alert>
+          ))}
         </Form.Group>
 
         <TextInput label="Country" name="country" value={country} handleChange={handleChange} errors={errors.country} readOnly />
@@ -164,7 +167,12 @@ const WifiLocationsCreation = () => {
 
         <Form.Group controlId="continent" className="mb-3">
           <Form.Label>Continent</Form.Label>
-          <Form.Control as="select" name="continent" value={continent} onChange={handleChange}>
+          <Form.Control
+            as="select"
+            name="continent"
+            value={continent}
+            onChange={handleChange}
+          >
             <option value="">Select a Continent</option>
             <option value="Africa">Africa</option>
             <option value="Asia">Asia</option>
@@ -173,7 +181,11 @@ const WifiLocationsCreation = () => {
             <option value="Australia">Australia</option>
             <option value="South America">South America</option>
           </Form.Control>
+          {errors.continent?.map((idx) => (
+            <Alert variant="warning" key={idx}>This field can not be blank</Alert>
+          ))}
         </Form.Group>
+
 
         <Form.Group controlId="image" className="mb-3">
           <Form.Label>Image Upload</Form.Label>
@@ -183,7 +195,7 @@ const WifiLocationsCreation = () => {
 
         {Object.keys(errors).length > 0 && (
           <Alert variant="danger">
-            {Object.values(errors).flat().join(", ")}
+            Please review the form and add in the missing information
           </Alert>
         )}
 
