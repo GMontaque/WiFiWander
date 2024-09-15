@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Col, Card } from 'react-bootstrap';
 import showAlert from '../components/Sweetalert';
@@ -10,6 +10,7 @@ const City = () => {
   const { continentName, countryName } = useParams();
   const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -17,7 +18,13 @@ const City = () => {
         setLoading(true);
         const response = await axios.get(`/wifi_locations/?continent=${continentName}&country=${countryName}`);
         const uniqueCities = [...new Set(response.data.map(location => location.city))];
-        setCities(uniqueCities);
+
+        if (uniqueCities.length === 0) {
+          navigate('/404');
+        } else {
+          setCities(uniqueCities);
+        }
+
         setLoading(false);
       } catch (error) {
         showAlert('error', 'Error fetching cities, please refresh and try again', 'error');
@@ -26,7 +33,7 @@ const City = () => {
     };
 
     fetchCities();
-  }, [continentName, countryName]);
+  }, [continentName, countryName, navigate]);
 
   if (loading) {
     return <Loader />;
@@ -34,7 +41,6 @@ const City = () => {
 
   return (
     <div>
-      {/* Display Breadcrumb */}
       <div>
         <BreadcrumbComp continentName={continentName} countryName={countryName} />
       </div>

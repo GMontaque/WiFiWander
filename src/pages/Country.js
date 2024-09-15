@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Col, Card } from 'react-bootstrap';
 import showAlert from '../components/Sweetalert';
@@ -10,6 +10,7 @@ const Country = () => {
   const { continentName, countryName } = useParams();
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -17,7 +18,13 @@ const Country = () => {
         setLoading(true);
         const response = await axios.get(`/wifi_locations/?continent=${continentName}`);
         const uniqueCountries = [...new Set(response.data.map(location => location.country))];
-        setCountries(uniqueCountries);
+
+        // Check if the continentName is valid
+        if (uniqueCountries.length === 0) {
+          navigate('/404');
+        } else {
+          setCountries(uniqueCountries);
+        }
         setLoading(false);
       } catch (error) {
         showAlert('error', 'Error fetching countries, please refresh and try again', 'error');
@@ -26,7 +33,7 @@ const Country = () => {
     };
 
     fetchCountries();
-  }, [continentName]);
+  }, [continentName, navigate]);
 
   if (loading) {
     return <Loader />;

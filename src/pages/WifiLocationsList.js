@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { axiosReq } from "../api/axiosDefaults";
 import Table from 'react-bootstrap/Table';
-import { useParams, NavLink } from 'react-router-dom';
+import { useParams, NavLink, useNavigate } from 'react-router-dom';
 import BreadcrumbComp from '../components/BreadcrumbComp';
 import showAlert from '../components/Sweetalert';
 import Loader from '../components/Loader';
@@ -11,14 +11,20 @@ const WifiLocationsList = () => {
   const [wifiLocations, setWifiLocations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  // Fetch WiFi locations based on continent, country, and city
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
         const response = await axiosReq.get(`/wifi_locations/?continent=${continentName}&country=${countryName}&city=${cityName}`);
-        setWifiLocations(response.data);
+
+        if (response.data.length === 0) {
+          navigate('/404');
+        } else {
+          setWifiLocations(response.data);
+        }
+
         setLoading(false);
         setError(null);
       } catch (err) {
@@ -28,7 +34,7 @@ const WifiLocationsList = () => {
     };
 
     fetchData();
-  }, [continentName, countryName, cityName]);
+  }, [continentName, countryName, cityName, navigate]);
 
   useEffect(() => {
     if (error) {
@@ -36,7 +42,6 @@ const WifiLocationsList = () => {
     }
   }, [error]);
 
-  // If still loading, show the loader
   if (loading) {
     return <Loader />;
   }
@@ -47,15 +52,12 @@ const WifiLocationsList = () => {
 
   return (
     <>
-      {/* Display Breadcrumb */}
       <div>
         <BreadcrumbComp continentName={continentName} countryName={countryName} cityName={cityName} />
       </div>
 
-      {/* Display the city name */}
       <h1 className='pageTitle'>{cityName.charAt(0).toUpperCase() + cityName.slice(1)}</h1>
 
-      {/* Display WiFi locations */}
       <Table responsive>
         <thead>
           <tr className='white'>
@@ -90,7 +92,6 @@ const WifiLocationsList = () => {
                   <NavLink className='remove-underline white wifiListHover' to={`/wifi-locations/${location.id}`}>View</NavLink>
                 </td>
               </tr>
-              {/* Mobile wifi location link */}
               <tr className="d-none display">
                 <td colSpan="6">
                   <p className='d-none mobile-amenities '>Amenities: {location.amenities}</p>
