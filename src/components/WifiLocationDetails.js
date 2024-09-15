@@ -26,9 +26,6 @@ const WifiLocationDetails = ({ wifiLocation, matchedAmenities }) => {
           )}
         </div>
       </div>
-      <div className='wifipage-text'>
-        <p className='pb-5'>{wifiLocation.description}</p>
-      </div>
     </div>
   );
 };
