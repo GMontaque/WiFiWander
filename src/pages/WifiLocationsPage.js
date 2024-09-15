@@ -60,33 +60,6 @@ const WifiLocationsPage = () => {
     }
   }, [id, fetchComments]);
 
-  const handleAddToFavorites = async () => {
-    if (!currentUser) {
-      showAlert('error', 'You must be logged in to add to favorites', 'error');
-      return;
-    }
-
-    try {
-      const response = await axiosReq.post(`/favourites/`, {
-        wifi_location_id: id,
-        notes: '',
-        folder_name: '',
-        visit_status: 'Planned',
-      }, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      });
-
-      if (response.status === 201) {
-        showAlert('success', 'Location added to favorites successfully!', 'success');
-      }
-    } catch (err) {
-      showAlert('error', 'Failed to add location to favorites', 'error');
-      console.error(err);
-    }
-  };
-
   const handleUpdateLocation = () => {
     navigate(`/wifi_locations/edit/${id}`);
   };
@@ -203,7 +176,8 @@ const WifiLocationsPage = () => {
           <WifiLocationActions
             isCreator={isCreator}
             isAdmin={isAdmin}
-            handleAddToFavorites={handleAddToFavorites}
+            wifiLocation={wifiLocation}
+            currentUser={currentUser}
             handleUpdateLocation={handleUpdateLocation}
             handleDeleteLocation={handleDeleteLocation}
           />
