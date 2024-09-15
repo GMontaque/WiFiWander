@@ -44,6 +44,7 @@ p {
 
 .main {
   min-height: 70vh;
+  margin-bottom: 7rem;
 }
 
 .spin-icon {
@@ -166,6 +167,7 @@ a i:hover,
 }
 
 /* ******************** Breadcrumb ******************** */
+
 .breadcrumb {
   margin: 2rem;
   font-size: 3rem;
@@ -192,6 +194,7 @@ a i:hover,
 }
 
 /* ******************** Hero image ******************** */
+
 .hero-container {
   position: relative;
   width: 100%;
@@ -424,8 +427,8 @@ a i:hover,
   }
 }
 
-
 /* ******************** Wifi Creation Page ******************** */
+
 .wificreation-title {
   margin: 3rem 0rem;
 }
@@ -498,7 +501,9 @@ a i:hover,
 }
 
 .img-fluid {
+  width: 90%;
   max-width: 90%;
+  height: auto;
 }
 
 .wifi-links {
@@ -515,12 +520,17 @@ a i:hover,
 
 /* ******************** Wifi Location Page Comments ******************** */
 
-
 .wifi-comment {
   max-width: 30rem !important;
 }
 
 .wifi-comments {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.comments {
   display: flex;
   flex-wrap: wrap;
 }

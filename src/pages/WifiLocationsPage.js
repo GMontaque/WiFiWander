@@ -23,7 +23,6 @@ const WifiLocationsPage = () => {
   const isCreator = currentUser && currentUser.username === wifiLocation?.added_by;
   const isAdmin = currentUser && currentUser.username === 'adminuser';
 
-  // list of amenities with icons
   const amenitiesData = [
     { name: "Outside Seating", icon: "fa-chair" },
     { name: "Desks", icon: "fa-box-archive" },
@@ -33,7 +32,6 @@ const WifiLocationsPage = () => {
     { name: "Meeting Rooms", icon: "fa-handshake" }
   ];
 
-  // Fetch comments for the WiFi location
   const fetchComments = useCallback(async () => {
     try {
       const response = await axiosReq.get(`/comments/?wifi_location=${id}`);
@@ -45,7 +43,6 @@ const WifiLocationsPage = () => {
     }
   }, [id]);
 
-  // Fetch WiFi location data
   useEffect(() => {
     const fetchWifiLocation = async () => {
       try {
@@ -94,7 +91,6 @@ const WifiLocationsPage = () => {
     navigate(`/wifi_locations/edit/${id}`);
   };
 
-  // Handle deletion with pop-up confirmation for Wi-Fi location
   const handleDeleteLocation = async () => {
     if (!currentUser) {
       showAlert('error', 'You must be logged in to delete a location', 'error');
@@ -131,7 +127,6 @@ const WifiLocationsPage = () => {
     });
   };
 
-  // Handle deletion of a comment with a confirmation pop-up
   const handleDeleteComment = async (commentId) => {
     if (!currentUser) {
       showAlert('error', 'You must be logged in to delete a comment', 'error');
@@ -187,12 +182,10 @@ const WifiLocationsPage = () => {
     setCommentToEdit(null);
   };
 
-  // Filter matched amenities
   const matchedAmenities = wifiLocation?.amenities
     ? amenitiesData.filter(amenity => wifiLocation.amenities.includes(amenity.name))
     : [];
 
-  // Error or loading state handling
   if (error && !wifiLocation) {
     return <NotFound />;
   }
@@ -218,19 +211,22 @@ const WifiLocationsPage = () => {
       </Row>
 
       <Row>
-        <WifiLocationDetails wifiLocation={wifiLocation} matchedAmenities={matchedAmenities} />
-      </Row>
+        <div className="wifipage-img">
+          <WifiLocationDetails wifiLocation={wifiLocation} matchedAmenities={matchedAmenities} />
+        </div>
 
-      <Row className='justify-content-end mb-5'>
-        <CommentsSection
-          comments={comments}
-          currentUser={currentUser}
-          deleteComment={handleDeleteComment}
-          handleUpdateComment={handleUpdateComment}
-          commentToEdit={commentToEdit}
-          handleCommentAdded={handleCommentAdded}
-          handleCancelEdit={handleCancelEdit}
-        />
+        <div className="wifipage-text">
+          <p className='pb-5'>{wifiLocation.description}</p>
+          <CommentsSection
+            comments={comments}
+            currentUser={currentUser}
+            deleteComment={handleDeleteComment}
+            handleUpdateComment={handleUpdateComment}
+            commentToEdit={commentToEdit}
+            handleCommentAdded={handleCommentAdded}
+            handleCancelEdit={handleCancelEdit}
+          />
+        </div>
       </Row>
     </>
   );

@@ -5,16 +5,18 @@ import CreateComment from './CreateComment';
 const CommentsSection = ({ comments, currentUser, deleteComment, handleUpdateComment, commentToEdit, handleCommentAdded, handleCancelEdit }) => {
   return (
     <div className='wifi-comments'>
-      {comments.length > 0 ? (
-        <Comments
-          comments={comments}
-          onDelete={deleteComment}
-          onUpdate={handleUpdateComment}
-          currentUser={currentUser}
-        />
-      ) : (
-        <p>No comments available.</p>
-      )}
+      <div className='comments'>
+        {comments.length > 0 ? (
+          <Comments
+            comments={comments}
+            onDelete={deleteComment}
+            onUpdate={handleUpdateComment}
+            currentUser={currentUser}
+          />
+        ) : (
+          <p>No comments available.</p>
+        )}
+      </div>
 
       {currentUser && (
         <CreateComment
