@@ -9,6 +9,7 @@ import WifiLocationDetails from '../components/WifiLocationDetails';
 import WifiLocationActions from '../components/WifiLocationActions';
 import CommentsSection from '../components/CommentsSection';
 import Swal from 'sweetalert2';
+import NotFound from '../components/NotFound';
 
 const WifiLocationsPage = () => {
   const { id } = useParams();
@@ -193,7 +194,7 @@ const WifiLocationsPage = () => {
 
   // Error or loading state handling
   if (error && !wifiLocation) {
-    return <p>Error loading WiFi location</p>;
+    return <NotFound />;
   }
 
   if (!wifiLocation) {
