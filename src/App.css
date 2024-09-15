@@ -38,7 +38,7 @@ p {
   margin: 5rem 0rem;
 }
 
-.margin-bottom-7{
+.margin-bottom-7 {
   margin-bottom: 7rem;
 }
 
@@ -65,22 +65,28 @@ p {
   height: 100vh;
 }
 
-.about-subhead{
+.back-colour {
+  background-color: #F5DEB3;
+}
+
+.about-subhead {
   font-size: 3rem;
   text-decoration: underline;
 }
 
 /* ******************** SweetAlert ******************** */
 
-.swal2-show{
+.swal2-show {
   width: 40rem;
 }
 
-.swal2-title{
- font-size: 3rem; 
+.swal2-title {
+  font-size: 3rem;
 }
 
-.swal2-html-container,.swal2-confirm,.swal2-cancel{
+.swal2-html-container,
+.swal2-confirm,
+.swal2-cancel {
   font-size: 2rem;
 }
 
