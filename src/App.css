@@ -75,12 +75,12 @@ p {
   text-decoration: underline;
 }
 
-.line{
+.line {
   border: 2px solid black;
   margin: 1rem 0rem;
 }
 
-.font-color{
+.font-color {
   color: #003366;
 }
 
@@ -153,7 +153,7 @@ a i:hover,
   text-decoration: underline;
 }
 
-.navStyle .active{
+.navStyle .active {
   color: #00f733 !important;
   text-decoration: underline;
 }
@@ -533,7 +533,7 @@ a i:hover,
   border: none;
 }
 
-.f-2rem{
+.f-2rem {
   font-size: 2rem;
 }
 
