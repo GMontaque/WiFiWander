@@ -4,7 +4,7 @@ import { Image } from 'react-bootstrap';
 const WifiLocationDetails = ({ wifiLocation, matchedAmenities }) => {
   return (
     <div className='wifi-mobile'>
-      <div className='wifipage-img'>
+      <div className='w-100'>
         {wifiLocation.image && (
           <Image
             src={wifiLocation.image}
