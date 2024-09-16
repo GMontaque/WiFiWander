@@ -84,6 +84,10 @@ p {
   color: #003366;
 }
 
+.min-width {
+  width: min-content;
+}
+
 /* ******************** SweetAlert ******************** */
 
 .swal2-show {

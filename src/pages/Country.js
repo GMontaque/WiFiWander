@@ -47,8 +47,8 @@ const Country = () => {
       <h1 className='pageTitle'>Select a Country in {continentName.charAt(0).toUpperCase() + continentName.slice(1)}</h1>
       <div className='list'>
         {countries.map(country => (
-          <Col key={country} sm={12} md={6} lg={4}>
-            <Card className="mb-4">
+          <div key={country}>
+            <Card className="mb-4 min-width">
               <Card.Body className='citybtn'>
                 <Card.Title>{country}</Card.Title>
                 <div className="btn-back">
@@ -58,7 +58,7 @@ const Country = () => {
                 </div>
               </Card.Body>
             </Card>
-          </Col>
+          </div>
         ))}
       </div>
       <div className='newlocation-btn'>
