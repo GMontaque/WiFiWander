@@ -9,10 +9,10 @@ const Comments = ({ comments, onDelete, onUpdate, currentUser }) => {
           <Card key={comment.id} className='wifi-comment'>
             <Card.Body>
               <Card.Title>{comment.user}</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">
+              <Card.Subtitle className="mb-2 text-muted f-2rem">
                 {comment.star_rating} Stars
               </Card.Subtitle>
-              <Card.Text>{comment.comment_text}</Card.Text>
+              <Card.Text className='mb-3'>{comment.comment_text}</Card.Text>
               {/* Conditionally render Update and Delete buttons */}
               {currentUser && (currentUser.username === comment.user || currentUser.username === 'adminuser') && (
                 <>

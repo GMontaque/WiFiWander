@@ -457,7 +457,6 @@ a i:hover,
   height: 7rem;
 }
 
-
 #image {
   height: 4rem;
 }
@@ -532,6 +531,10 @@ a i:hover,
   cursor: not-allowed;
   opacity: 1;
   border: none;
+}
+
+.f-2rem{
+  font-size: 2rem;
 }
 
 @media (max-width: 484px) {
