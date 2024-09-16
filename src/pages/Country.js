@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Col, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import showAlert from '../components/Sweetalert';
 import BreadcrumbComp from '../components/BreadcrumbComp';
 import Loader from '../components/Loader';
