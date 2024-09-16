@@ -14,6 +14,7 @@ const Profile = () => {
           src="https://via.placeholder.com/150"
           className='profile-img'
           roundedCircle
+          alt='profile image'
         />
         <h1 className='text-center capitalize wificreation-title' >{currentUser?.username}</h1>
       </Row>

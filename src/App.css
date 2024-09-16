@@ -601,6 +601,7 @@ textarea {
 
 .star-rating {
   margin-right: 1rem;
+  display: block;
 }
 
 @media (max-width: 1025px) {
