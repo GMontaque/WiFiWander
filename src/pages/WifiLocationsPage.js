@@ -143,7 +143,7 @@ const WifiLocationsPage = () => {
   };
 
   const handleUpdateComment = (comment) => {
-    if (currentUser?.username === comment.user) {
+    if (currentUser?.username === comment.user || currentUser?.is_superuser === true) {
       setCommentToEdit(comment);
     } else {
       showAlert('error', "You don't have permission to edit this comment", 'error');
