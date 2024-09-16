@@ -17,11 +17,11 @@ const About = () => {
         <h1 className='text-center mt-4 mb-4'>About page</h1>
         <div>
           <div className='about-boss-img'>
-            <Image src={boss} className='img-fluid' />
+            <Image src={boss} className='img-fluid' alt='boss-image'/>
           </div>
 
           <div className='about-text'>
-            <h3 className='about-subhead'>Lorenzo Diana</h3>
+            <h2 className='about-subhead'>Lorenzo Diana</h2>
             <p>Welcome to our digital platform, tailored specifically for digital nomads and remote workers seeking
               the best Wi-Fi spots around the world. Our website is designed to make your search for optimal work
               environments as easy and efficient as possible, no matter where you are. Whether you're exploring a
@@ -45,7 +45,7 @@ const About = () => {
           </div>
         </div>
         <div className="team-img">
-          <Image src={team} className="full-width-img" />
+          <Image src={team} className="full-width-img" alt='iamge of the team'/>
         </div>
         <p className='team-bio'>Our team is a diverse group of seven digital nomads who share a passion for travel, technology,
           and the freedom to work from anywhere in the world. Each member brings a unique perspective and
@@ -66,22 +66,22 @@ const About = () => {
 
         <div className="team-photos">
           <Col md={6} className="team-photo-wrapper left">
-            <Image src={teamPhoto1} className="team-photo" />
+            <Image src={teamPhoto1} className="team-photo" alt='iamge of the team'/>
           </Col>
           <Col md={6} className="team-photo-wrapper right">
-            <Image src={teamPhoto2} className="team-photo" />
+            <Image src={teamPhoto2} className="team-photo" alt='iamge of the team'/>
           </Col>
           <Col md={6} className="team-photo-wrapper left">
-            <Image src={teamPhoto3} className="team-photo" />
+            <Image src={teamPhoto3} className="team-photo" alt='iamge of the team'/>
           </Col>
           <Col md={6} className="team-photo-wrapper right">
-            <Image src={teamPhoto4} className="team-photo" />
+            <Image src={teamPhoto4} className="team-photo" alt='iamge of the team'/>
           </Col>
           <Col md={6} className="team-photo-wrapper left">
-            <Image src={teamPhoto5} className="team-photo" />
+            <Image src={teamPhoto5} className="team-photo" alt='iamge of the team'/>
           </Col>
           <Col md={6} className="team-photo-wrapper right">
-            <Image src={teamPhoto6} className="team-photo" />
+            <Image src={teamPhoto6} className="team-photo" alt='iamge of the team'/>
           </Col>
         </div>
       </Row>
