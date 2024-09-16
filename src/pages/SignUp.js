@@ -86,7 +86,7 @@ const SignUp = () => {
     <Row className="justify-content-md-center">
       <h1 className="mt-5 mb-4 text-center">Sign Up</h1>
       <div className="mt-3 text-center">
-        <NavLink to="/signin">
+        <NavLink to="/signin" className="font-color">
           Already got an account? <span>Sign In</span>
         </NavLink>
       </div>
