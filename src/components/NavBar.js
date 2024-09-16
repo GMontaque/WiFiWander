@@ -10,13 +10,13 @@ import Swal from 'sweetalert2';
 
 const LoggedOutIcons = ({ closeNav }) => (
   <>
-    <NavLink to="/signup" onClick={closeNav} className="remove-underline nav-color">Sign Up</NavLink>
-    <NavLink to="/signin" onClick={closeNav} className="remove-underline ms-4 nav-color">Sign In</NavLink>
+    <NavLink to="/signup" onClick={closeNav} className={({ isActive }) => isActive ? "remove-underline nav-color active" : "remove-underline nav-color"}>Sign Up</NavLink>
+    <NavLink to="/signin" onClick={closeNav} className={({ isActive }) => isActive ? "remove-underline ms-4 nav-color active" : "remove-underline ms-4 nav-color"}>Sign In</NavLink>
   </>
 );
 
 const AddLocation = ({ closeNav }) => (
-  <NavLink to="/newlocation" onClick={closeNav} className="remove-underline ms-4 nav-color">Add Location</NavLink>
+  <NavLink to="/newlocation" onClick={closeNav} className={({ isActive }) => isActive ? "remove-underline ms-4 nav-color active" : "remove-underline ms-4 nav-color"}>Add Location</NavLink>
 );
 
 const NavBar = () => {
@@ -60,7 +60,7 @@ const NavBar = () => {
   const LoggedInIcons = ({ closeNav }) => (
     <>
       <p className='white capitalize'>{currentUser?.username}</p>
-      <NavLink to="/profile" onClick={closeNav} className="ms-4 remove-underline nav-color">Profile</NavLink>
+      <NavLink to="/profile" onClick={closeNav} className={({ isActive }) => isActive ? "ms-4 remove-underline nav-color active" : "ms-4 remove-underline nav-color"}>Profile</NavLink>
       <NavLink to="/" onClick={() => { closeNav(); confirmSignOut(); }} className="ms-4 remove-underline nav-color">Log Out</NavLink>
     </>
   );
@@ -82,8 +82,8 @@ const NavBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setExpanded(!expanded)} />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto navbar-mobile-links">
-            <NavLink to="/" onClick={closeNav} className="remove-underline nav-color">Home</NavLink>
-            <NavLink to="/about" onClick={closeNav} className="remove-underline ms-4 nav-color">About Us</NavLink>
+            <NavLink to="/" onClick={closeNav} className={({ isActive }) => isActive ? "remove-underline nav-color active" : "remove-underline nav-color"}>Home</NavLink>
+            <NavLink to="/about" onClick={closeNav} className={({ isActive }) => isActive ? "remove-underline ms-4 nav-color active" : "remove-underline ms-4 nav-color"}>About Us</NavLink>
             {currentUser && <AddLocation closeNav={closeNav} />}
           </Nav>
           <Nav className="ms-auto navbar-mobile-login">
