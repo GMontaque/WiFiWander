@@ -8,6 +8,7 @@ import { useCurrentUser } from '../components/CurrentUserContext';
 import WifiLocationDetails from '../components/WifiLocationDetails';
 import WifiLocationActions from '../components/WifiLocationActions';
 import CommentsSection from '../components/CommentsSection';
+import StarRating from '../components/StarRating';
 import Swal from 'sweetalert2';
 import NotFound from '../components/NotFound';
 
@@ -159,6 +160,10 @@ const WifiLocationsPage = () => {
     ? amenitiesData.filter(amenity => wifiLocation.amenities.includes(amenity.name))
     : [];
 
+  const averageRating = comments.length > 0
+    ? comments.reduce((sum, comment) => sum + (comment.star_rating || 0), 0) / comments.length
+    : 0;
+
   if (error && !wifiLocation) {
     return <NotFound />;
   }
@@ -172,7 +177,7 @@ const WifiLocationsPage = () => {
       <Row>
         <h1 className='pageTitle mt-4'>{wifiLocation.name}</h1>
         <div className='wifipage-links'>
-          <p>{wifiLocation.star_rating || 'No rating available'}</p>
+          <StarRating rating={averageRating} />
           <WifiLocationActions
             isCreator={isCreator}
             isAdmin={isAdmin}
