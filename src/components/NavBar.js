@@ -61,7 +61,13 @@ const NavBar = () => {
     <>
       <p className='white capitalize'>{currentUser?.username}</p>
       <NavLink to="/profile" onClick={closeNav} className={({ isActive }) => isActive ? "ms-4 remove-underline nav-color active" : "ms-4 remove-underline nav-color"}>Profile</NavLink>
-      <NavLink to="/" onClick={() => { closeNav(); confirmSignOut(); }} className="ms-4 remove-underline nav-color">Log Out</NavLink>
+      <span
+        onClick={() => { closeNav(); confirmSignOut(); }}
+        className="ms-4 remove-underline nav-color logout-btn"
+        role="button"
+      >
+        Log Out
+      </span>
     </>
   );
 
