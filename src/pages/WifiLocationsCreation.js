@@ -9,6 +9,7 @@ import TextInput from "../components/TextInput";
 import TextArea from "../components/TextArea";
 import CheckboxGroup from "../components/CheckboxGroup";
 import ImagePreview from "../components/ImagePreview";
+import Loader from '../components/Loader';
 
 const WifiLocationsCreation = () => {
   const { id } = useParams();
@@ -33,12 +34,14 @@ const WifiLocationsCreation = () => {
 
   const [errors, setErrors] = useState({});
   const [wifiLocation, setWifiLocation] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const { name, street, city, country, postcode, description, amenities, image, continent } = wifiData;
 
   useEffect(() => {
     const fetchWifiLocation = async () => {
       if (id) {
+        setLoading(true);
         try {
           const { data } = await axiosReq.get(`/wifi_locations/${id}/`);
           setWifiLocation(data);
@@ -56,6 +59,8 @@ const WifiLocationsCreation = () => {
         } catch (err) {
           showAlert('error', "Error fetching WiFi location data, please try again", 'error');
           setErrors((prevErrors) => ({ ...prevErrors, fetch: "Failed to load WiFi location data." }));
+        } finally {
+          setLoading(false);
         }
       }
     };
@@ -144,6 +149,13 @@ const WifiLocationsCreation = () => {
     }
   };
 
+  // loader when fetching data
+  if (loading) {
+    return (
+      <Loader />
+    );
+  }
+
   return (
     <Container>
       <h1 className="text-center wificreation-title">{id ? "Edit WiFi Location" : "Create WiFi Location"}</h1>
@@ -185,7 +197,6 @@ const WifiLocationsCreation = () => {
             <Alert variant="warning" key={idx}>This field can not be blank</Alert>
           ))}
         </Form.Group>
-
 
         <Form.Group controlId="image" className="mb-3">
           <Form.Label>Image Upload</Form.Label>
