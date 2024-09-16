@@ -153,6 +153,11 @@ a i:hover,
   text-decoration: underline;
 }
 
+.navStyle .active{
+  color: #00f733 !important;
+  text-decoration: underline;
+}
+
 @media (max-width: 991px) {
   #basic-navbar-nav {
     margin-left: -4rem;
