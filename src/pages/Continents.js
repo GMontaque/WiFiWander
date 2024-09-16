@@ -22,7 +22,7 @@ const Continents = () => {
     <div className='continentsCards'>
       {continents.map((continent) => (
         <Card key={continent.name} className="mb-4">
-          <Card.Img variant="top" src={continent.image} />
+          <Card.Img variant="top" src={continent.image} alt={continent.name} />
           <Card.Body>
             <Card.Title className="card-title">{continent.name}</Card.Title>
             <Card.Text>

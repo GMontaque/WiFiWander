@@ -25,13 +25,28 @@ function Footer() {
                             <Link to="/about" className='white remove-underline ms-5 footer-link'>About Us</Link>
                         </Col>
                         <Col className='text-align-c pt-5' sm={3}>
-                            <a className='' href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
+                            <a 
+                            className='' 
+                            href="https://www.twitter.com" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            aria-label="Follow us on Twitter">
                                 <i className="fa-brands fa-x-twitter"></i>
                             </a>
-                            <a className='ms-4 ' href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                            <a 
+                            className='ms-4 ' 
+                            href="https://www.facebook.com" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            aria-label="Follow us on Facebook">
                                 <i className="fa-brands fa-square-facebook"></i>
                             </a>
-                            <a className='ms-4' href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                            <a 
+                            className='ms-4' 
+                            href="https://www.instagram.com" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            aria-label="Follow us on Instagram">
                                 <i className="fa-brands fa-square-instagram"></i>
                             </a>
                         </Col>

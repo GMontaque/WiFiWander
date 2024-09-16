@@ -75,6 +75,11 @@ p {
   text-decoration: underline;
 }
 
+.line{
+  border: 2px solid black;
+  margin: 1rem 0rem;
+}
+
 /* ******************** SweetAlert ******************** */
 
 .swal2-show {
