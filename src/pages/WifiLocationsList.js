@@ -38,7 +38,7 @@ const WifiLocationsList = () => {
 
   useEffect(() => {
     if (error) {
-      showAlert('error', error, 'error');
+      showAlert('error', "We couldn't load the WiFi locations. Please try again later.", 'error');
     }
   }, [error]);
 

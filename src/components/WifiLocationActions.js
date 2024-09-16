@@ -33,7 +33,7 @@ const WifiLocationActions = ({ isCreator, isAdmin, wifiLocation, currentUser, ha
           setDisableButton(false);
         }
       } catch (err) {
-        console.error('Failed to fetch favorites', err);
+        showAlert('error', 'Failed to fetch favorites: Please refresh and try again', 'error');
         setDisableButton(false);
       }
     };
@@ -65,7 +65,6 @@ const WifiLocationActions = ({ isCreator, isAdmin, wifiLocation, currentUser, ha
       }
     } catch (err) {
       showAlert('error', 'Failed to add location to favorites', 'error');
-      console.error(err);
     }
   };
 

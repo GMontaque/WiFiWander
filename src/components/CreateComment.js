@@ -106,7 +106,7 @@ const CreateComment = ({ onCommentAdded, username, commentToEdit, onCancelEdit }
       });
     } catch (err) {
       setErrors(err.response.data);
-      console.error('Error during comment creation:', err.response.data);
+      showAlert('error', 'Error during comment creation, please try again', 'error');
     }
   };
 

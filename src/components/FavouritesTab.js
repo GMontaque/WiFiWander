@@ -49,7 +49,6 @@ const FavouritesTab = () => {
         setLoading(false);
       } catch (err) {
         setError('Failed to fetch favorites or WiFi locations');
-        console.error(err);
         setLoading(false);
       }
     };

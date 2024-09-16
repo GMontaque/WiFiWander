@@ -95,7 +95,6 @@ const WifiLocationsPage = () => {
           }
         } catch (err) {
           showAlert('error', 'There was an error deleting the WiFi location, please try again', 'error');
-          console.error(err);
         }
       }
     });
@@ -133,7 +132,6 @@ const WifiLocationsPage = () => {
           }
         } catch (err) {
           showAlert('error', 'There was an error deleting the comment, please try again', 'error');
-          console.error(err);
         }
       }
     });

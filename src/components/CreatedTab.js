@@ -26,8 +26,7 @@ const CreatedTab = ({ username }) => {
         setWifiLocations(userLocations);
         setLoading(false);
       } catch (err) {
-        setError('Failed to fetch WiFi locations');
-        console.error(err);
+        setError('Failed to fetch WiFi locations: Please refresh and try again');
         setLoading(false);
       }
     };

@@ -17,7 +17,6 @@ const StarRating = ({ rating }) => {
         stars.push(<i key="half" className="fa-solid fa-star-half-stroke" ></i>);
     }
 
-    // Push empty stars
     for (let i = 0; i < emptyStars; i++) {
         stars.push(<i key={`empty-${i}`} className="fa-regular fa-star"></i>);
     }
