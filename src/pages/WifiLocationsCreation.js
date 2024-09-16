@@ -120,7 +120,7 @@ const WifiLocationsCreation = () => {
       formData.append("image", image);
     }
 
-    const canEditOrDelete = currentUser && (currentUser.username === wifiLocation?.added_by || currentUser.username === 'adminuser');
+    const canEditOrDelete = currentUser && (currentUser.username === wifiLocation?.added_by || currentUser.is_superuser);
 
     if (id && !canEditOrDelete) {
       showAlert('warning', "You are not authorized to edit this WiFi location.", 'warning');
@@ -214,7 +214,7 @@ const WifiLocationsCreation = () => {
           <Button type="submit" className="btn" variant="">
             {id ? "Update WiFi Location" : "Save WiFi Location"}
           </Button>
-          
+
         </div>
         {/* Cancel button */}
         {id && (

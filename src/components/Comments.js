@@ -14,7 +14,7 @@ const Comments = ({ comments, onDelete, onUpdate, currentUser }) => {
               </Card.Subtitle>
               <Card.Text className='mb-3'>{comment.comment_text}</Card.Text>
               {/* Conditionally render Update and Delete buttons */}
-              {currentUser && (currentUser.username === comment.user || currentUser.username === 'adminuser') && (
+              {currentUser && (currentUser.username === comment.user || currentUser.is_superuser) && (
                 <>
                   <Button variant="warning" onClick={() => onUpdate(comment)}>
                     Update

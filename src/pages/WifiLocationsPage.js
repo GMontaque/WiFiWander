@@ -22,7 +22,7 @@ const WifiLocationsPage = () => {
   const navigate = useNavigate();
 
   const isCreator = currentUser && currentUser.username === wifiLocation?.added_by;
-  const isAdmin = currentUser && currentUser.username === 'adminuser';
+  const isAdmin = currentUser && (currentUser.is_superuser);
 
   const amenitiesData = [
     { name: "Outside Seating", icon: "fa-chair" },
