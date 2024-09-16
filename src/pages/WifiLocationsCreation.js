@@ -214,7 +214,19 @@ const WifiLocationsCreation = () => {
           <Button type="submit" className="btn" variant="">
             {id ? "Update WiFi Location" : "Save WiFi Location"}
           </Button>
+          
         </div>
+        {/* Cancel button */}
+        {id && (
+          <div className="btn-back m-top-1 mt-5 ms-3">
+            <Button
+              className="btn" variant=""
+              onClick={() => navigate(-1)}
+            >
+              Cancel
+            </Button>
+          </div>
+        )}
       </Form>
     </Container>
   );
