@@ -500,7 +500,6 @@ a i:hover,
   pointer-events: none;
 }
 
-
 @media (max-width: 769px) {
   .wificreation-form {
     width: 80%;
