@@ -796,3 +796,15 @@ For more details on cloning a repository, check out [GitHub’s official documen
 - Bro Code - React Fuull Course - [Link](https://www.youtube.com/watch?v=CgkZ7MvWUAA)
 
 - freecodecamp.org - React Course - [Link](https://youtu.be/bMknfKXIFA8?si=rn1s71I49-x04VOQ)
+
+- How to create React Star rating system - [Link](https://www.youtube.com/watch?v=l1Q7o8skKPM)
+
+- Build Super Easy Rating Component in React - [Link](https://www.youtube.com/watch?v=J-gURMj3M6A)
+
+**Loader**
+
+- React Bootstrap loader Icon - [Link](https://react-bootstrap.netlify.app/docs/components/spinners/)
+
+**Icons**
+
+- Fontawesome Icons - [Link](https://fontawesome.com/)
