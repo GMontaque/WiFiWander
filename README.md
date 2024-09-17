@@ -544,11 +544,11 @@ Kanban Board Link - [Link](https://github.com/users/GMontaque/projects/7)
 - When the user clicks the button, a pop-up will appear asking for confirmation to remove the location.
 - If they confirm, the Wi-Fi location is removed from the favorites list, and a pop-up will confirm the action.
 
-![picture of Removing Wi-Fi location from favorites](readme-pics/wifi-location-remove-favorites.png)
+![picture of Removing Wi-Fi location from favorites](readme-pics/wifi-location-remove-favioutes.png)
 
 - **Mobile**
 
-![picture of Removing Wi-Fi location from favorites](readme-pics/wifi-location-remove-favorites-mobile.png)
+![picture of Removing Wi-Fi location from favorites](readme-pics/wifi-location-remove-favioutes-mobile.png)
 
 ### About Page
 
