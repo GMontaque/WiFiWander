@@ -62,7 +62,6 @@ const FavouritesTab = () => {
   const handleRemoveFavorite = async (favoriteId) => {
     try {
       await axiosRes.delete(`/favourites/${favoriteId}/`);
-      // Update the favorites list after deletion
       setFavorites(prevFavorites => prevFavorites.filter(fav => fav.id !== favoriteId));
       showAlert('success', 'WiFi location removed from favorites', 'success');
     } catch (err) {
@@ -92,7 +91,7 @@ const FavouritesTab = () => {
   };
 
   if (error) {
-    return <p style={{ color: 'red' }}>{error}</p>;
+    return <p className="no-favourites">{error}</p>;
   }
 
   if (loading) {

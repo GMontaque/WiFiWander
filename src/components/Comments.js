@@ -28,7 +28,7 @@ const Comments = ({ comments, onDelete, onUpdate, currentUser }) => {
           </Card>
         ))
       ) : (
-        <p>No comments available for this location.</p>
+        <p className='no-comments'>No comments available for this location.</p>
       )}
     </>
   );

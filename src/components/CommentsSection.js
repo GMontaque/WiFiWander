@@ -14,7 +14,7 @@ const CommentsSection = ({ comments, currentUser, deleteComment, handleUpdateCom
             currentUser={currentUser}
           />
         ) : (
-          <p>No comments available.</p>
+          <p className='no-comments'>No comments available.</p>
         )}
       </div>
 

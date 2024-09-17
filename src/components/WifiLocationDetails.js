@@ -22,7 +22,7 @@ const WifiLocationDetails = ({ wifiLocation, matchedAmenities }) => {
               </div>
             ))
           ) : (
-            <p>No amenities available</p>
+            <p className='no-amenities'>No amenities available</p>
           )}
         </div>
       </div>

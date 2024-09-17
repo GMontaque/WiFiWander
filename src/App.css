@@ -548,6 +548,15 @@ a i:hover,
   font-size: 2rem;
 }
 
+.no-comments {
+  color: white;
+  background-color: #003366;
+  margin: 3rem 0rem;
+  padding: 2rem;
+  width: 90%;
+  text-align: center;
+}
+
 @media (max-width: 484px) {
   .m-top-1 {
     margin-top: 1rem;
@@ -715,6 +724,16 @@ button.tab-border.nav-link.active[data-rr-ui-event-key="favourites"] {
 
 .fav-img {
   width: 100%;
+}
+
+.no-favourites,
+.no-amenities {
+  color: white;
+  background-color: #003366;
+  margin: 3rem 0rem;
+  padding: 2rem;
+  width: 100%;
+  text-align: center;
 }
 
 @media (max-width: 769px) {
