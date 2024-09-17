@@ -6,17 +6,16 @@ const AutoComplete = ({ type, onSelect }) => {
     const [filteredCities, setFilteredCities] = useState([]);
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
 
-    // Debounce the search term to optimize filtering performance
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedSearchTerm(searchTerm);
-        }, 300); // Wait 300ms after the user stops typing
+        }, 300);
         return () => {
             clearTimeout(handler);
         };
     }, [searchTerm]);
 
-    // Memoize the filtering operation for performance improvement
+    // Memoize the filtering operation
     const results = useMemo(() => {
         if (debouncedSearchTerm.length > 0) {
             const lowerCaseTerm = debouncedSearchTerm.toLowerCase();
@@ -24,7 +23,7 @@ const AutoComplete = ({ type, onSelect }) => {
                 type === 'city'
                     ? city.city.toLowerCase().includes(lowerCaseTerm)
                     : city.country.toLowerCase().includes(lowerCaseTerm)
-            ).slice(0, 10); // Limit the results to 10
+            ).slice(0, 10);
         }
         return [];
     }, [debouncedSearchTerm, type]);
