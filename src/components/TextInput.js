@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Alert } from "react-bootstrap";
 
-const TextInput = ({ label, name, value, handleChange, errors, placeholder = "" }) => {
+const TextInput = ({ label, name, value, handleChange, errors, placeholder = "", readOnly = false }) => {
   return (
     <Form.Group controlId={name} className="mb-3">
       <Form.Label>{label}</Form.Label>
@@ -11,6 +11,7 @@ const TextInput = ({ label, name, value, handleChange, errors, placeholder = "" 
         name={name}
         value={value}
         onChange={handleChange}
+        readOnly={readOnly}
       />
       {errors?.map((message, idx) => (
         <Alert variant="warning" key={idx}>{message}</Alert>
