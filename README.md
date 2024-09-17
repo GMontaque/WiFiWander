@@ -100,3 +100,21 @@
 
 - **About Page**
   - This section will introduce the team behind the site, featuring images and a description of how the company started, along with the inspiration behind the idea.
+
+## Structure
+
+### Site Map
+
+- Below shows a breakdown of the website depending on the logged in status of the user
+
+**Logged in user or Admin**
+
+- This wil be a user who has an account or admin
+
+![picture of site map for clan representative](readme-pics/site-map-logged-in.png)
+
+**General user**
+
+- This will be a user with no log in details i.e general user
+
+![picture of site map for non clan representative](readme-pics/site-map-general.png)
