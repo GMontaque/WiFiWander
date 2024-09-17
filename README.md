@@ -260,3 +260,55 @@
   - Main text font: Pangolin - [Link](https://fonts.google.com/specimen/Pangolin?colors=140f11-fcfbfc-987987-b1bfab-97afa1&fonts=Pangolin-Inter&query=Pangolin)
 
   ![picture of body text example](readme-pics/body-font.png)
+
+## Agile
+
+Kanban Board Link - [Link](https://github.com/users/GMontaque/projects/7)
+
+- Due to time constraints and work load not all user stories which were created were completed and some were not included all together or their priority had to be changed to make sure an MVP product was produced
+
+**Epics**
+
+- During the design stage of my project, I decided on the different features, structure and strategy for the site, this was broken down for the project using the agile methodology to better understand how to complete the project and implement the necessary features. At the same time, this ensured that the most important features were implemented first and that a deliverable product (minimum viable product) was created, even if some of the features were not completed within the set time. 12 EPICS were created 11 for the front end and 1 for the back end. These were then further broken down 12 user stories for the back end and 73 user stories for the front end.
+
+- Below is the list of the 11 EPICS which were created for front end section of this project.
+
+  - EPIC 1: Project set up
+  - EPIC 2: Website Navigation
+  - EPIC 3: Wifi Spot Filtering and Display
+  - EPIC 4: User Authentication and Authorisation
+  - EPIC 5: WIFI location page Creation and CRUD
+  - EPIC 6: Wifi Location Page
+  - EPIC 7: City and Country Profiles
+  - EPIC 8: Error Handling
+  - EPIC 9: Testing
+  - EPIC 10: Wifi Location Page Features
+  - EPIC 11: “Possibles” visit WIFI Locations
+
+- Below is the list of the EPIC which were created for Back End section of this project.
+  - EPIC 1: Back-End API Development
+
+**User stories**
+
+- Once the user stories and epics had been created, the next stage was to break them down to understand which to prioritize and which could be left to be completed at a later stage. I used the MoSCoW prioritization technique to do this. This process works by giving each user story a score (story point) as to the estimated amount of effort required to implement the user story and then once implemented checked against the acceptance criteria. The story point number system uses something called the Fibonacci numbers, the reason for this is that the number sequence goes (1, 2, 3, 5, 8, 13, etc.), the benefit of which is that it allows for the different size of tasks. For example setting up a GitHub repository is a relatively easy task but styling a website is much more complex with a number of parts, which the Fibonacci numbers allows for.
+
+- Each entry in the kanban board shows the MoSCoW prioritisation result.
+
+- MoSCoW prioritization technique stands for:
+
+  - Must-Have: Critical requirements that must be implemented for the project to be considered successful.
+  - Should-Have: Important requirements that are not critical but add significant value.
+  - Could-Haves: Desirable features that would be nice to have but are not crucial.
+  - Won't-Have: Features that are explicitly excluded from the project scope.
+
+- The total Story Points in the project is 253.
+- Must-Have : 189 story points
+- Should-Have : 51 story points
+- Could-Have : 13 story points
+- Wont-Have
+
+**Mock Kanban Board**
+
+- As referenced previously, when deciding on how to proceed, I first broke the user stories down using the MoSCow technique and then added a story point value to each user story. I went through a few iterations to decide on the order of completion. Having arrived at a satisfactory order, I completed the project over 5 iterations.
+
+[Excel Spreadsheet](https://docs.google.com/spreadsheets/d/1MN09sHqwkGb0rT8LuqexFH33Z2vpBfb0pXv4thdSXCI/edit?usp=sharing)
