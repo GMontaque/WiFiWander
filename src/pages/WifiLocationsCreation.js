@@ -175,7 +175,7 @@ const WifiLocationsCreation = () => {
         <TextInput label="Postcode" name="postcode" value={postcode} handleChange={handleChange} errors={errors.postcode} />
         <TextArea label="Description" name="description" value={description} handleChange={handleChange} errors={errors.description} rows={5} />
 
-        <CheckboxGroup options={amenitiesList} selectedOptions={amenities} handleChange={handleCheckboxChange} />
+        <CheckboxGroup options={amenitiesList} selectedOptions={amenities} handleChange={handleCheckboxChange} errors={errors} />
 
         <Form.Group controlId="continent" className="mb-3">
           <Form.Label>Continent</Form.Label>

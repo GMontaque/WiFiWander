@@ -1,7 +1,7 @@
 import React from "react";
-import { Form } from "react-bootstrap";
+import { Alert, Form } from "react-bootstrap";
 
-const CheckboxGroup = ({ options, selectedOptions, handleChange }) => {
+const CheckboxGroup = ({ options, selectedOptions, handleChange, errors }) => {
   return (
     <Form.Group className="mb-3" controlId="amenities">
       <Form.Label>Amenities</Form.Label>
@@ -14,6 +14,9 @@ const CheckboxGroup = ({ options, selectedOptions, handleChange }) => {
           checked={selectedOptions.includes(option)}
           onChange={handleChange}
         />
+      ))}
+      {errors.amenities?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>{message}</Alert>
       ))}
     </Form.Group>
   );
