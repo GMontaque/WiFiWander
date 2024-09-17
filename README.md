@@ -199,3 +199,64 @@
 **Delete comment/wifi location**
 
 ![picture of Deleting Wifi Location](readme-pics/delete-wifi-location.png)
+
+## Surface
+
+**Images**
+
+- For the logo this was generated from input text from myself where I described the website.
+- The images that were used on the about page came from a site called unsplash
+- The images on the homepage showing the 6 continents came from Wikipedia
+
+![picture of Logo](readme-pics/logo.png)
+
+**Colour Scheme**
+
+- The website was created using colours that are in keeping with travel, journey, working on the go. All colours were checked to make sure they did not clash and had the correct contrast with one another.
+
+- Header and Footer:
+
+  - Background: Deep Blue (#003366)
+  - Text: White (#FFFFFF)
+  - Hover Links: neon green (#00f733)
+
+- Website Body Content:
+
+  - Background: Sand Beige (#F5DEB3)
+  - All Text: Deep Blue (#003366)
+  - Button background: Deep Blue (#003366)
+  - Button Text: White (#FFFFFF)
+  - Button background hover: neon green (#00f733)
+  - Hover Button Text: White (#003366)
+
+- Wifi location list
+
+  - Background: Deep Blue (#003366)
+  - Text: White (#FFFFFF)
+
+- Listings / Featured Regions:
+
+  - Background: Deep Blue (#003366)
+  - Text: White (#FFFFFF)
+  - Star Ratings: neon green (#00f733)
+  - Hover Links: neon green (#00f733)
+
+- Breadcrumb
+  - Text: Deep Blue (#003366)
+  - Text Hover: maroon (#800000)
+
+![picture of colour palette ](readme-pics/colour-pallet.png)
+
+**Typography**
+
+- The theme for this website was Digital Noamds and how they operate whereby they are always travelling around the world therefore the font styles I selected were done so as they complemented that theme.
+
+- Fonts were taken from google fonts:
+
+  - Header font: fredoka - [Link](https://fonts.google.com/specimen/Fredoka?colors=140f11-fcfbfc-987987-b1bfab-97afa1&fonts=Pangolin-Inter&query=Fredoka)
+
+  ![picture of header text example](readme-pics/header-font.png)
+
+  - Main text font: Pangolin - [Link](https://fonts.google.com/specimen/Pangolin?colors=140f11-fcfbfc-987987-b1bfab-97afa1&fonts=Pangolin-Inter&query=Pangolin)
+
+  ![picture of body text example](readme-pics/body-font.png)
