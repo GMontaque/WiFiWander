@@ -476,6 +476,11 @@ a i:hover,
   width: 100%;
 }
 
+.auto-complete-error {
+  background-color: red;
+  color: white;
+}
+
 @media (max-width: 769px) {
   .wificreation-form {
     width: 80%;
