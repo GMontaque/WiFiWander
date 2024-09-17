@@ -613,3 +613,184 @@ Kanban Board Link - [Link](https://github.com/users/GMontaque/projects/7)
 - python3-openid==3.2.0
 - requests-oauthlib==2.0.0
 - sqlparse==0.5.1
+
+## Deployment
+
+### Deploying on Heroku
+
+#### Preparing the Application
+
+1. **Procfile**: Create a `Procfile` in the root directory of your project to instruct Heroku on how to run your application. For a Django project, you would run the following in your terminal:
+   ```bash
+   echo 'web: gunicorn <project_name>.wsgi' > Procfile
+   ```
+2. **requirements.txt**: Ensure all the project dependencies are listed in your `requirements.txt` file. To generate or update this file, run:
+   ```bash
+   pip freeze > requirements.txt
+   ```
+3. **Config Vars**: In the Heroku dashboard, under **Settings**, set the required configuration variables such as:
+   - `SECRET_KEY`
+   - `DATABASE_URL`
+   - `CLOUDINARY_URL`
+4. **ALLOWED_HOSTS**: Update your `settings.py` to include your Heroku app in `ALLOWED_HOSTS`:
+   ```python
+   ALLOWED_HOSTS = ['your-app-name.herokuapp.com']
+   ```
+
+#### Initial Setup
+
+1. Sign up for an account at [Heroku](https://heroku.com) if you haven’t already.
+2. Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) to interact with Heroku from your terminal.
+3. Alternatively, use the Heroku web interface to manage your deployment.
+
+#### Creating a Heroku App
+
+1. Log in to Heroku and click **Create New App**.
+2. Provide a unique app name and choose the region closest to you.
+3. Navigate to the **Buildpacks** section and ensure **Python** is added first, followed by **Node.js** if required.
+   - You can reorder the buildpacks by dragging them into the correct sequence.
+
+#### Deployment
+
+1. **GitHub Integration**: In the **Deploy** tab, choose **GitHub** and search for your repository. Once found, click **Connect**.
+2. **Manual Deployment**: You can also deploy manually by pushing your code to Heroku using the CLI:
+   ```bash
+   git push heroku main
+   ```
+3. **Migrations**: After deploying, ensure database migrations are applied:
+   ```bash
+   heroku run python manage.py migrate
+   ```
+
+#### Final Steps
+
+1. **Dyno Management**: Ensure the web dyno is enabled in the **Resources** tab.
+2. **View App**: Open your application using the Heroku dashboard or via the CLI:
+   ```bash
+   heroku open
+   ```
+
+### Local Deployment
+
+1. **Clone the Repository**:
+
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
+   ```
+
+2. **Open the Project**: Navigate to the project directory and open it in your IDE.
+
+3. **Create a Virtual Environment**:
+
+   ```bash
+   python -m venv venv
+   ```
+
+4. **Activate the Virtual Environment**:
+
+   - **Windows**:
+     ```bash
+     venv\Scripts\activate
+     ```
+   - **macOS/Linux**:
+     ```bash
+     source venv/bin/activate
+     ```
+
+5. **Install Dependencies**:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+6. **Set Up Environment Variables**: Create a `.env` file in the project’s root directory and add the necessary environment variables:
+
+   ```bash
+   SECRET_KEY=your_secret_key
+   DATABASE_URL=your_database_url
+   CLOUDINARY_URL=your_cloudinary_url
+   ```
+
+7. **Run the Development Server**:
+   ```bash
+   python manage.py runserver
+   ```
+
+---
+
+### Forking the Repository
+
+1. Navigate to the GitHub repository you want to fork.
+2. Click the **Fork** button located in the upper-right corner of the repository page.
+3. After the repository is forked, clone it to your local machine:
+
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/YOUR-FORKED-REPOSITORY
+   ```
+
+4. Make changes to the codebase locally.
+5. Commit your changes:
+
+   ```bash
+   git commit -m "Description of changes"
+   ```
+
+6. Push the changes to your forked repository:
+
+   ```bash
+   git push origin main
+   ```
+
+7. To contribute to the original repository, initiate a pull request by clicking **New pull request** on the original repository page.
+
+---
+
+### Cloning the Repository
+
+1. Log in to GitHub and find the repository you want to clone.
+2. Click the **Code** button and copy the URL under **Clone with HTTPS**.
+3. Open Git Bash or a similar terminal and navigate to the directory where you want to clone the repository.
+4. Run the following command to clone the repository:
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
+   ```
+
+For more details on cloning a repository, check out [GitHub’s official documentation](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
+
+## Credit and Content
+
+**Images**
+
+- Logo Image - Auto generated with input prompts
+- continent images:
+
+  - [Ocenia Image](<https://en.wikipedia.org/wiki/Oceania#/media/File:Oceania_(centered_orthographic_projection).svg>)
+  - [Africa Image](<https://en.wikipedia.org/wiki/List_of_sovereign_states_and_dependent_territories_in_Africa#/media/File:Africa_(orthographic_projection).svg>)
+  - [Asia Image](<https://en.wikipedia.org/wiki/Asia#/media/File:Asia_(orthographic_projection)_without_New_Guinea.svg>)
+  - [Europe Image](<https://en.wikipedia.org/wiki/Europe#/media/File:Europe_orthographic_Caucasus_Urals_boundary_(with_borders).svg>)
+  - [South America Image](<https://en.wikipedia.org/wiki/List_of_sovereign_states_and_dependent_territories_in_South_America#/media/File:South_America_(orthographic_projection).svg>)
+  - [North America Image](https://en.wikipedia.org/wiki/List_of_sovereign_states_and_dependent_territories_in_North_America#/media/File:Location_North_America.svg)
+
+- About page boss image - [Link](https://www.manomano.fr/p/relaxdays-etui-lunettes-pour-8-paires-rangement-lunettes-de-soleil-85-x-335-x-245-cm-coffre-en-cuir-noir-49967871)
+
+- About page team images:
+
+  - [Team Member Image 1](https://unsplash.com/photos/people-holding-shoulders-sitting-on-wall-Cecb0_8Hx-o)
+  - [Team Member Image 2](https://unsplash.com/photos/group-picture-of-men-and-women-on-hill-at-daytime-cMG5qjpnsyg)
+  - [Team Member Image 3](https://unsplash.com/photos/a-man-wearing-a-hat-is-looking-at-a-laptop-t1aXvVUEH0o)
+  - [Team Member Image 4](https://unsplash.com/photos/man-in-black-and-white-plaid-dress-shirt-sitting-by-the-table-using-macbook-1SimlW2A4ZY)
+  - [Team Member Image 5](https://unsplash.com/photos/three-people-sitting-in-front-of-table-laughing-together-g1Kr4Ozfoac)
+  - [Team Member Image 6](https://unsplash.com/photos/man-smiling-and-using-macbook-qnt9iigV444)
+  - [Team Member Image 7](https://unsplash.com/photos/man-using-computer-desktop-front-of-cat-XncszFVfqhE)
+
+- 404 Page image - [Link](https://unsplash.com/photos/people-holding-shoulders-sitting-on-wall-Cecb0_8Hx-o)
+
+**Tutor Support**
+
+- Profile component in django: created with the help of Code Institute Tutor Support
+
+**Youtube Courses**
+
+- Bro Code - React Fuull Course - [Link](https://www.youtube.com/watch?v=CgkZ7MvWUAA)
+
+- freecodecamp.org - React Course - [Link](https://youtu.be/bMknfKXIFA8?si=rn1s71I49-x04VOQ)
