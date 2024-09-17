@@ -179,22 +179,24 @@ const WifiLocationsCreation = () => {
 
         <Form.Group controlId="continent" className="mb-3">
           <Form.Label>Continent</Form.Label>
-          <Form.Control
-            as="select"
-            name="continent"
-            value={continent}
-            onChange={handleChange}
-          >
-            <option value="">Select a Continent</option>
-            <option value="Africa">Africa</option>
-            <option value="Asia">Asia</option>
-            <option value="Europe">Europe</option>
-            <option value="North America">North America</option>
-            <option value="Australia">Australia</option>
-            <option value="South America">South America</option>
-          </Form.Control>
+          <div className="dropdown-arrow">
+            <Form.Control
+              as="select"
+              name="continent"
+              value={continent}
+              onChange={handleChange}
+            >
+              <option value="">Select a Continent</option>
+              <option value="Africa">Africa</option>
+              <option value="Asia">Asia</option>
+              <option value="Europe">Europe</option>
+              <option value="North America">North America</option>
+              <option value="Australia">Australia</option>
+              <option value="South America">South America</option>
+            </Form.Control>
+          </div>
           {errors.continent?.map((idx) => (
-            <Alert variant="warning" key={idx}>This field can not be blank</Alert>
+            <Alert variant="warning" key={idx}>This field cannot be blank</Alert>
           ))}
         </Form.Group>
 

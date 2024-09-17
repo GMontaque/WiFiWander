@@ -481,6 +481,26 @@ a i:hover,
   color: white;
 }
 
+.dropdown-arrow {
+  position: relative;
+}
+
+.dropdown-arrow select {
+  appearance: none;
+  padding-right: 25px;
+}
+
+.dropdown-arrow::after {
+  content: '▼';
+  font-size: 40px;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+
 @media (max-width: 769px) {
   .wificreation-form {
     width: 80%;
