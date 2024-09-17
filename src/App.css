@@ -162,6 +162,13 @@ a i:hover,
   text-decoration: underline;
 }
 
+.logout-btns {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
 @media (max-width: 991px) {
   #basic-navbar-nav {
     margin-left: -4rem;
