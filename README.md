@@ -118,3 +118,22 @@
 - This will be a user with no log in details i.e general user
 
 ![picture of site map for non clan representative](readme-pics/site-map-general.png)
+
+## Data Schema
+
+- User Profile
+
+  - The User Profile model stores all the necessary information for each registered user. It manages login credentials, user details, and profile images. Each user can add wifi locations, post comments, and save their favorite spots.
+
+- Wifi Location
+
+  - The Wifi Location model holds all the details about each wifi location added to the platform. Each wifi spot includes the location’s name, address, and available amenities. The model is connected to the user who added the location and supports features such as user ratings and comments.
+
+- Comments
+
+  - The Comments model allows users to leave feedback on individual wifi locations. Each comment is linked to both the user who posted it and the relevant wifi location. Users can rate the wifi quality with a star rating, and the comments section provides additional insights on the spot.
+
+- Favorites
+  - The Favorites model enables users to save wifi locations for future reference. Users can organize their favorite spots, add notes, and mark whether they’ve visited a location. Each favorite is tied to both the user’s profile and the wifi location.
+
+![picture of data scheme](readme-pics/data-schema.png)
