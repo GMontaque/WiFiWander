@@ -570,3 +570,46 @@ Kanban Board Link - [Link](https://github.com/users/GMontaque/projects/7)
 - **Suggestions** – A feature to recommend Wi-Fi locations based on the user’s current location, making it easier to find nearby spots.
 - **Sorting Feature** – When a user filters a list of Wi-Fi locations down to a city, they will be able to sort by amenities, star rating, or proximity to the city center.
 - **Gallery** – This feature will allow users to upload multiple images to Wi-Fi location pages, creating a gallery that others can view and scroll through.
+
+## Testing
+
+- Please see External testing file for manaul testing result, automated testing and errors/bugs
+
+[Link to test.md](testing.md)
+
+## Technologies and Languages
+
+- HTML: A markup language used to create the structure and content of web pages.
+- CSS: A styling language used to control the layout and visual appearance of web pages.
+- JavaScript: A programming language used to add interactivity and dynamic effects to web pages.
+- Python: A high-level programming language used for web development, data analysis, and artificial intelligence.
+- Django: A high-level Python web framework that enables rapid development of secure and maintainable websites.
+- Github: A web-based platform for version control and collaboration on software development projects.
+- Bootstrap: A popular front-end framework used to build responsive and mobile-first web applications.
+- Heroku: A cloud platform as a service (PaaS) that enables developers to build, deploy, and scale web applications.
+- Vscode: A lightweight, open-source code editor developed by Microsoft that supports a wide range of programming languages.
+- Gitpod: A cloud-based development environment that provides a pre-configured and collaborative coding experience.
+- SweetAlert: A JavaScript library used to create customizable and responsive alert messages and modal windows for web applications.
+
+## Requirments.txt
+
+- Following requirements for the REST API
+
+- asgiref==3.8.1
+- cloudinary==1.41.0
+- dj-database-url==2.2.0
+- dj-rest-auth==2.1.9
+- Django==4.2
+- django-allauth==0.54.0
+- django-cloudinary-storage==0.3.0
+- django-cors-headers==4.4.0
+- djangorestframework==3.15.2
+- djangorestframework-simplejwt==5.3.1
+- gunicorn==23.0.0
+- oauthlib==3.2.2
+- pillow==10.4.0
+- psycopg2==2.9.9
+- PyJWT==2.9.0
+- python3-openid==3.2.0
+- requests-oauthlib==2.0.0
+- sqlparse==0.5.1
