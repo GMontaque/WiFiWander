@@ -70,7 +70,8 @@ const WifiLocationActions = ({ isCreator, isAdmin, wifiLocation, currentUser, ha
 
   return (
     <div className='wifi-links'>
-      {(!isCreator || isAdmin) && (
+      {/* Only show Add to Favorites button if user is not the creator */}
+      {!isCreator && (
         <div className="btn-back m-top-1">
           <Button
             onClick={!isFavorited ? handleAddToFavorites : null}
@@ -83,6 +84,7 @@ const WifiLocationActions = ({ isCreator, isAdmin, wifiLocation, currentUser, ha
         </div>
       )}
 
+      {/* Show Edit/Delete buttons for the creator or admin */}
       {(isCreator || isAdmin) && (
         <>
           <div className="btn-back m-top-1 ms-2">
