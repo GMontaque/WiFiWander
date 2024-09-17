@@ -265,7 +265,7 @@
 
 Kanban Board Link - [Link](https://github.com/users/GMontaque/projects/7)
 
-- Due to time constraints and work load not all user stories which were created were completed and some were not included all together or their priority had to be changed to make sure an MVP product was produced
+- Due to the limited time available and the overall workload, I was unable to complete all the planned user stories. As a result, I had to reassess and adjust the priorities throughout the project. This allowed me to ensure that I delivered a Minimum Viable Product (MVP) that met the core requirements and functionality, even though some features were either postponed or modified. My focus was on delivering a functional product that aligned with the project's main objectives within the given timeframe.
 
 **Epics**
 
