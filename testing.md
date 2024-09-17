@@ -41,3 +41,291 @@
 | Logged-in user can edit comment                                                                               | Try to edit comment                                                                   | When a user visits a Wi-Fi location page, if they have created a comment, they will see an edit button. Clicking the edit button pre-populates the create comment section                                                           | Pass |
 | Pop-up confirmation on edited comment                                                                         | User attempts to edit and submit a comment                                            | When a user has finished editing a comment and hits submit, if all fields are correct, it submits, and they get a confirmation pop-up                                                                                               | Pass |
 | Logged-in user can delete comment                                                                             | User attempts to delete comment                                                       | If a user has created a comment, next to the edit button will be the delete button. When clicking the delete button, a pop-up                                                                                                       |
+
+### Automated Testing
+
+- As part of testing the site, I have implemented unit testing on different parts of the API. Below is a list of all the files that were tested along with their results.
+
+- The automated testing that I carried out was conducted on the python code in the website.
+
+**Wifi Location App**
+
+```
+from rest_framework.test import APITestCase, APIClient
+from rest_framework import status
+from django.urls import reverse
+from django.contrib.auth.models import User
+from wifi_locations.models import WifiLocation
+
+
+class WifiLocationTests(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='testuser', password='testpass'
+        )
+        self.wifi_location = WifiLocation.objects.create(
+            name="Test Wifi Location",
+            street="123 Test St",
+            city="Test City",
+            country="Test Country",
+            postcode="12345",
+            description="Test description",
+            amenities="Test amenities",
+            continent="Europe",
+            added_by=self.user
+        )
+        self.client = APIClient()
+
+    def test_get_wifi_locations_list(self):
+        """
+        Test retrieving the list of WiFi locations
+        """
+        response = self.client.get(reverse('wifi_location_list'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('Test Wifi Location', response.data[0]['name'])
+
+    def test_get_single_wifi_location(self):
+        """
+        Test retrieving a single WiFi location by ID
+        """
+        response = self.client.get(
+            reverse(
+                'wifi_location_detail',
+                kwargs={'pk': self.wifi_location.pk}
+            )
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['name'], self.wifi_location.name)
+
+    def test_create_wifi_location(self):
+        """
+        Test creating a new WiFi location
+        """
+        self.client.login(username='testuser', password='testpass')
+        data = {
+            'name': 'New Wifi Location',
+            'street': '456 New St',
+            'city': 'New City',
+            'country': 'New Country',
+            'postcode': '67890',
+            'description': 'New description',
+            'amenities': 'New amenities',
+            'continent': 'Asia',
+        }
+        response = self.client.post(
+            reverse('wifi_location_list'), data, format='json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(WifiLocation.objects.count(), 2)
+        self.assertEqual(response.data['name'], 'New Wifi Location')
+
+    def test_update_wifi_location(self):
+        """
+        Test updating an existing WiFi location
+        """
+        self.client.login(username='testuser', password='testpass')
+        data = {
+            'name': 'Updated Wifi Location',
+            'street': self.wifi_location.street,
+            'city': self.wifi_location.city,
+            'country': self.wifi_location.country,
+            'postcode': self.wifi_location.postcode,
+            'description': 'Updated description',
+            'amenities': self.wifi_location.amenities,
+            'continent': self.wifi_location.continent,
+        }
+        response = self.client.put(
+            reverse(
+                'wifi_location_detail',
+                kwargs={'pk': self.wifi_location.pk}
+            ),
+            data=data,
+            format='json'
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.wifi_location.refresh_from_db()
+        self.assertEqual(self.wifi_location.name, 'Updated Wifi Location')
+
+    def test_delete_wifi_location(self):
+        """
+        Test deleting a WiFi location
+        """
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.delete(
+            reverse(
+                'wifi_location_detail',
+                kwargs={'pk': self.wifi_location.pk}
+            )
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(WifiLocation.objects.count(), 0)
+
+    def test_cannot_create_duplicate_wifi_location(self):
+        """
+        Test that creating two Wi-Fi locations with the same name is not
+        allowed
+        """
+        self.client.login(username='testuser', password='testpass')
+
+        data = {
+            'name': 'Test Wifi Location',
+            'street': '456 New St',
+            'city': 'New City',
+            'country': 'New Country',
+            'postcode': '67890',
+            'description': 'New description',
+            'amenities': 'New amenities',
+            'continent': 'Asia',
+        }
+
+        response = self.client.post(
+            reverse('wifi_location_list'), data, format='json'
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('name', response.data)
+        self.assertEqual(
+            response.data['name'][0],
+            'wifi location with this name already exists.'
+        )
+
+
+```
+
+- Result
+  - ![picture of Wifi Location App test result](readme-pics/wifi-locations-python-test.png)
+
+**Comments App**
+
+```
+from rest_framework.test import APITestCase, APIClient
+from rest_framework import status
+from django.urls import reverse
+from django.contrib.auth.models import User
+from wifi_locations.models import WifiLocation
+from comments.models import Comments
+
+
+class CommentTests(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='testuser', password='testpass')
+        self.wifi_location = WifiLocation.objects.create(
+            name="Test Wifi Location")
+        self.comment = Comments.objects.create(
+            user=self.user,
+            wifi_location=self.wifi_location,
+            comment_text="Test comment",
+            star_rating=4
+        )
+        self.client = APIClient()
+
+    def test_get_comments_list(self):
+        """
+        Test retrieving the list of comments
+        """
+        response = self.client.get(reverse('comments-list'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('Test comment', response.data[0]['comment_text'])
+
+    def test_get_comments_list_for_wifi_location(self):
+        """
+        Test retrieving the list of comments filtered by wifi_location
+        """
+        response = self.client.get(
+            reverse('comments-list'), {'wifi_location': self.wifi_location.id}
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(
+            response.data[0]['wifi_location'], self.wifi_location.id)
+
+    def test_create_comment(self):
+        """
+        Test creating a new comment
+        """
+        self.client.login(username='testuser', password='testpass')
+        data = {
+            'comment_text': 'New test comment',
+            'star_rating': 5,
+            'wifi_location': self.wifi_location.id
+        }
+        response = self.client.post(
+            reverse('comments-list'), data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Comments.objects.count(), 2)
+        self.assertEqual(response.data['comment_text'], 'New test comment')
+
+    def test_get_single_comment(self):
+        """
+        Test retrieving a single comment
+        """
+        response = self.client.get(
+            reverse('comments-detail', kwargs={'pk': self.comment.pk})
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.data['comment_text'], self.comment.comment_text)
+
+    def test_update_comment(self):
+        """
+        Test updating a comment
+        """
+        self.client.login(username='testuser', password='testpass')
+        data = {
+            'comment_text': 'Updated comment text',
+            'star_rating': 3,
+            'wifi_location': self.wifi_location.id
+        }
+        response = self.client.put(
+            reverse(
+                'comments-detail',
+                kwargs={'pk': self.comment.pk}), data, format='json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.comment.refresh_from_db()
+        self.assertEqual(self.comment.comment_text, 'Updated comment text')
+
+    def test_delete_comment(self):
+        """
+        Test deleting a comment
+        """
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.delete(
+            reverse('comments-detail', kwargs={'pk': self.comment.pk})
+        )
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Comments.objects.count(), 0)
+
+    def test_permission_required_for_post(self):
+        """
+        Ensure that creating a comment requires authentication
+        """
+        data = {
+            'comment_text': 'Unauthorized comment',
+            'star_rating': 3,
+            'wifi_location': self.wifi_location.id
+        }
+        response = self.client.post(
+            reverse('comments-list'), data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_owner_required_for_delete(self):
+        """
+        Test that only the owner can delete a comment
+        """
+        another_user = User.objects.create_user(
+            username='otheruser', password='otherpass')
+        self.client.login(username='otheruser', password='otherpass')
+        response = self.client.delete(
+            reverse('comments-detail', kwargs={'pk': self.comment.pk})
+        )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+```
+
+- Result
+  - ![picture of Comments App test result](readme-pics/comments-python-test.png)
