@@ -67,3 +67,36 @@
 - Users are encouraged to interact through the rating system and comment features.
 - Creating an account enables users to add listings and contribute more actively.
 - The platform ensures up-to-date information through user contributions.
+
+## Scope
+
+### What will the site include?
+
+- **Search and Navigation**
+
+  - The website will allow users to search for Wi-Fi spots by filtering through continents, countries, and cities. The homepage will feature interactive images representing each continent, making navigation simple and intuitive.
+  - Logged-in users will have the ability to add new Wi-Fi locations if their search does not return a Wi-Fi location they were looking for.
+
+- **User Contributions**
+
+  - By creating an account, users can contribute to the platform by adding new Wi-Fi locations. They can also review existing locations and rate the Wi-Fi strength using a star-rating system.
+  - Users can leave comments on each Wi-Fi location to provide up-to-date information or report any changes.
+
+- **User Profiles**
+
+  - Each user will have a personalized profile page where they can manage their contributions, including the Wi-Fi locations they’ve added. Users can also save Wi-Fi locations to a list of favourites for future reference.
+
+- **Wi-Fi Page**
+
+  - Each Wi-Fi location page will include a description, star rating, an image of the location, icons representing available amenities, and comments from other users.
+
+- **Comments Section**
+
+  - Logged-in users will have the ability to leave a comment under a Wi-Fi location, along with a rating based on their experience with the Wi-Fi and the location.
+
+- **Description**
+
+  - A section on the homepage will provide a clear description of how to use the site and what users can expect.
+
+- **About Page**
+  - This section will introduce the team behind the site, featuring images and a description of how the company started, along with the inspiration behind the idea.
