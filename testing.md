@@ -371,3 +371,184 @@ Initially, I designed the Wi-Fi location model with the address stored in a sepa
 However, an issue arose when each Wi-Fi location required an address to place it correctly on the website (e.g., London in the Europe section). When attempting to add or update a Wi-Fi location, I encountered an error related to the address database and its ID. This occurred because the Wi-Fi location and address were linked via a one-to-one relationship using a foreign key.
 
 To resolve this issue, I combined both models into one. This way, the form submission targeted a single model, incorporating the address directly into the Wi-Fi location model. After implementing this change, the form functioned as expected, and the error was resolved.
+
+### Validation
+
+**CSS Validator**
+
+- The image shows the results of passing the CSS file through the CSS validator
+
+![picture of CSS Validator result](readme-pics/css-validation.png)
+
+**Python Validator**
+
+- The table below contains all the python code and the results of passing it through the python validator to make sure it passes all pep standards
+
+| File tested                   | Result                                                           |
+| ----------------------------- | ---------------------------------------------------------------- |
+| comments admin                | Pass - [Img Link](readme-pics/comments-admin.png)                |
+| comments model                | Pass - [Img Link](readme-pics/comments-model.png)                |
+| comments serializer           | Pass - [Img Link](readme-pics/comments-serializer.png)           |
+| comments tests                | Pass - [Img Link](readme-pics/comments-test.png)                 |
+| comments urls                 | Pass - [Img Link](readme-pics/comments-urls.png)                 |
+| comments view                 | Pass - [Img Link](readme-pics/comments-view.png)                 |
+| favourites admin              | Pass - [Img Link](readme-pics/favourites-admin.png)              |
+| favourites model              | Pass - [Img Link](readme-pics/favourites-model.png)              |
+| favourites serializer         | Pass - [Img Link](readme-pics/favourites-serializer.png)         |
+| favourites urls               | Pass - [Img Link](readme-pics/favourites-urls.png)               |
+| favourites view               | Pass - [Img Link](readme-pics/favourites-view.png)               |
+| profile model                 | Pass - [Img Link](readme-pics/profile-model.png)                 |
+| profile serializer            | Pass - [Img Link](readme-pics/profile-serializer.png)            |
+| profile urls                  | Pass - [Img Link](readme-pics/profile-urls.png)                  |
+| profile view                  | Pass - [Img Link](readme-pics/profile-view.png)                  |
+| wifi locations admin          | Pass - [Img Link](readme-pics/wifi-locations-admin.png)          |
+| wifi locations model          | Pass - [Img Link](readme-pics/wifi-locations-model.png)          |
+| wifi locations serializer     | Pass - [Img Link](readme-pics/wifi-locations-serializer.png)     |
+| wifi locations test           | Pass - [Img Link](readme-pics/wifi-locations-test.png)           |
+| wifi locations urls           | Pass - [Img Link](readme-pics/wifi-locations-urls.png)           |
+| wifi locations view           | Pass - [Img Link](readme-pics/wifi-locations-view.png)           |
+| wifi locations api serializer | Pass - [Img Link](readme-pics/wifi-locations-api-serializer.png) |
+| wifi locations api settings   | Pass - [Img Link](readme-pics/wifi-locations-api-settings.png)   |
+| wifi locations api urls       | Pass - [Img Link](readme-pics/wifi-locations-api-urls.png)       |
+| wifi locations api view       | Pass - [Img Link](readme-pics/wifi-locations-api-view.png)       |
+
+**Javascript Validator**
+
+- **Initial Errors**
+
+- The image shows the results of passing the JavaScript file through EsLint
+
+![picture of Javascript Validator result](readme-pics/eslint-errors.png)
+
+- **Resolved Errors**
+
+![picture of Javascript Validator result](readme-pics/eslint-corrected.png)
+
+## Browser Testing
+
+- When testing the website on different devices I have used the pre-defined dimensions that come with the developer tools on Google Chrome
+
+- I have also researched several websites which have described the most common screen size for devices in 2023 for desktop and mobile - https://www.designrush.com/agency/web-development-companies/trends/website-dimensions
+
+![picture of device sizes](readme-pics/most-common-screen-resolutions-worldwide-content.jpg)
+
+**Google Chromee**
+![picture of google chrome browser test](readme-pics/website-chrome.png)
+
+**Edge**
+![picture of device sizes ](readme-pics/website-edge.png)
+
+**Firefox**
+![picture of device sizes browser test](readme-pics/website-firefox.png)
+
+## Lighthouse Test
+
+**Homepage**
+
+- Desktop
+
+![picture of Lighthouse result for homepage](readme-pics/homepage-lighthouse-pc.png)
+
+- Mobile
+
+![picture of Lighthouse result for homepage](readme-pics/homepage-lighthouse-mobile.png)
+
+**Continent Page**
+
+- Desktop
+
+![picture of Lighthouse result for Continent Page](readme-pics/continent-lighthouse-pc.png)
+
+- Mobile
+
+![picture of Lighthouse result for Continent Page](readme-pics/continent-lighthouse-mobile.png)
+
+**Country Page**
+
+- Desktop
+
+![picture of Lighthouse result for Country Page](readme-pics/country-lighthouse-pc.png)
+
+- Mobile
+
+![picture of Lighthouse result for Country Page](readme-pics/country-lighthouse-mobile.png)
+
+**City Page**
+
+- Desktop
+
+![picture of Lighthouse result for City Page](readme-pics/city-lighthouse-pc.png)
+
+- Mobile
+
+![picture of Lighthouse result for City Page](readme-pics/city-lighthouse-pc.png)
+
+**Individual Wifi Location Page**
+
+- Desktop
+
+![picture of Lighthouse result for Individual Wifi Location Page](readme-pics/wifi-location-lighthouse-pc.png)
+
+- Mobile
+
+![picture of Lighthouse result for Individual Wifi Location Page](readme-pics/wifi-location-lighthouse-mobile.png)
+
+**Edit/Create Wifi Location Page**
+
+- Desktop
+
+![picture of Lighthouse result for Edit/Create Wifi Location Page](readme-pics/edit-wifi-location-pc.png)
+
+- Mobile
+
+![picture of Lighthouse result for Edit/Create Wifi Location Page](readme-pics/edit-wifi-location-mobile.png)
+
+**Profile Page**
+
+- Desktop
+
+![picture of Lighthouse result for Profile Page](readme-pics/profile-lighthouse-pc.png)
+
+- Mobile
+
+![picture of Lighthouse result for Profile Page](readme-pics/profile-lighthouse-mobile.png)
+
+**Sign Up - Register**
+
+- Desktop
+
+![picture of Lighthouse result for Sign Up](readme-pics/signup-lighthouse-pc.png)
+
+- Mobile
+
+![picture of Lighthouse result for Sign Up](readme-pics/signup-lighthouse-mobile.png)
+
+**404 Page**
+
+- Desktop
+
+![picture of Lighthouse result for 404 Page](readme-pics/404-page-lighthouse-pc.png)
+
+- Mobile
+
+![picture of Lighthouse result for 404 Page](readme-pics/404-page-lighthouse-mobile.png)
+
+**Sign In**
+
+- Desktop
+
+![picture of Lighthouse result for Sign In](readme-pics/signin-lighthouse-desktop.png)
+
+- Mobile
+
+![picture of Lighthouse result for Sign In](readme-pics/signin-lighthouse-mobile.png)
+
+**About Page**
+
+- Desktop
+
+![picture of Lighthouse result for About Page](readme-pics/aboutpage-lighthouse-pc.png)
+
+- Mobile
+
+![picture of Lighthouse result for About Page](readme-pics/aboutpage-lighthouse-mobile.png)
