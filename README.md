@@ -312,3 +312,261 @@ Kanban Board Link - [Link](https://github.com/users/GMontaque/projects/7)
 - As referenced previously, when deciding on how to proceed, I first broke the user stories down using the MoSCow technique and then added a story point value to each user story. I went through a few iterations to decide on the order of completion. Having arrived at a satisfactory order, I completed the project over 5 iterations.
 
 [Excel Spreadsheet](https://docs.google.com/spreadsheets/d/1MN09sHqwkGb0rT8LuqexFH33Z2vpBfb0pXv4thdSXCI/edit?usp=sharing)
+
+## Features
+
+### Navigation Bar
+
+- The navigation bar appears at the top of all pages within the website.
+- Before a user logs in, the navigation bar contains links to the logo, home, about, sign-up, and sign-in pages.
+- For a logged-in user, the navigation bar updates to include home, about, add location, profile, and log-out links.
+- Non-logged-in users will only see the standard navigation bar links.
+- When a link is moused over, its color changes to indicate focus. Additionally, the link to the current page the user is on will appear in a different color on the navigation bar.
+
+- **Navigation Bar - General User**
+
+![picture of General user navigation bar](readme-pics/navbar-general.png)
+
+- **Navigation Bar - Admin and Logged-in User**
+
+![picture of Admin and Logged-in User navigation bar](readme-pics/navbar-logged-in.png)
+
+- **Mobile Navigation Bar**
+
+![picture of mobile navigation bar](readme-pics/navbar-mobile.png)
+
+### Footer
+
+- The footer appears at the bottom of all the web pages.
+- It contains social media links, website links, and a logo.
+- There is also a section containing legal wording.
+
+![picture of footer](readme-pics/footer.png)
+
+- **Footer Mobile**
+
+![picture of Footer Mobile](readme-pics/footer-mobile.png)
+
+### Home Page
+
+- The page contains the navigation bar, a hero image with the website title, and a small caption. The hero image is auto-generated.
+- **Description section**: This explains the website in more detail.
+- **Continent images**: These are used to allow the user to search the website for different Wi-Fi locations.
+- The footer contains website links and social media links.
+
+![picture of homepage top](readme-pics/homepage-top.png)  
+![picture of homepage middle](readme-pics/homepage-middle.png)  
+![picture of homepage bottom](readme-pics/homepage-bottom.png)
+
+- **Homepage Mobile**
+
+![picture of homepage mobile](readme-pics/homepage-mobile.png)
+
+### Filtering by Location (Continent/Country/City)
+
+- A user can click on any of the 6 continent images.
+- Upon clicking a link, the user is taken to a page showing countries for further filtering.
+- After selecting a country, they will be directed to a list of cities.
+- Finally, after selecting a city, the user will see a list of Wi-Fi locations in that city.
+- If no result is found for a continent, the user can click on a button to add a new location (they must be signed in to do so).
+
+- **Continent Full Screen and Mobile**
+
+![picture of Full Screen Continent](readme-pics/continent-fullscreen.png)  
+![picture of Mobile Continent](readme-pics/continent-mobile.png)
+
+- **Country Full Screen and Mobile**
+
+![picture of Full Screen country](readme-pics/country-fullscreen.png)  
+![picture of Mobile country](readme-pics/country-mobile.png)
+
+- **City Full Screen and Mobile**
+
+![picture of Full Screen City](readme-pics/city-fullscreen.png)  
+![picture of Mobile City](readme-pics/city-mobile.png)
+
+### User Registration
+
+- There is a link in the navigation bar that directs users to the registration form.
+- Users must complete the form with a username, email, password, memorable name, and optionally a profile image.
+- After submitting the form, a confirmation message appears, and the user is redirected to the homepage.
+- A confirmation message will appear to confirm their registration.
+
+![picture of sign up fullscreen](readme-pics/sign-up-fullscreen.png)
+
+- **Register Mobile**
+
+![picture of sign up mobile](readme-pics/sign-up-mobile.png)
+
+### User Log In
+
+- There is a link in the navigation bar that directs users to the log-in form.
+- Users must enter their username and password.
+- Once logged in, they are redirected to the homepage, and a confirmation message appears.
+- The navigation bar updates with appropriate links based on the user's status.
+
+![picture of sign in fullscreen](readme-pics/sign-in-fullscreen.png)
+
+- **Sign In Mobile**
+
+![picture of sign in mobile](readme-pics/sign-in-mobile.png)
+
+### User Log Out
+
+- The log-out link appears in the navigation bar once the user is logged in.
+- Clicking this link opens a pop-up asking for confirmation.
+- After confirming, the user is logged out, and a message appears confirming the action.
+
+![picture of sign out page](readme-pics/sign-out.png)
+
+### Create Wi-Fi Location
+
+- When a user is logged in, they will see an "add location" link in the navigation bar.
+- Clicking the link takes the user to a form where they can input details such as the Wi-Fi location’s name, address, amenities, and an optional image.
+- The city field is linked to a database that auto-fills the country and city upon selection.
+- After submitting the form, a confirmation message will appear if successful.
+
+![picture of Create Wi-Fi location](readme-pics/create-wifi-location.png)
+
+- **Mobile**
+
+![picture of Create Wi-Fi location Mobile](readme-pics/create-wifi-location-mobile.png)
+
+### Wi-Fi Location Page
+
+- After a user searches the website and clicks on a Wi-Fi location, they will be taken to this page.
+- The page contains the full details of the Wi-Fi location, including:
+  - Left side: An image of the location and its amenities.
+  - Right side: The name, description, and comments section.
+- Logged-in users can also add a comment.
+
+![picture of Wi-Fi location page](readme-pics/wifi-location-page-fullscreen.png)
+
+- **Mobile**
+
+![picture of Wi-Fi location page Mobile](readme-pics/wifi-location-page-mobile.png)
+
+### Delete Wi-Fi Location
+
+- For the user who created the Wi-Fi location or an admin, two buttons appear at the top of the Wi-Fi location page, one of which is a delete button.
+- Clicking the delete button opens a pop-up asking for confirmation.
+- Once confirmed, the user will see a pop-up message confirming the deletion.
+
+![picture of Delete Wi-Fi location page](readme-pics/wifi-location-delete.png)
+
+- **Mobile**
+
+![picture of Delete Wi-Fi location Mobile](readme-pics/wifi-location-delete-mobile.png)
+
+### Edit Wi-Fi Location
+
+- The second button available to the user who created the Wi-Fi location or admin is the edit button.
+- Clicking the button redirects the user to the Wi-Fi location creation form, pre-populated with the current data.
+- Once the form is updated, a confirmation pop-up will appear.
+
+![picture of Edit Wi-Fi location page](readme-pics/wifi-location-edit-fullscreen.png)
+
+- **Mobile**
+
+![picture of Edit Wi-Fi location Mobile](readme-pics/wifi-location-edit-mobile.png)
+
+### Create Comment
+
+- Logged-in users can create a comment on any Wi-Fi location.
+- The comment section is displayed below the Wi-Fi location information.
+- The username is pre-filled, and users can add a comment and a star rating.
+- After submitting the comment, a confirmation message will appear, and the comment will be displayed on the Wi-Fi page.
+
+![picture of Create comment](readme-pics/wifi-location-edit-create-comment-fullscreen.png)
+
+- **Mobile**
+
+![picture of Create comment](readme-pics/wifi-location-edit-create-comment-mobile.png)
+
+### View Comment
+
+- All comments related to a Wi-Fi location are displayed below the description section.
+- Each comment shows the username, star rating, and the comment content.
+- Every Wi-Fi location has its own unique list of comments.
+
+![picture of View comment](readme-pics/wifi-location-view-comment-fullscreen.png)
+
+- **Mobile**
+
+![picture of View comment Mobile](readme-pics/wifi-location-view-comment-mobile.png)
+
+### Edit Comment
+
+- Logged-in users who have created a comment will see two buttons next to their comments: edit and delete.
+- Clicking the edit button pre-fills the comment section with the existing data, allowing the user to update it.
+- After editing, a confirmation message will appear.
+
+![picture of Edit comment](readme-pics/wifi-location-edit-comment-full.png)
+
+- **Mobile**
+
+![picture of Edit comment Mobile](readme-pics/wifi-location-edit-comment-edits.png)
+
+### Delete Comment
+
+- Like the edit button, the delete button appears next to comments created by the logged-in user.
+- Clicking the delete button opens a pop-up asking for confirmation.
+- After confirming, the comment is deleted, and a pop-up message confirms its removal.
+
+![picture of Delete comment Mobile](readme-pics/wifi-location-delete-comment-mobile.png)
+
+- **Mobile**
+
+![picture of Delete comment](readme-pics/wifi-location-delete-comment-full.png)
+
+### Profile Page
+
+- Users who have created an account and logged in will have a profile page.
+- The profile page shows the user’s profile image, username, and a list of Wi-Fi locations they have created and favorited.
+- The created and favorited Wi-Fi locations are split into two tabs, with summary information such as image, name, address, and links.
+
+### Add Wi-Fi Location to Favorites
+
+- To add a Wi-Fi location to a user's favorites list, they need to click the button that appears on that specific Wi-Fi location page.
+- After clicking the button, a pop-up will confirm that the Wi-Fi location has been added to the favorites list.
+- If the user has created the Wi-Fi location, they will not be able to add the location to their favorites.
+
+![picture of Add Wi-Fi location to favorites](readme-pics/wifi-location-add-to-fav.png)
+
+- **Mobile**
+
+![picture of Add Wi-Fi location to favorites](readme-pics/wifi-location-add-to-fav-mobile.png)
+
+### Remove Wi-Fi Location from Favorites
+
+- To remove a Wi-Fi location from a user's favorites list, they need to go to their profile page and click on the favorites tab.
+- Here, each Wi-Fi location will have a remove button next to it.
+- When the user clicks the button, a pop-up will appear asking for confirmation to remove the location.
+- If they confirm, the Wi-Fi location is removed from the favorites list, and a pop-up will confirm the action.
+
+![picture of Removing Wi-Fi location from favorites](readme-pics/wifi-location-remove-favorites.png)
+
+- **Mobile**
+
+![picture of Removing Wi-Fi location from favorites](readme-pics/wifi-location-remove-favorites-mobile.png)
+
+### About Page
+
+- The About page can be accessed from the navigation bar.
+- When clicked, it takes the user to a page divided into sections:
+  - The top section provides an overview of the company.
+  - Below, there is a section filled with images of company employees and descriptions about the company and the team.
+
+![picture of About page](readme-pics/wifi-location-about-page.png)
+
+- **Mobile**
+
+![picture of About page Mobile](readme-pics/wifi-location-about-page-mobile.png)
+
+## Future Implementations
+
+- **Search Bar** – A search bar will be added to the homepage, allowing users to search for Wi-Fi locations by city or country without needing to use the image icons.
+- **Reply to Comments** – On Wi-Fi location pages, users can currently create comments. A future feature would allow users to reply to comments and have conversations with others.
+- **Suggestions** – A feature to recommend Wi-Fi locations based on the user’s current location, making it easier to find nearby spots.
+- **Sorting Feature** – When a user filters a list of Wi-Fi locations down to a city, they will be able to sort by amenities, star rating, or proximity to the city center.
+- **Gallery** – This feature will allow users to upload multiple images to Wi-Fi location pages, creating a gallery that others can view and scroll through.
