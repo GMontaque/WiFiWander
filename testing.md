@@ -329,3 +329,45 @@ class CommentTests(APITestCase):
 
 - Result
   - ![picture of Comments App test result](readme-pics/comments-python-test.png)
+
+### Errors and Bugs
+
+**Form Validation**
+
+Initially, I configured the form for submitting Wi-Fi locations to display an error if any input field was left empty. However, I encountered an issue where the error message would only appear for the "name" field. This allowed users to submit the form with only the "name" filled in, bypassing the other required fields.
+
+The root cause of this problem was in the model design. I had mistakenly set a default value of an empty string for fields that should have been required. As a result, the database accepted the form submission because it technically fulfilled the model's requirements by only needing the "name" field to be populated.
+
+To resolve this issue, I removed the default empty string values from the model fields. After doing so, the form functioned as expected, ensuring that all required fields were properly validated before submission.
+
+**Favorite and Delete Buttons Not Working**
+
+While developing the Wi-Fi location page, I added a delete button to allow users or admins to remove a Wi-Fi location. Initially, this functioned as intended. However, after refactoring the code into smaller, modular sections, I committed the changes and noticed that the delete button no longer worked.
+
+Upon investigation, I discovered that the issue was due to missing code in the refactored files. During the process of breaking the code down, I had unintentionally omitted some key functionality required for the delete button to work correctly.
+
+I fixed this by revisiting the delete function and ensuring that all necessary code was included in the correct files. After this update, the delete button worked as expected, allowing users to delete Wi-Fi locations without any issues.
+
+**404 Page Not Appearing**
+
+During testing, I noticed that navigating to an incorrect URL (e.g., `/continents/africad`) would still load a page but with no content. The page would update with the incorrect URL's title but would not display any data or error message.
+
+This issue arose because there was no proper URL validation, which led to a poor user experience.
+
+I resolved this by using the `useNavigate` hook to redirect users to a 404 page when invalid data was detected. This ensures users are directed to the correct error page for non-existent URLs.
+
+**Loader Icon Overlay During Data Loading**
+
+There was an issue with the loader icon that appeared when data was being fetched. When the loader was displayed, parts of the background were still visible, giving the impression that the page was incomplete and unprofessional. This caused a poor user experience, as it wasn’t clear whether the page was still loading or ready for interaction.
+
+The problem occurred because the loader did not fully overlay the background content. To fix this, I applied a full-page background overlay to the loader, ensuring that when it appeared, no part of the background was visible.
+
+After this fix, the loading process became much clearer to the user, improving the overall experience by ensuring they could not interact with the page until it had fully loaded.
+
+**Wi-Fi Location Model**
+
+Initially, I designed the Wi-Fi location model with the address stored in a separate model. The idea was to improve performance by allowing the front end to filter through the address model alone, which would speed up load times and enhance the user experience.
+
+However, an issue arose when each Wi-Fi location required an address to place it correctly on the website (e.g., London in the Europe section). When attempting to add or update a Wi-Fi location, I encountered an error related to the address database and its ID. This occurred because the Wi-Fi location and address were linked via a one-to-one relationship using a foreign key.
+
+To resolve this issue, I combined both models into one. This way, the form submission targeted a single model, incorporating the address directly into the Wi-Fi location model. After implementing this change, the form functioned as expected, and the error was resolved.
