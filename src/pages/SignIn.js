@@ -110,7 +110,7 @@ function SignIn() {
         </Form>
 
         <Link to="/signup" className="signup-form">
-          Don't have an account? <span>Sign up now!</span>
+          Don&apos;t have an account? <span>Sign up now!</span>
         </Link>
       </Row>
     </>

@@ -1,0 +1,35 @@
+{
+	"env": {
+		"browser": true, // To allow browser globals like `window` and `document`
+		"es2021": true, // To support modern ECMAScript features
+		"node": true // Node.js environment
+	},
+	"extends": [
+		"eslint:recommended", // Use ESLint's recommended settings
+		"plugin:react/recommended", // Use recommended settings for React
+		"plugin:jsx-a11y/recommended" // Accessibility settings
+	],
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true // Enable JSX parsing
+		},
+		"ecmaVersion": "latest", // Enable the latest ECMAScript version
+		"sourceType": "module" // Use ES modules
+	},
+	"plugins": [
+		"react", // Enable React plugin
+		"jsx-a11y" // Enable accessibility plugin
+	],
+	"rules": {
+		"no-empty": "error", // Error for empty blocks
+		"react/no-children-prop": "error", // Enforce not passing children as props
+		"no-mixed-spaces-and-tabs": "error", // Disallow mixing spaces and tabs for indentation
+		"react/react-in-jsx-scope": "off", // Turn off for React 17+ (not needed to import React in scope)
+		"react/prop-types": "off" // If you don’t use prop-types, you can turn this off
+	},
+	"settings": {
+		"react": {
+			"version": "detect" // Automatically detect the React version
+		}
+	}
+}

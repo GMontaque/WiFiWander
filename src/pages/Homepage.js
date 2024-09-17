@@ -2,7 +2,6 @@ import React from 'react'
 import Continents from '../pages/Continents';
 import { Row } from 'react-bootstrap';
 
-
 const Homepage = () => {
   return (
     <>
@@ -13,12 +12,12 @@ const Homepage = () => {
             <ul >
               <li>
                 <h3>Start Your Search</h3>
-                <p>Below you will find six continent-based buttons (e.g., South America, Europe). Simply select a continent, then narrow it down by country and city. If your city isn’t listed, you can add it! A search bar is also available for quick access. Once you choose a city, you'll see a list of Wi-Fi spots with key details like name, address, image, and amenities. Each listing links to a more detailed page.</p>
+                <p>Below you will find six continent-based buttons (e.g., South America, Europe). Simply select a continent, then narrow it down by country and city. If your city isn&apos;t listed, you can add it! A search bar is also available for quick access. Once you choose a city, you&apos;ll see a list of Wi-Fi spots with key details like name, address, image, and amenities. Each listing links to a more detailed page.</p>
               </li>
               <li className='line'></li>
               <li>
                 <h3>Explore Wi-Fi Spots</h3>
-                <p>After selecting a city, you'll get a list of Wi-Fi spots with important info like the address, image, and amenities. Each spot features a star rating system based on user feedback to help you find the best location, whether for speed or comfort.</p>
+                <p>After selecting a city, you will get a list of Wi-Fi spots with important info like the address, image, and amenities. Each spot features a star rating system based on user feedback to help you find the best location, whether for speed or comfort.</p>
               </li>
               <li className='line'></li>
               <li>
@@ -38,7 +37,7 @@ const Homepage = () => {
               <li className='line'></li>
               <li>
                 <h3>Profile</h3>
-                <p>Your profile serves as your personal hub. It lists all the Wi-Fi spots you've added and your saved favorites, making it easy to manage your contributions and go-to locations.</p>
+                <p>Your profile serves as your personal hub. It lists all the Wi-Fi spots you&apos;ve added and your saved favorites, making it easy to manage your contributions and go-to locations.</p>
               </li>
               <li className='line'></li>
               <li>
@@ -56,4 +55,3 @@ const Homepage = () => {
 }
 
 export default Homepage
-

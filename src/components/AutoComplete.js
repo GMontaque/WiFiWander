@@ -1,25 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import worldCities from '../Json/worldcities.json';
 
 const AutoComplete = ({ type, onSelect }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredCities, setFilteredCities] = useState([]);
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
 
-    const handleChange = (e) => {
-        const term = e.target.value;
-        setSearchTerm(term);
+    // Debounce the search term to optimize filtering performance
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedSearchTerm(searchTerm);
+        }, 300); // Wait 300ms after the user stops typing
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [searchTerm]);
 
-        if (term.length > 0) {
-            const results = worldCities.filter((city) =>
+    // Memoize the filtering operation for performance improvement
+    const results = useMemo(() => {
+        if (debouncedSearchTerm.length > 0) {
+            const lowerCaseTerm = debouncedSearchTerm.toLowerCase();
+            return worldCities.filter((city) =>
                 type === 'city'
-                    ? city.city.toLowerCase().includes(term.toLowerCase())
-                    : city.country.toLowerCase().includes(term.toLowerCase())
-            );
-            setFilteredCities(results);
-        } else {
-            setFilteredCities([]);
+                    ? city.city.toLowerCase().includes(lowerCaseTerm)
+                    : city.country.toLowerCase().includes(lowerCaseTerm)
+            ).slice(0, 10); // Limit the results to 10
         }
-    };
+        return [];
+    }, [debouncedSearchTerm, type]);
+
+    // Update the filteredCities state whenever the results change
+    useEffect(() => {
+        setFilteredCities(results);
+    }, [results]);
 
     const handleSelect = (city) => {
         if (type === 'city') {
@@ -32,24 +45,32 @@ const AutoComplete = ({ type, onSelect }) => {
         setFilteredCities([]);
     };
 
+    const handleKeyDown = (event, city) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            handleSelect(city);
+        }
+    };
+
     return (
         <div>
             <input
                 className='width-100'
                 type="text"
                 value={searchTerm}
-                onChange={handleChange}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder={type === 'city' ? 'Search for a city...' : 'Search for a country...'}
             />
             {filteredCities.length > 0 && (
                 <ul style={{ listStyle: 'none', padding: 0, maxHeight: '150px', overflowY: 'auto', border: '1px solid #ddd' }}>
                     {filteredCities.map((city, index) => (
-                        <li
-                            key={index}
-                            onClick={() => handleSelect(city)}
-                            style={{ cursor: 'pointer', padding: '5px', borderBottom: '1px solid #ddd' }}
-                        >
-                            {type === 'city' ? `${city.city}, ${city.country}` : city.country}
+                        <li key={index} style={{ padding: '5px', borderBottom: '1px solid #ddd' }}>
+                            <button
+                                onClick={() => handleSelect(city)}
+                                onKeyDown={(event) => handleKeyDown(event, city)}
+                                style={{ cursor: 'pointer', background: 'none', border: 'none', textAlign: 'left', width: '100%' }}
+                            >
+                                {type === 'city' ? `${city.city}, ${city.country}` : city.country}
+                            </button>
                         </li>
                     ))}
                 </ul>

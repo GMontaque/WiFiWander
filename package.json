@@ -18,7 +18,7 @@
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {
-    "heroku-prebuild": "npm install -g serve",
+		"heroku-prebuild": "npm install -g serve",
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
@@ -41,5 +41,10 @@
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
+	},
+	"devDependencies": {
+		"eslint": "^8.57.1",
+		"eslint-plugin-jsx-a11y": "^6.10.0",
+		"eslint-plugin-react": "^7.36.1"
 	}
 }
