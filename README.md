@@ -789,6 +789,8 @@ For more details on cloning a repository, check out [GitHub’s official documen
 
 - Profile component in django: created with the help of Code Institute Tutor Support
 
+- Moment and drf-api Code Institute Walk Through Project
+
 **Youtube Courses**
 
 - Bro Code - React Fuull Course - [Link](https://www.youtube.com/watch?v=CgkZ7MvWUAA)
