@@ -137,3 +137,65 @@
   - The Favorites model enables users to save wifi locations for future reference. Users can organize their favorite spots, add notes, and mark whether they’ve visited a location. Each favorite is tied to both the user’s profile and the wifi location.
 
 ![picture of data scheme](readme-pics/data-schema.png)
+
+## Skeleton
+
+### Wireframe
+
+- I created wireframes for each page of the website, showing how the site will appear both in mobile and browser format.
+
+**Homepage**
+
+![picture of Homepage](readme-pics/homepage-wireframe.png)
+
+**Country and city**
+
+- These two pages have been combined as the basic layout is the same the only difference is the content
+
+![picture of Country and City Page](readme-pics/city-and-country.png)
+
+**Wifi location list**
+
+![picture of Wifi Location List](readme-pics/wifi-location-list.png)
+
+**About Page**
+
+![picture of About Page](readme-pics/about-page.png)
+
+**Wifi location page**
+
+![picture of Wifi Location Page](readme-pics/wifi-location-page.png)
+
+**Profile – Created and Favioutes**
+
+- These two pages have been combined as the basic layout is the same the only difference is the content, they will not both appear at the same time
+
+![picture of Profile with Created and Favioutes](readme-pics/profile-created-possibles.png)
+
+**Comments - C.R.U.D**
+
+- The image below shows the comments and also the update and delete functions
+- If a user creates a comment they wil see the update and delete next to it
+- Including how to create a comment
+
+![picture of comments and CRUD functions](readme-pics/comments-crud.png)
+
+**Sign in and Sign Up**
+
+![picture of sing up and sing in form](readme-pics/sign-in-and-up.png)
+
+**Sign out**
+
+![picture of sign out system](readme-pics/sign-out-wireframe.png)
+
+**Pop Up Message**
+
+![picture of Pop Up Message](readme-pics/template-popup.png)
+
+**Create/edit wifi location**
+
+![picture of creating and editing Wifi Location](readme-pics/create-and-edit-wifi-location.png)
+
+**Delete comment/wifi location**
+
+![picture of Deleting Wifi Location](readme-pics/delete-wifi-location.png)
